@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>見積・承認 — 社内業務管理システム</title>
+    <meta name="page-name" content="quote-hub">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        .quote-hub-row { cursor: pointer; }
+        .quote-hub-row:hover { background-color: rgba(13, 110, 253, 0.06); }
+        .quote-hub-filters { font-size: 0.8125rem; }
+        .quote-hub-filters .form-label { font-size: 0.7rem; margin-bottom: 0.15rem; color: #6c757d; font-weight: 600; }
+        .quote-hub-filters .form-control,
+        .quote-hub-filters .form-select { min-height: calc(1.5em + 0.35rem + 2px); padding-top: 0.2rem; padding-bottom: 0.2rem; }
+    </style>
+</head>
+<body data-page-name="quote-hub">
+<main class="main-content">
+        <div id="quote-hub" class="page-root" data-page-name="quote-hub">
+            <div id="quoteHubTabContent">
+                    <div class="d-flex justify-content-end mb-2">
+                        <button type="button" class="btn btn-success btn-sm" onclick="location.href='quote-create.html'"><i class="bi bi-plus-circle"></i> 新規作成</button>
+                    </div>
+                    <div class="quote-hub-filters border rounded bg-light px-2 py-2 mb-3">
+                        <div class="row g-2 align-items-end">
+                            <div class="col-6 col-sm-4 col-lg-2">
+                                <label class="form-label">見積番号</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="QUO-2026-">
+                            </div>
+                            <div class="col-6 col-sm-4 col-lg-2">
+                                <label class="form-label">クライアント</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="社名">
+                            </div>
+                            <div class="col-6 col-sm-4 col-lg-2">
+                                <label class="form-label">ステータス</label>
+                                <select class="form-select form-select-sm">
+                                    <option>すべて</option>
+                                    <option>新規</option>
+                                    <option>承認待ち</option>
+                                    <option>差し戻し</option>
+                                    <option>承認済み</option>
+                                    <option>受注確定</option>
+                                    <option>失注</option>
+                                    <option>却下</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-sm-4 col-lg-2">
+                                <label class="form-label">作成日</label>
+                                <input type="date" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-12 col-sm-8 col-lg-2">
+                                <label class="form-label">カテゴリー</label>
+                                <select class="form-select form-select-sm">
+                                    <option>すべて</option>
+                                    <option>通常：請負</option>
+                                    <option>通常：ラボ</option>
+                                    <option>通常：保守</option>
+                                    <option>通常：概算：請負／保守／サーバー</option>
+                                    <option>概算：請負</option>
+                                    <option>概算：ラボ</option>
+                                    <option>概算：保守</option>
+                                    <option>概算：請負／保守／サーバー</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-4 col-lg-2">
+                                <label class="form-label">見積元</label>
+                                <select class="form-select form-select-sm">
+                                    <option>すべて</option>
+                                    <option>NC</option>
+                                    <option>OTA</option>
+                                    <option>OTHERS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-2 pt-2 border-top border-light-subtle">
+                            <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-search"></i> 検索</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm small">
+                            <thead>
+                                <tr>
+                                    <th>依頼コード</th>
+                                    <th>見積番号</th>
+                                    <th>Ver</th>
+                                    <th>クライアント</th>
+                                    <th>案件名</th>
+                                    <th>カテゴリー</th>
+                                    <th>見積元</th>
+                                    <th>金額</th>
+                                    <th>ステータス</th>
+                                    <th>承認者</th>
+                                    <th>作成日</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="clickable quote-hub-row" role="button" tabindex="0" data-href="quote-detail.html?id=00001&amp;no=QUO-2026-0045&amp;ver=2&amp;status=pending">
+                                    <td>00001</td>
+                                    <td><strong>QUO-2026-0045</strong></td>
+                                    <td><span class="badge bg-info">2</span></td>
+                                    <td>株式会社テックソリューション</td>
+                                    <td>ECサイトリニューアル</td>
+                                    <td>通常：請負</td>
+                                    <td><span class="badge bg-primary">OTA</span></td>
+                                    <td class="amount-cell">¥18,500,000</td>
+                                    <td><span class="badge badge-pending">承認待ち</span></td>
+                                    <td>山本部長</td>
+                                    <td>2026/03/15</td>
+                                </tr>
+                                <tr class="clickable quote-hub-row" role="button" tabindex="0" data-href="quote-detail.html?id=00002&amp;no=QUO-2026-0044&amp;ver=1&amp;status=approved">
+                                    <td>00002</td>
+                                    <td><strong>QUO-2026-0044</strong></td>
+                                    <td><span class="badge bg-success">1</span></td>
+                                    <td>サンプル商事株式会社</td>
+                                    <td>在庫管理システム開発</td>
+                                    <td>通常：ラボ</td>
+                                    <td><span class="badge bg-info text-dark">NC</span></td>
+                                    <td class="amount-cell">¥12,800,000</td>
+                                    <td><span class="badge badge-approved">承認済み</span></td>
+                                    <td>山本部長</td>
+                                    <td>2026/03/12</td>
+                                </tr>
+                                <tr class="clickable quote-hub-row" role="button" tabindex="0" data-href="quote-detail.html?id=00003&amp;no=QUO-2026-0043&amp;ver=2&amp;status=rejected">
+                                    <td>00003</td>
+                                    <td><strong>QUO-2026-0043</strong></td>
+                                    <td><span class="badge bg-warning text-dark">2</span></td>
+                                    <td>株式会社グローバルテック</td>
+                                    <td>基幹システム保守</td>
+                                    <td>通常：保守</td>
+                                    <td><span class="badge bg-primary">OTA</span></td>
+                                    <td class="amount-cell">¥3,200,000</td>
+                                    <td><span class="badge badge-rejected">差し戻し</span></td>
+                                    <td>山本部長</td>
+                                    <td>2026/03/10</td>
+                                </tr>
+                                <tr class="clickable quote-hub-row" role="button" tabindex="0" data-href="quote-detail.html?id=00004&amp;no=QUO-2026-0042&amp;ver=1&amp;status=new">
+                                    <td>00004</td>
+                                    <td><strong>QUO-2026-0042</strong></td>
+                                    <td><span class="badge bg-secondary">1</span></td>
+                                    <td>株式会社グローバルテック</td>
+                                    <td>データ基盤整備（概算）</td>
+                                    <td>通常：概算：請負／保守／サーバー</td>
+                                    <td><span class="badge bg-secondary">OTHERS</span></td>
+                                    <td class="amount-cell">¥24,000,000</td>
+                                    <td><span class="badge bg-secondary">新規</span></td>
+                                    <td>—</td>
+                                    <td>2026/03/08</td>
+                                </tr>
+                                <tr class="clickable quote-hub-row" role="button" tabindex="0" data-href="quote-detail.html?id=00005&amp;no=QUO-2026-0041&amp;ver=2&amp;status=ordered">
+                                    <td>00005</td>
+                                    <td><strong>QUO-2026-0041</strong></td>
+                                    <td><span class="badge bg-info">2</span></td>
+                                    <td>株式会社ネクストリンク</td>
+                                    <td>モバイルアプリ開発（概算見積）</td>
+                                    <td>概算：請負</td>
+                                    <td><span class="badge bg-primary">OTA</span></td>
+                                    <td class="amount-cell">¥8,900,000</td>
+                                    <td><span class="badge badge-ordered">受注確定</span></td>
+                                    <td>山本部長</td>
+                                    <td>2026/03/05</td>
+                                </tr>
+                                <tr class="clickable quote-hub-row" role="button" tabindex="0" data-href="quote-detail.html?id=00006&amp;no=QUO-2026-0040&amp;ver=1&amp;status=lost">
+                                    <td>00006</td>
+                                    <td><strong>QUO-2026-0040</strong></td>
+                                    <td><span class="badge bg-secondary">1</span></td>
+                                    <td>株式会社サンプル物流</td>
+                                    <td>WMS連携PoC</td>
+                                    <td>通常：請負</td>
+                                    <td><span class="badge bg-info text-dark">NC</span></td>
+                                    <td class="amount-cell">¥2,400,000</td>
+                                    <td><span class="badge badge-lost">失注</span></td>
+                                    <td>—</td>
+                                    <td>2026/03/01</td>
+                                </tr>
+                                <tr class="clickable quote-hub-row" role="button" tabindex="0" data-href="quote-detail.html?id=00007&amp;no=QUO-2026-0039&amp;ver=1&amp;status=declined">
+                                    <td>00007</td>
+                                    <td><strong>QUO-2026-0039</strong></td>
+                                    <td><span class="badge bg-secondary">1</span></td>
+                                    <td>テスト工業株式会社</td>
+                                    <td>社内ポータル刷新</td>
+                                    <td>通常：保守</td>
+                                    <td><span class="badge bg-primary">OTA</span></td>
+                                    <td class="amount-cell">¥0</td>
+                                    <td><span class="badge badge-declined">却下</span></td>
+                                    <td>山本部長</td>
+                                    <td>2026/02/28</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    function go(tr) {
+        var u = tr.getAttribute('data-href');
+        if (u) location.href = u;
+    }
+    document.querySelectorAll('#quote-hub .quote-hub-row').forEach(function (tr) {
+        tr.addEventListener('click', function () {
+            go(tr);
+        });
+        tr.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                go(tr);
+            }
+        });
+    });
+})();
+    </script>
+</body>
+</html>

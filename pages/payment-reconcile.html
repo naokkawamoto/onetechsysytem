@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>入金消込 — 社内業務管理システム</title>
+    <meta name="page-name" content="payment-reconcile">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body data-page-name="payment-reconcile">
+<main class="main-content">
+        <div id="payment-reconcile" class="page-root" data-page-name="payment-reconcile">
+<h3 class="mb-4">入金消込 - INV-2026-0098</h3>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-8">
+                    <div class="form-section">
+                        <h6 class="form-section-title">請求情報</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr><th>請求番号:</th><td>INV-2026-0098</td></tr>
+                                    <tr><th>ステータス:</th><td><span class="badge badge-unpaid">未入金</span></td></tr>
+                                    <tr><th>クライアント:</th><td>株式会社テックソリューション</td></tr>
+                                    <tr><th>案件名:</th><td>ECサイトリニューアル</td></tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr><th>請求日:</th><td>2026/03/31</td></tr>
+                                    <tr><th>支払期日:</th><td>2026/04/30</td></tr>
+                                    <tr><th>支払条件:</th><td>月末締め翌月末払い</td></tr>
+                                    <tr><th>担当営業:</th><td>田中太郎</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-section">
+                        <h6 class="form-section-title">金額サマリー</h6>
+                        <table class="table table-sm table-borderless">
+                            <tr class="table-light">
+                                <th>請求金額:</th>
+                                <td class="amount-cell"><h4 class="mb-0">¥18,500,000</h4></td>
+                            </tr>
+                            <tr>
+                                <th>入金済み:</th>
+                                <td class="amount-cell text-success">¥0</td>
+                            </tr>
+                            <tr class="table-warning">
+                                <th><strong>未入金額:</strong></th>
+                                <td class="amount-cell"><strong>¥18,500,000</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h6 class="form-section-title">入金情報入力</h6>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">入金日 <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" value="2026-03-15">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">入金額 <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="18500000">
+                            <button class="btn btn-outline-secondary" type="button">残額入力</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">入金方法</label>
+                        <select class="form-select">
+                            <option>銀行振込</option>
+                            <option>現金</option>
+                            <option>小切手</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">入金元口座</label>
+                        <select class="form-select">
+                            <option>サンプル銀行 東京支店</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">備考</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label"><strong>完全消込</strong>（入金額が請求額と一致）</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h6 class="form-section-title">入金履歴</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>入金日</th>
+                                <th>入金額</th>
+                                <th>入金方法</th>
+                                <th>備考</th>
+                                <th>登録者</th>
+                                <th>登録日時</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">入金履歴はありません</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-secondary" onclick="location.href='payment-list.html'">キャンセル</button>
+                <button class="btn btn-primary"><i class="bi bi-check-circle"></i> 入金消込を実行</button>
+            </div>
+        </div>
+
+<!-- 続く管理系画面... -->
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+</body>
+</html>

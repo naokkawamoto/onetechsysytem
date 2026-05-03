@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請求一覧 — 社内業務管理システム</title>
+    <meta name="page-name" content="invoice-list">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        #invoice-list .form-section.invoice-list-filters {
+            padding: 0.75rem 1rem;
+        }
+        #invoice-list .invoice-list-filters .form-label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.2rem;
+        }
+        #invoice-list .table {
+            font-size: 0.8125rem;
+            --bs-table-cell-padding-y: 0.45rem;
+            --bs-table-cell-padding-x: 0.5rem;
+        }
+        #invoice-list .table thead th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+        #invoice-list .table tbody td {
+            vertical-align: middle;
+        }
+        #invoice-list .table .amount-cell {
+            font-size: 0.8125rem;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+        #invoice-list .invoice-by-month-panel {
+            border-left: 4px solid #1e4d7b;
+            background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+        }
+        #invoice-list .invoice-by-month-panel .form-label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.2rem;
+        }
+        #invoice-list .invoice-row-nav {
+            cursor: pointer;
+        }
+        #invoice-list .invoice-row-nav:hover td {
+            background-color: rgba(30, 77, 123, 0.06);
+        }
+    </style>
+</head>
+<body data-page-name="invoice-list">
+<main class="main-content">
+        <div id="invoice-list" class="page-root" data-page-name="invoice-list">
+            <div class="form-section invoice-by-month-panel mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+                    <div>
+                        <span class="small fw-semibold text-secondary text-uppercase" style="letter-spacing: 0.04em;">請求月サマリー</span>
+                        <p class="small text-muted mb-0">検索フォームとは別に、請求月だけで件数・税込合計を確認できます。</p>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap align-items-end gap-3">
+                    <div>
+                        <label class="form-label" for="invoiceMonthSummaryInput">請求月（西暦）</label>
+                        <input type="month" id="invoiceMonthSummaryInput" class="form-control form-control-sm" lang="ja-JP" title="西暦年月" autocomplete="off">
+                    </div>
+                    <div id="invoiceMonthSummaryStats" class="d-none flex-wrap align-items-baseline gap-4 border-start ps-3 ms-md-2" style="border-color: rgba(0,0,0,.12) !important;">
+                        <div class="text-nowrap">
+                            <span class="small text-muted">請求件数</span>
+                            <span id="invoiceMonthSummaryCount" class="fw-bold fs-6 ms-1">0</span>
+                            <span class="small ms-1">件</span>
+                        </div>
+                        <div class="text-nowrap">
+                            <span class="small text-muted">請求額合計（税込）</span>
+                            <span id="invoiceMonthSummaryTotal" class="fw-bold fs-6 font-monospace ms-1">¥0</span>
+                        </div>
+                    </div>
+                </div>
+                <p id="invoiceMonthSummaryHint" class="small text-muted mb-0 mt-2">請求月を選択すると、一覧に該当する請求の件数と請求額合計（税込）を表示します。</p>
+            </div>
+
+            <div class="form-section invoice-list-filters mb-3">
+                <div class="d-flex justify-content-end mb-2">
+                    <button type="button" class="btn btn-success btn-sm" onclick="location.href='invoice-create.html'"><i class="bi bi-plus-circle"></i> 新規作成</button>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6 col-md-4">
+                        <label class="form-label">請求番号</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="INV-2026-">
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label class="form-label">クライアント名</label>
+                        <input type="text" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label">カテゴリー</label>
+                        <select class="form-select form-select-sm">
+                            <option>すべて</option>
+                            <option>納品済み</option>
+                            <option>前受金</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                    <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-search"></i> 検索</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-clockwise"></i> リセット</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>請求番号</th>
+                            <th>請求月</th>
+                            <th>クライアント</th>
+                            <th>案件名</th>
+                            <th>カテゴリー</th>
+                            <th>ステータス</th>
+                            <th>請求日</th>
+                            <th>支払期日</th>
+                            <th>請求額（税込み）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="invoice-row-nav" data-billing-month="2026-03" data-invoice-no="INV-2026-0098" title="クリックで詳細を表示">
+                            <td class="font-monospace">INV-2026-0098</td>
+                            <td class="text-nowrap">2026年3月</td>
+                            <td>株式会社テックソリューション</td>
+                            <td>ECサイトリニューアル</td>
+                            <td><span class="badge bg-success">納品済み</span></td>
+                            <td><span class="badge bg-success">承認済み</span></td>
+                            <td>2026/03/31</td>
+                            <td>2026/04/30</td>
+                            <td class="amount-cell">¥18,500,000</td>
+                        </tr>
+                        <tr class="invoice-row-nav" data-billing-month="2026-02" data-invoice-no="INV-2026-0085" title="クリックで詳細を表示">
+                            <td class="font-monospace">INV-2026-0085</td>
+                            <td class="text-nowrap">2026年2月</td>
+                            <td>グローバル物流株式会社</td>
+                            <td>在庫管理システム開発</td>
+                            <td><span class="badge bg-info text-dark">前受金</span></td>
+                            <td><span class="badge bg-warning text-dark">承認待ち</span></td>
+                            <td>2026/02/28</td>
+                            <td>2026/03/08</td>
+                            <td class="amount-cell">¥12,800,000</td>
+                        </tr>
+                        <tr class="invoice-row-nav" data-billing-month="2026-02" data-invoice-no="INV-2026-0078" title="クリックで詳細を表示">
+                            <td class="font-monospace">INV-2026-0078</td>
+                            <td class="text-nowrap">2026年2月</td>
+                            <td>株式会社グローバルテック</td>
+                            <td>基幹システム保守</td>
+                            <td><span class="badge bg-success">納品済み</span></td>
+                            <td><span class="badge bg-secondary">下書き</span></td>
+                            <td>2026/02/28</td>
+                            <td>2026/03/31</td>
+                            <td class="amount-cell">¥3,200,000</td>
+                        </tr>
+                        <tr class="invoice-row-nav" data-billing-month="2026-02" data-invoice-no="INV-2026-0072" style="background-color: #ffe6e6;" title="クリックで詳細を表示">
+                            <td class="font-monospace">INV-2026-0072</td>
+                            <td class="text-nowrap">2026年2月</td>
+                            <td>メディアワークス合同会社</td>
+                            <td>社内ポータル刷新</td>
+                            <td><span class="badge bg-success">納品済み</span></td>
+                            <td><span class="badge bg-danger">差し戻し</span></td>
+                            <td>2026/02/15</td>
+                            <td>2026/03/31</td>
+                            <td class="amount-cell">¥3,200,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    var monthInp = document.getElementById('invoiceMonthSummaryInput');
+    var statsEl = document.getElementById('invoiceMonthSummaryStats');
+    var hintEl = document.getElementById('invoiceMonthSummaryHint');
+    var countEl = document.getElementById('invoiceMonthSummaryCount');
+    var totalEl = document.getElementById('invoiceMonthSummaryTotal');
+    var tbody = document.querySelector('#invoice-list table tbody');
+    if (!monthInp || !statsEl || !hintEl || !countEl || !totalEl || !tbody) return;
+
+    function fmtYen(n) {
+        return '¥' + Math.round(n).toLocaleString('ja-JP');
+    }
+    function parseAmountCell(td) {
+        if (!td) return 0;
+        var s = String(td.textContent || '').replace(/,/g, '').replace(/[¥円\s]/g, '');
+        var v = parseInt(s, 10);
+        return isNaN(v) ? 0 : v;
+    }
+    function refreshMonthSummary() {
+        var ym = (monthInp.value || '').trim();
+        if (!ym) {
+            statsEl.classList.add('d-none');
+            statsEl.classList.remove('d-flex');
+            hintEl.classList.remove('d-none');
+            return;
+        }
+        var rows = tbody.querySelectorAll('tr[data-billing-month]');
+        var n = 0;
+        var sum = 0;
+        rows.forEach(function (tr) {
+            if (tr.getAttribute('data-billing-month') !== ym) return;
+            n += 1;
+            var amtTd = tr.querySelector('.amount-cell');
+            sum += parseAmountCell(amtTd);
+        });
+        countEl.textContent = String(n);
+        totalEl.textContent = fmtYen(sum);
+        statsEl.classList.remove('d-none');
+        statsEl.classList.add('d-flex');
+        hintEl.classList.add('d-none');
+    }
+    monthInp.addEventListener('change', refreshMonthSummary);
+    monthInp.addEventListener('input', refreshMonthSummary);
+
+    tbody.addEventListener('click', function (e) {
+        var tr = e.target.closest('tr.invoice-row-nav');
+        if (!tr) return;
+        var no = tr.getAttribute('data-invoice-no');
+        if (!no) return;
+        location.href = 'invoice-detail.html?no=' + encodeURIComponent(no);
+    });
+})();
+    </script>
+</body>
+</html>

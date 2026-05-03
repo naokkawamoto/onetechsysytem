@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>連携設定 — 社内業務管理システム</title>
+    <meta name="page-name" content="integration-settings">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body data-page-name="integration-settings">
+<main class="main-content">
+        <div id="integration-settings" class="page-root" data-page-name="integration-settings">
+<h3 class="mb-4">外部システム連携設定</h3>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="kpi-card">
+                        <div class="kpi-value">3</div>
+                        <div class="kpi-label">連携システム数</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="kpi-card">
+                        <div class="kpi-value text-success">2</div>
+                        <div class="kpi-label">正常稼働中</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="kpi-card">
+                        <div class="kpi-value text-danger">1</div>
+                        <div class="kpi-label">エラー発生中</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="kpi-card">
+                        <div class="kpi-value">0</div>
+                        <div class="kpi-label">未設定</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white">
+                            <i class="bi bi-check-circle"></i> CRM連携 (Salesforce)
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm table-borderless mb-0">
+                                <tr><th>連携データ:</th><td>会社マスタ（双方向）</td></tr>
+                                <tr><th>同期頻度:</th><td>1時間ごと自動</td></tr>
+                                <tr><th>認証方式:</th><td>OAuth 2.0</td></tr>
+                                <tr><th>最終同期:</th><td>2026/03/15 16:00</td></tr>
+                                <tr><th>直近24h:</th><td class="text-success">142件同期（エラー0）</td></tr>
+                            </table>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary"><i class="bi bi-gear"></i> 設定</button>
+                                <button class="btn btn-sm btn-success"><i class="bi bi-arrow-repeat"></i> 同期実行</button>
+                                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-list"></i> ログ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-success">
+                        <div class="card-header bg-success text-white">
+                            <i class="bi bi-check-circle"></i> PMS連携
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm table-borderless mb-0">
+                                <tr><th>連携データ:</th><td>見積工数・金額（送信）</td></tr>
+                                <tr><th>同期タイミング:</th><td>見積承認時トリガー</td></tr>
+                                <tr><th>認証方式:</th><td>API Key</td></tr>
+                                <tr><th>最終同期:</th><td>2026/03/15 14:30</td></tr>
+                                <tr><th>直近7日:</th><td class="text-success">18件送信（エラー0）</td></tr>
+                            </table>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary"><i class="bi bi-gear"></i> 設定</button>
+                                <button class="btn btn-sm btn-success"><i class="bi bi-arrow-repeat"></i> 同期実行</button>
+                                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-list"></i> ログ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-danger">
+                        <div class="card-header bg-danger text-white">
+                            <i class="bi bi-exclamation-triangle"></i> OTA連携（拠点A）
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm table-borderless mb-0">
+                                <tr><th>連携データ:</th><td>原価情報（双方向）</td></tr>
+                                <tr><th>同期頻度:</th><td>30分ごと自動</td></tr>
+                                <tr><th>認証方式:</th><td>Basic Auth</td></tr>
+                                <tr><th>最終同期:</th><td class="text-danger">2026/03/15 14:00（失敗）</td></tr>
+                                <tr><th>エラー内容:</th><td class="text-danger">タイムアウト</td></tr>
+                            </table>
+                            <div class="alert alert-danger mt-3 mb-0 p-2">
+                                <small><i class="bi bi-exclamation-triangle"></i> 接続エラーが発生しています。設定を確認してください。</small>
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary"><i class="bi bi-gear"></i> 設定</button>
+                                <button class="btn btn-sm btn-warning"><i class="bi bi-arrow-repeat"></i> 再試行</button>
+                                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-list"></i> ログ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h6 class="form-section-title">連携オプション設定</h6>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="auto-retry" checked>
+                    <label class="form-check-label" for="auto-retry">自動リトライを有効にする（失敗時に3回まで自動再試行）</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="error-notification" checked>
+                    <label class="form-check-label" for="error-notification">エラー通知を有効にする（管理者にメール通知）</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="detailed-log">
+                    <label class="form-check-label" for="detailed-log">詳細ログを記録する（デバッグ用）</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="data-validation" checked>
+                    <label class="form-check-label" for="data-validation">データ検証を有効にする（同期前に整合性チェック）</label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h6 class="form-section-title">最近の同期ログ</h6>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>日時</th>
+                                <th>連携先</th>
+                                <th>種類</th>
+                                <th>件数</th>
+                                <th>結果</th>
+                                <th>メッセージ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026/03/15 16:00</td>
+                                <td>CRM (Salesforce)</td>
+                                <td>会社マスタ同期</td>
+                                <td>142件</td>
+                                <td><span class="badge bg-success">成功</span></td>
+                                <td>正常終了</td>
+                            </tr>
+                            <tr>
+                                <td>2026/03/15 14:30</td>
+                                <td>PMS</td>
+                                <td>見積データ送信</td>
+                                <td>1件</td>
+                                <td><span class="badge bg-success">成功</span></td>
+                                <td>QUO-2026-0045を送信</td>
+                            </tr>
+                            <tr>
+                                <td>2026/03/15 14:00</td>
+                                <td>OTA（拠点A）</td>
+                                <td>原価情報同期</td>
+                                <td>0件</td>
+                                <td><span class="badge bg-danger">失敗</span></td>
+                                <td>接続タイムアウト</td>
+                            </tr>
+                            <tr>
+                                <td>2026/03/15 13:30</td>
+                                <td>OTA（拠点A）</td>
+                                <td>原価情報同期</td>
+                                <td>0件</td>
+                                <td><span class="badge bg-danger">失敗</span></td>
+                                <td>接続タイムアウト</td>
+                            </tr>
+                            <tr>
+                                <td>2026/03/15 13:00</td>
+                                <td>OTA（拠点A）</td>
+                                <td>原価情報同期</td>
+                                <td>15件</td>
+                                <td><span class="badge bg-success">成功</span></td>
+                                <td>正常終了</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+</body>
+</html>

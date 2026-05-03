@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マスタ管理 — 社内業務管理システム</title>
+    <meta name="page-name" content="master-management">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        #master-management {
+            font-size: 0.875rem;
+        }
+        #master-management .mm-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e4d7b;
+            border-left: 4px solid #1e4d7b;
+            padding-left: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        #master-management .mm-subtitle {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.5rem;
+        }
+        #master-management .mm-cat-card .card-header {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        #master-management .mm-setting-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        #master-management .mm-setting-row:last-child {
+            border-bottom: none;
+        }
+        #master-management .mm-inv-filters {
+            padding: 0.75rem 1rem;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        #master-management .mm-inv-filters .form-label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.2rem;
+        }
+        #master-management .mm-inv-table-wrap .table {
+            font-size: 0.8125rem;
+            --bs-table-cell-padding-y: 0.45rem;
+            --bs-table-cell-padding-x: 0.5rem;
+        }
+        #master-management .mm-inv-table-wrap .table thead th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+        #master-management .mm-inv-table-wrap .amount-cell {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        #master-management .mm-bank-template-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: #fff;
+        }
+        #master-management .mm-bank-template-card .card-header {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+        }
+    </style>
+</head>
+<body data-page-name="master-management">
+<main class="main-content">
+        <div id="master-management" class="page-root" data-page-name="master-management">
+            <h3 class="h5 mb-3"><i class="bi bi-gear"></i> マスタ管理</h3>
+
+            <div class="mm-section-title">共通</div>
+            <div class="card mb-2">
+                <div class="card-header py-2 fw-semibold small d-flex align-items-center gap-2">
+                    <i class="bi bi-folder2"></i> 見積りカテゴリ
+                </div>
+                <div class="card-body py-2 px-0">
+                    <div class="table-responsive px-2">
+                        <table class="table table-sm table-bordered align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 2.5rem;">#</th>
+                                    <th>名称</th>
+                                    <th style="width: 7rem;">短縮英字</th>
+                                    <th>備考</th>
+                                    <th style="width: 4rem;" class="text-center">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mm-common-cat-tbody">
+                                <tr data-cat-id="ukeoi">
+                                    <td class="text-muted">1</td>
+                                    <td>請負</td>
+                                    <td class="font-monospace small">UKEOI</td>
+                                    <td class="small text-muted">標準の請負見積</td>
+                                    <td class="text-center text-muted">—</td>
+                                </tr>
+                                <tr data-cat-id="maint">
+                                    <td class="text-muted">2</td>
+                                    <td>保守</td>
+                                    <td class="font-monospace small">MAINT</td>
+                                    <td class="small text-muted">保守契約・月次等</td>
+                                    <td class="text-center text-muted">—</td>
+                                </tr>
+                                <tr data-cat-id="lab">
+                                    <td class="text-muted">3</td>
+                                    <td>ラボ</td>
+                                    <td class="font-monospace small">LAB</td>
+                                    <td class="small text-muted">試作・検証・ラボ型</td>
+                                    <td class="text-center text-muted">—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="px-2 pb-2 pt-1 border-top bg-light">
+                        <button type="button" class="btn btn-sm btn-primary" id="mm-cat-add-btn"><i class="bi bi-plus-lg"></i> カテゴリを追加</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body py-2 px-3">
+                    <div class="mm-setting-row border-0 pt-0">
+                        <div>
+                            <div class="fw-semibold">見積りステータス設定</div>
+                            <div class="small text-muted">見積一覧のカテゴリー／フィルタと整合する表示名・コード（デモ）</div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#quoteStatusModal"><i class="bi bi-pencil"></i> 編集</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mm-section-title">見積設定</div>
+            <ul class="nav nav-tabs mb-2" id="mm-quote-cat-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="mm-cat-ukeoi-tab" data-bs-toggle="tab" data-bs-target="#mm-cat-ukeoi" type="button" role="tab">請負</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="mm-cat-maint-tab" data-bs-toggle="tab" data-bs-target="#mm-cat-maint" type="button" role="tab">保守</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="mm-cat-lab-tab" data-bs-toggle="tab" data-bs-target="#mm-cat-lab" type="button" role="tab">ラボ</button>
+                </li>
+            </ul>
+
+            <div class="tab-content mb-4">
+                <div class="tab-pane fade show active" id="mm-cat-ukeoi" role="tabpanel">
+                    <div class="card mm-cat-card border-primary">
+                        <div class="card-header bg-primary-subtle text-primary d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <span><i class="bi bi-briefcase me-1"></i>請負 — 見積りカテゴリ別マスタ</span>
+                            <span class="badge bg-primary">運用中</span>
+                        </div>
+                        <div class="card-body py-2 px-3">
+                            <div class="mm-setting-row">
+                                <div>
+                                    <div class="fw-semibold">見積り単価設定</div>
+                                    <div class="small text-muted">単価区分・OTJ売上単価・原価率・発注先原価（請負見積で利用）</div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#quoteUnitPriceModal"><i class="bi bi-pencil"></i> 編集</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div>
+                                    <div class="fw-semibold">基本設定</div>
+                                    <div class="small text-muted">案件分類・見積有効期限・支払条件・納品方法などの既定（デモ）</div>
+                                </div>
+                                <a class="btn btn-sm btn-outline-primary flex-shrink-0" href="quote-create.html" title="見積作成画面の基本設定タブを参照">画面イメージ</a>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div>
+                                    <div class="fw-semibold">詳細見積設定</div>
+                                    <div class="small text-muted">工程・明細行の既定構成・単価区分の初期値など（デモ）</div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div>
+                                    <div class="fw-semibold">見積り詳細条件設定</div>
+                                    <div class="small text-muted">見積詳細の「詳細条件設定」ブロックに相当するマスタ</div>
+                                </div>
+                                <a class="btn btn-sm btn-outline-primary flex-shrink-0" href="quote-detail.html#quote-conditions">画面イメージ（見積詳細）</a>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div>
+                                    <div class="fw-semibold">見積り固定条件設定</div>
+                                    <div class="small text-muted">固定条件タブ・標準条項のマスタ</div>
+                                </div>
+                                <a class="btn btn-sm btn-outline-primary flex-shrink-0" href="quote-detail.html">画面イメージ（見積詳細）</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="mm-cat-maint" role="tabpanel">
+                    <div class="card mm-cat-card border-secondary">
+                        <div class="card-header bg-light text-secondary d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <span><i class="bi bi-wrench-adjustable me-1"></i>保守 — 見積りカテゴリ別マスタ</span>
+                            <span class="badge bg-secondary">準備中</span>
+                        </div>
+                        <div class="card-body py-2 px-3">
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">見積り単価設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">詳細見積設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">見積り詳細条件設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">見積り固定条件設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="mm-cat-lab" role="tabpanel">
+                    <div class="card mm-cat-card border-secondary">
+                        <div class="card-header bg-light text-secondary d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <span><i class="bi bi-flask me-1"></i>ラボ — 見積りカテゴリ別マスタ</span>
+                            <span class="badge bg-secondary">準備中</span>
+                        </div>
+                        <div class="card-body py-2 px-3">
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">見積り単価設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">詳細見積設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">見積り詳細条件設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div class="fw-semibold">見積り固定条件設定</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mm-section-title">請求設定</div>
+            <p class="small text-muted mb-2">請求一覧と同様の検索欄・表レイアウトのイメージです（デモ）。</p>
+
+            <div class="mm-subtitle mb-2">請求ステータス設定</div>
+            <div class="form-section mm-inv-filters mb-2">
+                <div class="row g-2">
+                    <div class="col-6 col-md-4">
+                        <label class="form-label" for="mm-inv-st-search">ステータス名</label>
+                        <input type="text" id="mm-inv-st-search" class="form-control form-control-sm" placeholder="部分一致">
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label class="form-label" for="mm-inv-st-code">コード</label>
+                        <input type="text" id="mm-inv-st-code" class="form-control form-control-sm" placeholder="例：PENDING">
+                    </div>
+                    <div class="col-12 col-md-4 d-flex align-items-end gap-2">
+                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-search"></i> 検索</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-clockwise"></i> リセット</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive mm-inv-table-wrap mb-4">
+                <table class="table table-bordered table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 2.5rem;">#</th>
+                            <th>表示名</th>
+                            <th style="width: 7rem;">コード</th>
+                            <th style="width: 9rem;">一覧表示（イメージ）</th>
+                            <th style="width: 4rem;">有効</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><input type="text" class="form-control form-control-sm" value="下書き"></td>
+                            <td><input type="text" class="form-control form-control-sm font-monospace" value="DRAFT"></td>
+                            <td><span class="badge bg-secondary">下書き</span></td>
+                            <td class="text-center"><input type="checkbox" class="form-check-input m-0" checked></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><input type="text" class="form-control form-control-sm" value="承認待ち"></td>
+                            <td><input type="text" class="form-control form-control-sm font-monospace" value="PENDING"></td>
+                            <td><span class="badge bg-warning text-dark">承認待ち</span></td>
+                            <td class="text-center"><input type="checkbox" class="form-check-input m-0" checked></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><input type="text" class="form-control form-control-sm" value="差し戻し"></td>
+                            <td><input type="text" class="form-control form-control-sm font-monospace" value="REJECTED"></td>
+                            <td><span class="badge bg-danger">差し戻し</span></td>
+                            <td class="text-center"><input type="checkbox" class="form-check-input m-0" checked></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><input type="text" class="form-control form-control-sm" value="承認済み"></td>
+                            <td><input type="text" class="form-control form-control-sm font-monospace" value="APPROVED"></td>
+                            <td><span class="badge bg-success">承認済み</span></td>
+                            <td class="text-center"><input type="checkbox" class="form-check-input m-0" checked></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end gap-1 mt-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary">行を追加</button>
+                    <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-check2"></i> 保存（デモ）</button>
+                </div>
+            </div>
+
+            <div class="mm-subtitle mb-2">請求カテゴリー設定</div>
+            <div class="form-section mm-inv-filters mb-2">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                    <span class="small text-muted mb-0">請求一覧の「カテゴリー」列と対応するマスタです。</span>
+                    <button type="button" class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> カテゴリーを追加</button>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6 col-md-4">
+                        <label class="form-label">表示名</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="例：納品済み">
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <label class="form-label">コード</label>
+                        <input type="text" class="form-control form-control-sm font-monospace" placeholder="DELIVERED">
+                    </div>
+                    <div class="col-12 col-md-4 d-flex align-items-end gap-2">
+                        <button type="button" class="btn btn-primary btn-sm"><i class="bi bi-search"></i> 検索</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-clockwise"></i> リセット</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive mm-inv-table-wrap mb-4">
+                <table class="table table-bordered table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 2.5rem;">#</th>
+                            <th>表示名</th>
+                            <th style="width: 7rem;">コード</th>
+                            <th style="width: 9rem;">一覧表示（イメージ）</th>
+                            <th style="width: 4rem;">有効</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><input type="text" class="form-control form-control-sm" value="納品済み"></td>
+                            <td><input type="text" class="form-control form-control-sm font-monospace" value="DELIVERED"></td>
+                            <td><span class="badge bg-success">納品済み</span></td>
+                            <td class="text-center"><input type="checkbox" class="form-check-input m-0" checked></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><input type="text" class="form-control form-control-sm" value="前受金"></td>
+                            <td><input type="text" class="form-control form-control-sm font-monospace" value="ADVANCE"></td>
+                            <td><span class="badge bg-info text-dark">前受金</span></td>
+                            <td class="text-center"><input type="checkbox" class="form-check-input m-0" checked></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-check2"></i> 保存（デモ）</button>
+                </div>
+            </div>
+
+            <div class="mm-subtitle mb-2">既定の支払条件・振込先テンプレート</div>
+            <div class="card mb-4">
+                <div class="card-body py-3">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">既定の支払条件（文言）</label>
+                            <input type="text" class="form-control form-control-sm" value="請求日の翌月末日払い" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">支払期日のルール</label>
+                            <input type="text" class="form-control form-control-sm" value="翌月末日" readonly>
+                        </div>
+                    </div>
+                    <p class="small text-muted mb-2">振込先テンプレート（請求書に印字する候補から選択する想定）。</p>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card mm-bank-template-card h-100">
+                                <div class="card-header bg-light">テンプレート 1</div>
+                                <div class="card-body py-2 small">
+                                    <table class="table table-sm table-borderless mb-0">
+                                        <tr><th class="text-muted" style="width: 6rem;">銀行名</th><td>楽天銀行</td></tr>
+                                        <tr><th class="text-muted">支店名</th><td>第二営業部</td></tr>
+                                        <tr><th class="text-muted">口座種別</th><td>普通</td></tr>
+                                        <tr><th class="text-muted">口座番号</th><td class="font-monospace">1234567</td></tr>
+                                        <tr><th class="text-muted">口座名義</th><td>カ）ワンテックノロジージャパン</td></tr>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-outline-primary mt-2">編集（デモ）</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mm-bank-template-card h-100">
+                                <div class="card-header bg-light">テンプレート 2</div>
+                                <div class="card-body py-2 small">
+                                    <table class="table table-sm table-borderless mb-0">
+                                        <tr><th class="text-muted" style="width: 6rem;">銀行名</th><td>横浜銀行</td></tr>
+                                        <tr><th class="text-muted">支店名</th><td>溝口支店</td></tr>
+                                        <tr><th class="text-muted">口座種別</th><td>普通</td></tr>
+                                        <tr><th class="text-muted">口座番号</th><td class="font-monospace">7654321</td></tr>
+                                        <tr><th class="text-muted">口座名義</th><td>カ）ワンテックノロジージャパン</td></tr>
+                                    </table>
+                                    <button type="button" class="btn btn-sm btn-outline-primary mt-2">編集（デモ）</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-check2"></i> 保存（デモ）</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mm-section-title">ユーザー設定</div>
+            <div class="card mb-3">
+                <div class="card-body py-3">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="bi bi-person-badge fs-4 text-primary"></i>
+                                <div>
+                                    <div class="fw-semibold">社内ユーザー・アカウント</div>
+                                    <p class="small text-muted mb-2">ログインID・表示名・権限ロールの管理（デモ）。</p>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>準備中</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-start gap-2">
+                                <i class="bi bi-shield-lock fs-4 text-primary"></i>
+                                <div>
+                                    <div class="fw-semibold">権限・承認ルール</div>
+                                    <p class="small text-muted mb-2">見積承認やマスタ編集権限のポリシー（デモ）。</p>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>準備中</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <details class="border rounded p-2 mb-0 bg-light">
+                <summary class="fw-semibold small" style="cursor: pointer;">その他のマスタ（従来メニュー・参照用）</summary>
+                <div class="row g-2 mt-2 small text-muted">
+                    <div class="col-md-4">会社マスタ・担当者マスタ・発注先マスタ等は、要件整理後に本セクションへ統合またはリンク化する想定です。</div>
+                </div>
+            </details>
+        </div>
+</main>
+
+    <div class="modal fade" id="quoteStatusModal" tabindex="-1" aria-labelledby="quoteStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quoteStatusModalLabel">見積りステータス設定（共通）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted mb-2">見積のカテゴリー区分に相当するラベルです（デモ）。保存はブラウザ内の想定です。</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 3rem;">#</th>
+                                    <th>表示名</th>
+                                    <th style="width: 8rem;">コード</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td><input type="text" class="form-control form-control-sm" value="すべて"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="ALL"></td></tr>
+                                <tr><td>2</td><td><input type="text" class="form-control form-control-sm" value="通常：請負"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_CONT"></td></tr>
+                                <tr><td>3</td><td><input type="text" class="form-control form-control-sm" value="通常：ラボ"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_LAB"></td></tr>
+                                <tr><td>4</td><td><input type="text" class="form-control form-control-sm" value="通常：保守"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_MAINT"></td></tr>
+                                <tr><td>5</td><td><input type="text" class="form-control form-control-sm" value="通常：概算：請負／保守／サーバー"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_EST_MCS"></td></tr>
+                                <tr><td>6</td><td><input type="text" class="form-control form-control-sm" value="概算：請負"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_CONT"></td></tr>
+                                <tr><td>7</td><td><input type="text" class="form-control form-control-sm" value="概算：ラボ"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_LAB"></td></tr>
+                                <tr><td>8</td><td><input type="text" class="form-control form-control-sm" value="概算：保守"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_MAINT"></td></tr>
+                                <tr><td>9</td><td><input type="text" class="form-control form-control-sm" value="概算：請負／保守／サーバー"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_MCS"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">閉じる</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="bi bi-check2"></i> 保存（デモ）</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="quoteUnitPriceModal" tabindex="-1" aria-labelledby="quoteUnitPriceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quoteUnitPriceModalLabel">見積り単価設定（請負）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">カテゴリ：<strong>請負</strong>。単価区分ごとに<strong>名前</strong>・<strong>OTJ売上単価（円/人日）</strong>・<strong>OTJ原価率（%）</strong>・<strong>発注先原価（円/人日）</strong>・<strong>発注先原価率（%）</strong>を設定します。発注先原価を人日単価で入れた場合は売上原価タブで人日×単価で原価を計算し、0 のときは売上×発注先原価率で計算します。保存後、見積新規作成・詳細・Ver.3 に反映されます（同一ブラウザ内）。</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="min-width: 9rem;">名前</th>
+                                    <th class="text-end text-nowrap" style="width: 7rem;">OTJ売上単価<br><span class="small fw-normal">（円/人日）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 6.5rem;">OTJ原価率<br><span class="small fw-normal">（%）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 7rem;">発注先原価<br><span class="small fw-normal">（円/人日）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 6.5rem;">発注先原価率<br><span class="small fw-normal">（%）</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="quote-unit-price-modal-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="quote-unit-price-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/quote-unit-price-config.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    var catTbody = document.getElementById("mm-common-cat-tbody");
+    var catAddBtn = document.getElementById("mm-cat-add-btn");
+    if (catTbody && catAddBtn) {
+        function renumberCatRows() {
+            var trs = catTbody.querySelectorAll("tr");
+            trs.forEach(function (tr, i) {
+                var first = tr.querySelector("td");
+                if (first) first.textContent = String(i + 1);
+            });
+        }
+        catAddBtn.addEventListener("click", function () {
+            var name = window.prompt("カテゴリの表示名を入力してください", "");
+            if (!name || !String(name).trim()) return;
+            var code = window.prompt("短縮英字（英字・数字推奨、例：SUBCON）", "NEW");
+            if (code == null) return;
+            code = String(code).trim().toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12) || "NEW";
+            var note = window.prompt("備考（任意）", "") || "";
+            var id = "custom-" + Date.now();
+            var tr = document.createElement("tr");
+            tr.setAttribute("data-cat-id", id);
+            tr.innerHTML =
+                '<td class="text-muted"></td>' +
+                "<td></td>" +
+                '<td class="font-monospace small"></td>' +
+                "<td></td>" +
+                '<td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger mm-cat-del" title="削除">削除</button></td>';
+            tr.cells[1].textContent = String(name).trim();
+            tr.cells[2].textContent = code;
+            tr.cells[3].className = "small text-muted";
+            tr.cells[3].textContent = String(note).trim() || "—";
+            catTbody.appendChild(tr);
+            renumberCatRows();
+        });
+        catTbody.addEventListener("click", function (e) {
+            var btn = e.target.closest(".mm-cat-del");
+            if (!btn) return;
+            var tr = btn.closest("tr");
+            if (!tr || !tr.getAttribute("data-cat-id") || tr.getAttribute("data-cat-id").indexOf("custom-") !== 0) return;
+            tr.remove();
+            renumberCatRows();
+        });
+    }
+
+    var modal = document.getElementById("quoteUnitPriceModal");
+    var tbody = document.getElementById("quote-unit-price-modal-tbody");
+    var btnSave = document.getElementById("quote-unit-price-save");
+    if (!modal || !tbody || !btnSave || typeof QuoteUnitPriceConfig === "undefined") return;
+
+    function fillModalRows() {
+        tbody.innerHTML = "";
+        QuoteUnitPriceConfig.getRateTypes().forEach(function (rt) {
+            var tr = document.createElement("tr");
+            var tdName = document.createElement("td");
+            var hid = document.createElement("input");
+            hid.type = "hidden";
+            hid.className = "qup-id";
+            hid.value = rt.id;
+            var inpLabel = document.createElement("input");
+            inpLabel.type = "text";
+            inpLabel.className = "form-control form-control-sm qup-label";
+            inpLabel.value = rt.label;
+            tdName.appendChild(hid);
+            tdName.appendChild(inpLabel);
+            tr.appendChild(tdName);
+            var tdOtjPrice = document.createElement("td");
+            var inpOtjPrice = document.createElement("input");
+            inpOtjPrice.type = "number";
+            inpOtjPrice.className = "form-control form-control-sm text-end qup-otj-sale-unit";
+            inpOtjPrice.min = 0;
+            inpOtjPrice.step = 1;
+            inpOtjPrice.value = String(rt.price != null ? rt.price : 0);
+            tdOtjPrice.appendChild(inpOtjPrice);
+            tr.appendChild(tdOtjPrice);
+            var tdOtjRatio = document.createElement("td");
+            var inpOtjRatio = document.createElement("input");
+            inpOtjRatio.type = "number";
+            inpOtjRatio.className = "form-control form-control-sm text-end qup-otj-cost-ratio";
+            inpOtjRatio.min = 0;
+            inpOtjRatio.max = 100;
+            inpOtjRatio.step = 0.1;
+            inpOtjRatio.value =
+                rt.otjCostRatio !== undefined && rt.otjCostRatio !== null && rt.otjCostRatio !== ""
+                    ? String(rt.otjCostRatio)
+                    : "";
+            tdOtjRatio.appendChild(inpOtjRatio);
+            tr.appendChild(tdOtjRatio);
+            var tdVenUnit = document.createElement("td");
+            var inpVenUnit = document.createElement("input");
+            inpVenUnit.type = "number";
+            inpVenUnit.className = "form-control form-control-sm text-end qup-vendor-unit-cost";
+            inpVenUnit.min = 0;
+            inpVenUnit.step = 1;
+            inpVenUnit.value = String(rt.vendorUnitCost != null ? rt.vendorUnitCost : 0);
+            inpVenUnit.title = "0 のときは発注先原価率で売上から計算";
+            tdVenUnit.appendChild(inpVenUnit);
+            tr.appendChild(tdVenUnit);
+            var tdVenRatio = document.createElement("td");
+            var inpVenRatio = document.createElement("input");
+            inpVenRatio.type = "number";
+            inpVenRatio.className = "form-control form-control-sm text-end qup-vendor-cost-ratio";
+            inpVenRatio.min = 0;
+            inpVenRatio.max = 100;
+            inpVenRatio.step = 0.1;
+            inpVenRatio.value =
+                rt.vendorCostRatio !== undefined && rt.vendorCostRatio !== null && rt.vendorCostRatio !== ""
+                    ? String(rt.vendorCostRatio)
+                    : "";
+            tdVenRatio.appendChild(inpVenRatio);
+            tr.appendChild(tdVenRatio);
+            tbody.appendChild(tr);
+        });
+    }
+
+    modal.addEventListener("show.bs.modal", fillModalRows);
+
+    btnSave.addEventListener("click", function () {
+        var rows = tbody.querySelectorAll("tr");
+        var arr = [];
+        rows.forEach(function (tr) {
+            var idEl = tr.querySelector(".qup-id");
+            var labelEl = tr.querySelector(".qup-label");
+            var otjSaleEl = tr.querySelector(".qup-otj-sale-unit");
+            var otjRatioEl = tr.querySelector(".qup-otj-cost-ratio");
+            var venUnitEl = tr.querySelector(".qup-vendor-unit-cost");
+            var venRatioEl = tr.querySelector(".qup-vendor-cost-ratio");
+            if (!idEl || !labelEl || !otjSaleEl) return;
+            arr.push({
+                id: idEl.value,
+                label: labelEl.value,
+                price: otjSaleEl.value,
+                otjCostRatio: otjRatioEl ? otjRatioEl.value : "",
+                vendorUnitCost: venUnitEl ? venUnitEl.value : "0",
+                vendorCostRatio: venRatioEl ? venRatioEl.value : "",
+            });
+        });
+        QuoteUnitPriceConfig.saveRateTypes(arr);
+        var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(modal) : null;
+        if (inst) inst.hide();
+    });
+})();
+    </script>
+</body>
+</html>

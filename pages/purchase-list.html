@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VN発注一覧 — 社内業務管理システム</title>
+    <meta name="page-name" content="purchase-list">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        #purchase-list .form-section.purchase-list-filters {
+            padding: 0.75rem 1rem;
+        }
+        #purchase-list .purchase-list-filters .form-label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.2rem;
+        }
+        #purchase-list .table {
+            font-size: 0.8125rem;
+            --bs-table-cell-padding-y: 0.45rem;
+            --bs-table-cell-padding-x: 0.5rem;
+        }
+        #purchase-list .table thead th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+        #purchase-list .table tbody td {
+            vertical-align: middle;
+        }
+        #purchase-list .table .amount-cell {
+            font-size: 0.8125rem;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+        #purchase-list .purchase-by-month-panel {
+            border-left: 4px solid #1e4d7b;
+            background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+        }
+        #purchase-list .purchase-by-month-panel .form-label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.2rem;
+        }
+    </style>
+</head>
+<body data-page-name="purchase-list">
+<main class="main-content">
+        <div id="purchase-list" class="page-root" data-page-name="purchase-list">
+            <div class="form-section purchase-by-month-panel mb-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+                    <div>
+                        <span class="small fw-semibold text-secondary text-uppercase" style="letter-spacing: 0.04em;">請求月サマリー</span>
+                        <p class="small text-muted mb-0">請求月と見積元で絞り込んだうえで、件数と各金額（税別）の合計を表示します。</p>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap align-items-end gap-3">
+                    <div>
+                        <label class="form-label" for="purchaseMonthSummaryInput">請求月（西暦）</label>
+                        <input type="month" id="purchaseMonthSummaryInput" class="form-control form-control-sm" lang="ja-JP" title="西暦年月" autocomplete="off">
+                    </div>
+                    <div>
+                        <label class="form-label" for="purchaseMonthSummaryQuoteSource">見積元</label>
+                        <select id="purchaseMonthSummaryQuoteSource" class="form-select form-select-sm" style="min-width: 9rem;">
+                            <option value="">すべて</option>
+                            <option value="OTA">OTA</option>
+                            <option value="NC">NC</option>
+                            <option value="OTHERS">OTHERS</option>
+                        </select>
+                    </div>
+                    <div id="purchaseMonthSummaryStats" class="d-none flex-wrap align-items-baseline gap-3 gap-md-4 border-start ps-3 ms-md-2" style="border-color: rgba(0,0,0,.12) !important;">
+                        <div class="text-nowrap">
+                            <span class="small text-muted">該当件数</span>
+                            <span id="purchaseMonthSummaryCount" class="fw-bold fs-6 ms-1">0</span>
+                            <span class="small ms-1">件</span>
+                        </div>
+                        <div class="text-nowrap">
+                            <span class="small text-muted">見積金額（税別）合計</span>
+                            <span id="purchaseMonthSummaryQuoteTotal" class="fw-bold fs-6 font-monospace ms-1">¥0</span>
+                        </div>
+                        <div class="text-nowrap">
+                            <span class="small text-muted">対象見積金額（税別）合計</span>
+                            <span id="purchaseMonthSummaryTargetQuoteTotal" class="fw-bold fs-6 font-monospace ms-1">¥0</span>
+                        </div>
+                        <div class="text-nowrap">
+                            <span class="small text-muted">発注金額（税別）合計</span>
+                            <span id="purchaseMonthSummaryPoTotal" class="fw-bold fs-6 font-monospace ms-1">¥0</span>
+                        </div>
+                    </div>
+                </div>
+                <p id="purchaseMonthSummaryHint" class="small text-muted mb-0 mt-2">請求月を選択すると、見積元の条件に合う行だけを集計します。見積元は「すべて」でも構いません。</p>
+            </div>
+
+            <div class="form-section purchase-list-filters mb-4">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">見積元</label>
+                        <select class="form-select">
+                            <option>すべて</option>
+                            <option>OTA</option>
+                            <option>NC</option>
+                            <option>OTHERS</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">ステータス</label>
+                        <select class="form-select">
+                            <option>すべて</option>
+                            <option>下書き</option>
+                            <option>発注中</option>
+                            <option>納品待ち</option>
+                            <option>完了</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-primary w-100"><i class="bi bi-search"></i> 検索</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>請求月</th>
+                            <th>OTJ請求番号</th>
+                            <th>見積元</th>
+                            <th>会社名</th>
+                            <th>案件名</th>
+                            <th class="text-end">見積金額（税別）</th>
+                            <th class="text-end">対象見積金額（税別）</th>
+                            <th class="text-end">発注金額（税別）</th>
+                            <th>ステータス</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="clickable" role="button" tabindex="0" data-href="purchase-detail.html?id=PO-2026-0018" data-billing-month="2026-05" data-quote-source="OTA">
+                            <td class="text-nowrap">2026年5月</td>
+                            <td class="text-nowrap">OTJ-INV-2026-0045</td>
+                            <td>OTA</td>
+                            <td>株式会社テックソリューション</td>
+                            <td>ECサイトリニューアル</td>
+                            <td class="amount-cell purchase-quote-amount">¥18,500,000</td>
+                            <td class="amount-cell purchase-target-quote-amount">¥16,200,000</td>
+                            <td class="amount-cell purchase-po-amount">¥13,800,000</td>
+                            <td><span class="badge bg-warning text-dark">納品待ち</span></td>
+                        </tr>
+                        <tr class="clickable" role="button" tabindex="0" data-href="purchase-detail.html?id=PO-2026-0017" data-billing-month="2026-05" data-quote-source="NC">
+                            <td class="text-nowrap">2026年5月</td>
+                            <td class="text-nowrap">OTJ-INV-2026-0038</td>
+                            <td>NC</td>
+                            <td>グローバル物流株式会社</td>
+                            <td>在庫管理システム開発</td>
+                            <td class="amount-cell purchase-quote-amount">¥12,800,000</td>
+                            <td class="amount-cell purchase-target-quote-amount">¥12,800,000</td>
+                            <td class="amount-cell purchase-po-amount">¥9,500,000</td>
+                            <td><span class="badge bg-success">完了</span></td>
+                        </tr>
+                        <tr class="clickable" role="button" tabindex="0" data-href="purchase-detail.html?id=PO-2026-0016" data-billing-month="2026-06" data-quote-source="OTHERS">
+                            <td class="text-nowrap">2026年6月</td>
+                            <td class="text-nowrap">OTJ-INV-2026-0021</td>
+                            <td>OTHERS</td>
+                            <td>メディアワークス合同会社</td>
+                            <td>社内ポータル刷新</td>
+                            <td class="amount-cell purchase-quote-amount">¥4,800,000</td>
+                            <td class="amount-cell purchase-target-quote-amount">¥4,500,000</td>
+                            <td class="amount-cell purchase-po-amount">¥4,200,000</td>
+                            <td><span class="badge bg-primary">発注中</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    function go(href) {
+        if (href) location.href = href;
+    }
+    document.querySelectorAll('#purchase-list tbody tr[data-href]').forEach(function (row) {
+        row.addEventListener('click', function () {
+            go(row.getAttribute('data-href'));
+        });
+        row.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                go(row.getAttribute('data-href'));
+            }
+        });
+    });
+
+    var monthInp = document.getElementById('purchaseMonthSummaryInput');
+    var sourceSel = document.getElementById('purchaseMonthSummaryQuoteSource');
+    var statsEl = document.getElementById('purchaseMonthSummaryStats');
+    var hintEl = document.getElementById('purchaseMonthSummaryHint');
+    var countEl = document.getElementById('purchaseMonthSummaryCount');
+    var quoteTotalEl = document.getElementById('purchaseMonthSummaryQuoteTotal');
+    var targetQuoteTotalEl = document.getElementById('purchaseMonthSummaryTargetQuoteTotal');
+    var poTotalEl = document.getElementById('purchaseMonthSummaryPoTotal');
+    var tbody = document.querySelector('#purchase-list table tbody');
+    if (!monthInp || !sourceSel || !statsEl || !hintEl || !countEl || !quoteTotalEl || !targetQuoteTotalEl || !poTotalEl || !tbody) return;
+
+    function fmtYen(n) {
+        return '¥' + Math.round(n).toLocaleString('ja-JP');
+    }
+    function parseAmountCell(tr, cls) {
+        var td = tr.querySelector(cls);
+        if (!td) return 0;
+        var s = String(td.textContent || '').replace(/,/g, '').replace(/[¥円\s]/g, '');
+        var v = parseInt(s, 10);
+        return isNaN(v) ? 0 : v;
+    }
+    function refreshMonthSummary() {
+        var ym = (monthInp.value || '').trim();
+        if (!ym) {
+            statsEl.classList.add('d-none');
+            statsEl.classList.remove('d-flex');
+            hintEl.classList.remove('d-none');
+            return;
+        }
+        var sourceFilter = (sourceSel.value || '').trim();
+        var rows = tbody.querySelectorAll('tr[data-billing-month]');
+        var n = 0;
+        var sumQuote = 0;
+        var sumTarget = 0;
+        var sumPo = 0;
+        rows.forEach(function (tr) {
+            if (tr.getAttribute('data-billing-month') !== ym) return;
+            if (sourceFilter && tr.getAttribute('data-quote-source') !== sourceFilter) return;
+            n += 1;
+            sumQuote += parseAmountCell(tr, '.purchase-quote-amount');
+            sumTarget += parseAmountCell(tr, '.purchase-target-quote-amount');
+            sumPo += parseAmountCell(tr, '.purchase-po-amount');
+        });
+        countEl.textContent = String(n);
+        quoteTotalEl.textContent = fmtYen(sumQuote);
+        targetQuoteTotalEl.textContent = fmtYen(sumTarget);
+        poTotalEl.textContent = fmtYen(sumPo);
+        statsEl.classList.remove('d-none');
+        statsEl.classList.add('d-flex');
+        hintEl.classList.add('d-none');
+    }
+    monthInp.addEventListener('change', refreshMonthSummary);
+    monthInp.addEventListener('input', refreshMonthSummary);
+    sourceSel.addEventListener('change', refreshMonthSummary);
+})();
+    </script>
+</body>
+</html>

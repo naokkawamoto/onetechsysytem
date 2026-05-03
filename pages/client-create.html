@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クライアント登録 — 社内業務管理システム</title>
+    <meta name="page-name" content="client-create">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        #client-create {
+            font-size: 0.875rem;
+        }
+        #client-create .client-create-section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1e4d7b;
+            border-left: 4px solid #1e4d7b;
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        #client-create .client-create-table-wrap {
+            margin-bottom: 1.25rem;
+        }
+        #client-create .client-create-table-wrap table {
+            font-size: 0.8125rem;
+        }
+        #client-create .client-create-table-wrap th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #495057;
+            white-space: nowrap;
+            width: 12rem;
+            vertical-align: middle;
+        }
+        #client-create .client-create-table-wrap td {
+            vertical-align: middle;
+            background: #fff;
+        }
+        #client-create .client-create-table-wrap .form-control,
+        #client-create .client-create-table-wrap .form-select {
+            font-size: 0.8125rem;
+        }
+        #client-create #cc-short-code {
+            font-family: ui-monospace, monospace;
+            letter-spacing: 0.04em;
+        }
+    </style>
+</head>
+<body data-page-name="client-create">
+<main class="main-content">
+        <div id="client-create" class="page-root" data-page-name="client-create">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <h3 class="h5 mb-0"><i class="bi bi-building-add"></i> クライアント登録</h3>
+                <div class="d-flex flex-wrap gap-1">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='client-list.html'">一覧へ戻る</button>
+                </div>
+            </div>
+
+            <form id="cc-form" action="#" method="get" onsubmit="return false;">
+                <div class="client-create-table-wrap">
+                    <div class="client-create-section-title">基本情報</div>
+                    <table class="table table-sm table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <th scope="row">短縮英字名 <span class="text-danger">*</span></th>
+                                <td>
+                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                        <input type="text" class="form-control form-control-sm" id="cc-short-code" name="short_code" maxlength="24" readonly autocomplete="off" placeholder="AUTO">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm flex-shrink-0" id="cc-short-regen" title="会社名・カナから再計算"><i class="bi bi-arrow-clockwise"></i> 再計算</button>
+                                        <div class="form-check ms-1 mb-0">
+                                            <input class="form-check-input" type="checkbox" id="cc-short-manual">
+                                            <label class="form-check-label small" for="cc-short-manual">手入力で編集</label>
+                                        </div>
+                                    </div>
+                                    <p class="small text-muted mb-0 mt-1">システムID・ファイル接頭辞などに使う英数字（自動）。カタカナの会社名（カナ）を入力すると精度が上がります。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">会社名 <span class="text-danger">*</span></th>
+                                <td><input type="text" class="form-control form-control-sm" id="cc-company" required placeholder="例：株式会社テックソリューション"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">会社名（カナ） <span class="text-danger">*</span></th>
+                                <td><input type="text" class="form-control form-control-sm" id="cc-kana" required placeholder="例：カブシキガイシャテックソリューション（カタカナ推奨）"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">業種</th>
+                                <td>
+                                    <select class="form-select form-select-sm" id="cc-industry">
+                                        <option value="">未選択</option>
+                                        <option>IT・通信</option>
+                                        <option>製造業</option>
+                                        <option>卸売・小売</option>
+                                        <option>金融・保険</option>
+                                        <option>サービス業</option>
+                                        <option>その他</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">郵便番号</th>
+                                <td><input type="text" class="form-control form-control-sm" id="cc-zip" placeholder="100-0001" inputmode="numeric"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">住所</th>
+                                <td><input type="text" class="form-control form-control-sm" id="cc-address" placeholder="都道府県から番地まで"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">電話番号</th>
+                                <td><input type="tel" class="form-control form-control-sm" id="cc-tel" placeholder="03-1234-5678"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">HP（URL）</th>
+                                <td><input type="url" class="form-control form-control-sm" id="cc-hp" placeholder="https://example.co.jp"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="client-create-table-wrap">
+                    <div class="client-create-section-title">担当者情報</div>
+                    <table class="table table-sm table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <th scope="row">担当者名 <span class="text-danger">*</span></th>
+                                <td><input type="text" class="form-control form-control-sm" id="cc-contact-name" required></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">部署・役職</th>
+                                <td><input type="text" class="form-control form-control-sm" id="cc-contact-dept" placeholder="例：情報システム部 部長"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">メールアドレス <span class="text-danger">*</span></th>
+                                <td><input type="email" class="form-control form-control-sm" id="cc-contact-email" required placeholder="name@example.co.jp"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">携帯電話</th>
+                                <td><input type="tel" class="form-control form-control-sm" id="cc-contact-mobile" placeholder="任意"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="client-create-table-wrap">
+                    <div class="client-create-section-title">取引情報</div>
+                    <table class="table table-sm table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <th scope="row">取引状況</th>
+                                <td>
+                                    <select class="form-select form-select-sm" id="cc-deal-status">
+                                        <option value="">未選択</option>
+                                        <option>商談中</option>
+                                        <option>取引中</option>
+                                        <option>休眠中</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">担当営業</th>
+                                <td>
+                                    <select class="form-select form-select-sm" id="cc-sales">
+                                        <option value="">未選択</option>
+                                        <option>田中太郎</option>
+                                        <option>佐藤花子</option>
+                                        <option>鈴木一郎</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">取引開始日</th>
+                                <td><input type="date" class="form-control form-control-sm" id="cc-deal-start"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="client-create-table-wrap">
+                    <div class="client-create-section-title">財務情報</div>
+                    <table class="table table-sm table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <th scope="row">支払条件 <span class="text-danger">*</span></th>
+                                <td><input type="text" class="form-control form-control-sm" id="cc-pay-terms" required placeholder="例：月末締め翌月末払い"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-end d-flex flex-wrap justify-content-end gap-1">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='client-list.html'">キャンセル</button>
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-check-lg"></i> 登録（デモ）</button>
+                </div>
+            </form>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    var inpCompany = document.getElementById('cc-company');
+    var inpKana = document.getElementById('cc-kana');
+    var inpShort = document.getElementById('cc-short-code');
+    var chkManual = document.getElementById('cc-short-manual');
+    var btnRegen = document.getElementById('cc-short-regen');
+    if (!inpCompany || !inpKana || !inpShort || !chkManual) return;
+
+    /** カタカナ→ローマ字（拗音・促音を簡易対応。見積用短縮コード向け） */
+    var P3 = {
+        ション: 'SHON',
+        ジャー: 'JA',
+        フィー: 'FI'
+    };
+    var P2 = {
+        キャ: 'KYA', キュ: 'KYU', キョ: 'KYO',
+        ギャ: 'GYA', ギュ: 'GYU', ギョ: 'GYO',
+        シャ: 'SHA', シュ: 'SHU', ショ: 'SHO',
+        ジャ: 'JA', ジュ: 'JU', ジョ: 'JO',
+        チャ: 'CHA', チュ: 'CHU', チョ: 'CHO',
+        ニャ: 'NYA', ニュ: 'NYU', ニョ: 'NYO',
+        ヒャ: 'HYA', ヒュ: 'HYU', ヒョ: 'HYO',
+        ビャ: 'BYA', ビュ: 'BYU', ビョ: 'BYO',
+        ピャ: 'PYA', ピュ: 'PYU', ピョ: 'PYO',
+        ミャ: 'MYA', ミュ: 'MYU', ミョ: 'MYO',
+        リャ: 'RYA', リュ: 'RYU', リョ: 'RYO',
+        ッカ: 'KKA', ッキ: 'KKI', ック: 'KKU', ッケ: 'KKE', ッコ: 'KKO',
+        ッサ: 'SSA', ッシ: 'SSHI', ッス: 'SSU', ッセ: 'SSE', ッソ: 'SSO',
+        ッタ: 'TTA', ッチ: 'CCHI', ッツ: 'TTSU', ッテ: 'TTE', ット: 'TTO',
+        ッパ: 'PPA', ッピ: 'PPI', ップ: 'PPU', ッペ: 'PPE', ッポ: 'PPO',
+        ファ: 'FA', フィ: 'FI', フェ: 'FE', フォ: 'FO',
+        ティ: 'TI', ディ: 'DI', デュ: 'DYU', ウェ: 'WE', ウォ: 'WO'
+    };
+    var K2R = {
+        ア: 'A', イ: 'I', ウ: 'U', エ: 'E', オ: 'O',
+        カ: 'KA', キ: 'KI', ク: 'KU', ケ: 'KE', コ: 'KO',
+        ガ: 'GA', ギ: 'GI', グ: 'GU', ゲ: 'GE', ゴ: 'GO',
+        サ: 'SA', シ: 'SHI', ス: 'SU', セ: 'SE', ソ: 'SO',
+        ザ: 'ZA', ジ: 'JI', ズ: 'ZU', ゼ: 'ZE', ゾ: 'ZO',
+        タ: 'TA', チ: 'CHI', ツ: 'TSU', テ: 'TE', ト: 'TO',
+        ダ: 'DA', ヂ: 'JI', ヅ: 'ZU', デ: 'DE', ド: 'DO',
+        ナ: 'NA', ニ: 'NI', ヌ: 'NU', ネ: 'NE', ノ: 'NO',
+        ハ: 'HA', ヒ: 'HI', フ: 'FU', ヘ: 'HE', ホ: 'HO',
+        バ: 'BA', ビ: 'BI', ブ: 'BU', ベ: 'BE', ボ: 'BO',
+        パ: 'PA', ピ: 'PI', プ: 'PU', ペ: 'PE', ポ: 'PO',
+        マ: 'MA', ミ: 'MI', ム: 'MU', メ: 'ME', モ: 'MO',
+        ヤ: 'YA', ユ: 'YU', ヨ: 'YO',
+        ラ: 'RA', リ: 'RI', ル: 'RU', レ: 'RE', ロ: 'RO',
+        ワ: 'WA', ヲ: 'WO', ン: 'N',
+        ッ: '', ー: '',
+        ァ: 'A', ィ: 'I', ゥ: 'U', ェ: 'E', ォ: 'O',
+        ヮ: 'WA', ヴ: 'VU', ヵ: 'KA', ヶ: 'KE'
+    };
+
+    var PREFIX_STRIP = [
+        'カブシキガイシャ',
+        'カブシキカイシャ',
+        'ユウゲンガイシャ',
+        'ユウゲンカイシャ',
+        'ゴウドウガイシャ',
+        'ゴウドウカイシャ'
+    ];
+
+    function hiraganaToKatakana(ch) {
+        var c = ch.charCodeAt(0);
+        if (c >= 0x3041 && c <= 0x3096) {
+            return String.fromCharCode(c + 0x60);
+        }
+        return ch;
+    }
+
+    function normalizeKana(s) {
+        var out = '';
+        var i;
+        for (i = 0; i < s.length; i++) {
+            out += hiraganaToKatakana(s.charAt(i));
+        }
+        return out.replace(/\s/g, '');
+    }
+
+    function stripLegalKanaPrefix(k) {
+        var s = k;
+        var p;
+        for (p = 0; p < PREFIX_STRIP.length; p++) {
+            var pre = PREFIX_STRIP[p];
+            if (s.indexOf(pre) === 0) {
+                s = s.slice(pre.length);
+                break;
+            }
+        }
+        return s;
+    }
+
+    function katakanaToRomaji(katakana) {
+        var s = stripLegalKanaPrefix(katakana);
+        var i = 0;
+        var out = '';
+        while (i < s.length) {
+            var tri = s.slice(i, i + 3);
+            var di = s.slice(i, i + 2);
+            if (tri.length === 3 && P3[tri]) {
+                out += P3[tri];
+                i += 3;
+                continue;
+            }
+            if (di.length === 2 && P2[di]) {
+                out += P2[di];
+                i += 2;
+                continue;
+            }
+            var ch = s.charAt(i);
+            if (ch === 'ッ' && i + 1 < s.length) {
+                var nxt = s.charAt(i + 1);
+                var rN = K2R[nxt] || (P2[s.slice(i + 1, i + 3)] ? P2[s.slice(i + 1, i + 3)] : '');
+                if (rN && rN.length > 0) {
+                    out += rN.charAt(0);
+                }
+                i += 1;
+                continue;
+            }
+            var r = K2R[ch];
+            if (r !== undefined) {
+                out += r;
+            } else if (/[A-Za-z0-9]/.test(ch)) {
+                out += ch.toUpperCase();
+            }
+            i += 1;
+        }
+        return out;
+    }
+
+    function slugFromAsciiCompany(name) {
+        var t = String(name || '')
+            .replace(/株式会社|（株）|\(株\)|合同会社|有限会社|\s+/g, ' ')
+            .trim()
+            .toUpperCase()
+            .replace(/[^A-Z0-9]+/g, '');
+        return t.slice(0, 12);
+    }
+
+    function suggestShortCode() {
+        if (chkManual.checked) return;
+        var kana = normalizeKana(inpKana.value || '');
+        var roma = katakanaToRomaji(kana);
+        var code = roma.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+        if (!code) {
+            code = slugFromAsciiCompany(inpCompany.value);
+        }
+        if (!code) {
+            code = 'C' + Date.now().toString(36).slice(-6).toUpperCase();
+        }
+        if (code.length > 14) {
+            code = code.slice(0, 14);
+        }
+        inpShort.value = code;
+    }
+
+    function setShortReadonly() {
+        inpShort.readOnly = !chkManual.checked;
+        inpShort.classList.toggle('bg-light', !chkManual.checked);
+        if (chkManual.checked) {
+            inpShort.setAttribute('required', 'required');
+        } else {
+            inpShort.removeAttribute('required');
+        }
+    }
+
+    function onFieldChange() {
+        suggestShortCode();
+    }
+
+    inpCompany.addEventListener('input', onFieldChange);
+    inpCompany.addEventListener('blur', onFieldChange);
+    inpKana.addEventListener('input', onFieldChange);
+    inpKana.addEventListener('blur', onFieldChange);
+    chkManual.addEventListener('change', function () {
+        setShortReadonly();
+        if (!chkManual.checked) {
+            suggestShortCode();
+        }
+    });
+    if (btnRegen) {
+        btnRegen.addEventListener('click', function () {
+            chkManual.checked = false;
+            setShortReadonly();
+            suggestShortCode();
+        });
+    }
+
+    setShortReadonly();
+    suggestShortCode();
+
+    var form = document.getElementById('cc-form');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!String(inpShort.value || '').trim()) {
+                alert('短縮英字名は必須です。「再計算」で自動入力するか、手入力で編集にチェックして入力してください。');
+                return;
+            }
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            alert('デモ：登録処理はありません。\n短縮英字名: ' + inpShort.value.trim());
+        });
+    }
+})();
+    </script>
+</body>
+</html>

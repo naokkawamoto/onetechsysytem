@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ラボ見積新規作成 — 社内業務管理システム</title>
+    <meta name="page-name" content="quote-create-lab">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        #quote-create-lab #quote-request-info,
+        #quote-create-lab .quote-case-info-card {
+            font-size: 0.8125rem;
+        }
+        #quote-create-lab #quote-request-info .form-section-title,
+        #quote-create-lab .quote-case-info-card .form-section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.35rem;
+            border-bottom-width: 1px;
+        }
+        #quote-create-lab #quote-request-info .form-label,
+        #quote-create-lab .quote-case-info-card .form-label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.2rem;
+        }
+        #quote-create-lab #quote-request-info .form-control,
+        #quote-create-lab #quote-request-info .form-select,
+        #quote-create-lab .quote-case-info-card .form-control,
+        #quote-create-lab .quote-case-info-card .form-select {
+            font-size: 0.8125rem;
+        }
+        #quote-create-lab #quote-request-info .btn {
+            font-size: 0.8125rem;
+        }
+    </style>
+</head>
+<body data-page-name="quote-create-lab">
+<main class="main-content">
+        <div id="quote-create-lab" class="page-root" data-page-name="quote-create-lab">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <h4 class="mb-0">ラボ見積新規作成</h4>
+                    <a href="quote-create.html" class="btn btn-sm btn-outline-secondary text-nowrap"><i class="bi bi-file-earmark-plus" aria-hidden="true"></i> 請負見積新規作成</a>
+                    <a href="quote-create-maint.html" class="btn btn-sm btn-outline-secondary text-nowrap"><i class="bi bi-wrench-adjustable" aria-hidden="true"></i> 保守見積新規作成</a>
+                </div>
+                <span class="badge bg-info">バージョン 1.0</span>
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <div class="d-flex flex-wrap align-items-center gap-2 gap-md-3">
+                    <span class="text-muted small text-nowrap">ステータス</span>
+                    <span class="badge bg-secondary">新規</span>
+                    <span class="text-muted small text-nowrap">最新更新日</span>
+                    <time class="small fw-semibold text-nowrap" datetime="">—</time>
+                </div>
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-save"></i> 保存</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='quote-approval.html'"><i class="bi bi-check-circle"></i> 承認申請</button>
+                </div>
+            </div>
+
+            <ul class="nav nav-tabs mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#quote-request-info">依頼情報</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#quote-basic">基本設定</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#quote-items">詳細設定</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#quote-conditions">詳細条件設定</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#quote-fixed-conditions">固定条件</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#quote-document">見積書</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#quote-otj">利益管理</a>
+                </li>
+            </ul>
+
+            <div class="form-section border mb-3 quote-case-info-card" id="quote-case-info-strip" aria-label="案件情報">
+                <h6 class="form-section-title">案件情報</h6>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label" for="qc-request-client">クライアント <span class="text-danger">*</span></label>
+                        <select id="qc-request-client" class="form-select">
+                            <option selected>株式会社テックソリューション</option>
+                            <option>グローバル物流株式会社</option>
+                            <option>メディアワークス合同会社</option>
+                            <option>株式会社デジタルワークス</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">案件名 <span class="text-danger">*</span></label>
+                        <div id="qc-case-project-name" class="form-control bg-light border text-break">ECサイトリニューアル</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="qc-request-category">依頼カテゴリー <span class="text-danger">*</span></label>
+                        <select id="qc-request-category" class="form-select">
+                            <option>すべて</option>
+                            <option>通常：請負</option>
+                            <option selected>通常：ラボ</option>
+                            <option>通常：保守</option>
+                            <option>通常：概算：請負／保守／サーバー</option>
+                            <option>概算：請負</option>
+                            <option>概算：ラボ</option>
+                            <option>概算：保守</option>
+                            <option>概算：請負／保守／サーバー</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="quote-request-info">
+                    <div class="form-section border mb-3">
+                        <h6 class="form-section-title">基本情報</h6>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label" for="qc-request-quote-source">見積元 <span class="text-danger">*</span></label>
+                                <select id="qc-request-quote-source" class="form-select">
+                                    <option value="" disabled>選択してください</option>
+                                    <option value="OTA" selected>OTA</option>
+                                    <option value="NC">NC</option>
+                                    <option value="OTHERS">OTHERS</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="qc-request-estimator">見積り担当</label>
+                                <select id="qc-request-estimator" class="form-select">
+                                    <option selected>鈴木一郎</option>
+                                    <option>佐藤花子</option>
+                                    <option>山田次郎</option>
+                                    <option>高橋美咲</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="qc-request-status">ステータス</label>
+                                <select id="qc-request-status" class="form-select">
+                                    <option selected>新規</option>
+                                    <option>承認待ち</option>
+                                    <option>差し戻し</option>
+                                    <option>承認済み</option>
+                                    <option>受注確定</option>
+                                    <option>失注</option>
+                                    <option>却下</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="qc-request-priority">優先度</label>
+                                <select id="qc-request-priority" class="form-select">
+                                    <option selected>高</option>
+                                    <option>中</option>
+                                    <option>低</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">希望納期</label>
+                                <input type="text" class="form-control" value="2026-06-30" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">担当営業</label>
+                                <input type="text" class="form-control" value="田中太郎" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section border mb-3">
+                        <h6 class="form-section-title">予算・要件</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">予算感（下限）</label>
+                                <input type="text" class="form-control" value="15000000" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">予算感（上限）</label>
+                                <input type="text" class="form-control" value="20000000" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">要件概要</label>
+                                <textarea class="form-control" rows="5" readonly>【ダミー】既存ECのリプレイス。決済・会員・在庫連携を含む。
+セキュリティ監査対応必須。モバイルファーストUI希望。</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section border mb-3">
+                        <h6 class="form-section-title"><i class="bi bi-paperclip"></i> 添付ファイル</h6>
+                        <p class="text-muted small mb-2">依頼に紐づく資料（デモ表示）。</p>
+                        <div class="list-group list-group-flush border rounded mb-2">
+                            <div class="list-group-item d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                <div class="d-flex align-items-start gap-2 min-w-0">
+                                    <i class="bi bi-file-earmark-arrow-down text-primary mt-1 flex-shrink-0"></i>
+                                    <div class="min-w-0">
+                                        <div class="fw-medium text-break small">RFP_ECリニューアル_2026.pdf</div>
+                                        <div class="text-muted small">2.4 MB · 田中太郎 · 2026/03/10</div>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn btn-sm btn-outline-primary flex-shrink-0" onclick="return false;">表示（デモ）</a>
+                            </div>
+                            <div class="list-group-item d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                <div class="d-flex align-items-start gap-2 min-w-0">
+                                    <i class="bi bi-file-earmark-arrow-down text-primary mt-1 flex-shrink-0"></i>
+                                    <div class="min-w-0">
+                                        <div class="fw-medium text-break small">現行サイト構成.xlsx</div>
+                                        <div class="text-muted small">856 KB · 田中太郎 · 2026/03/10</div>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn btn-sm btn-outline-primary flex-shrink-0" onclick="return false;">表示（デモ）</a>
+                            </div>
+                        </div>
+                        <label class="form-label small text-muted">ファイルを追加</label>
+                        <input type="file" class="form-control" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.zip,.txt,.csv" disabled>
+                        <div class="small mt-2 text-muted">見積作成画面では参照のみです。</div>
+                    </div>
+
+                    <div class="form-section border mb-0">
+                        <h6 class="form-section-title"><i class="bi bi-chat-left-text"></i> スレッド</h6>
+                        <p class="text-muted small">依頼に関するやりとり（ダミー）。</p>
+                        <div class="border rounded bg-white overflow-hidden">
+                            <div class="p-3 border-bottom" style="background-color: #fafbfc;">
+                                <div class="d-flex flex-wrap justify-content-between gap-2 mb-1">
+                                    <strong class="small">田中太郎</strong>
+                                    <small class="text-muted">2026/03/10 09:12</small>
+                                </div>
+                                <p class="mb-0 small text-break" style="white-space: pre-wrap;">依頼を登録しました。クライアントよりRFPを受領済みです。</p>
+                            </div>
+                            <div class="p-3 border-bottom" style="background-color: #fafbfc;">
+                                <div class="d-flex flex-wrap justify-content-between gap-2 mb-1">
+                                    <strong class="small">鈴木一郎</strong>
+                                    <small class="text-muted">2026/03/11 14:05</small>
+                                </div>
+                                <p class="mb-0 small text-break" style="white-space: pre-wrap;">要件の曖昧な点があるため、来週水曜にヒアリングを設定しました。</p>
+                            </div>
+                            <div class="p-3 border-bottom" style="background-color: #fafbfc;">
+                                <div class="d-flex flex-wrap justify-content-between gap-2 mb-1">
+                                    <strong class="small">田中太郎</strong>
+                                    <small class="text-muted">2026/03/12 10:00</small>
+                                </div>
+                                <p class="mb-0 small text-break" style="white-space: pre-wrap;">日程調整完了です。議事メモは別途共有します。</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label small text-muted">コメント追加（デモ・無効）</label>
+                            <textarea class="form-control" rows="2" placeholder="スレッドへ投稿…" disabled></textarea>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2" disabled>投稿</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="quote-basic">
+                    <p class="text-muted small mb-0">準備中です。</p>
+                </div>
+                <div class="tab-pane fade" id="quote-items">
+                    <p class="text-muted small mb-0">準備中です。</p>
+                </div>
+                <div class="tab-pane fade" id="quote-conditions">
+                    <p class="text-muted small mb-0">準備中です。</p>
+                </div>
+                <div class="tab-pane fade" id="quote-fixed-conditions">
+                    <p class="text-muted small mb-0">準備中です。</p>
+                </div>
+                <div class="tab-pane fade" id="quote-document">
+                    <p class="text-muted small mb-0">準備中です。</p>
+                </div>
+                <div class="tab-pane fade" id="quote-otj">
+                    <p class="text-muted small mb-0">準備中です。</p>
+                </div>
+            </div>
+        </div>
+</main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+</body>
+</html>

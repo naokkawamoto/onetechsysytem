@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請求書詳細 — 社内業務管理システム</title>
+    <meta name="page-name" content="invoice-detail">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        #invoice-detail {
+            font-size: 0.8125rem;
+        }
+        #invoice-detail > h5 {
+            font-size: 1.05rem;
+        }
+        #invoice-detail .form-section {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+        }
+        #invoice-detail .form-section-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.35rem;
+        }
+        #invoice-detail .form-label {
+            font-size: 0.8125rem;
+            margin-bottom: 0.2rem;
+        }
+        #invoice-detail .form-control[readonly],
+        #invoice-detail .form-select:disabled {
+            background-color: #f8f9fa;
+            cursor: default;
+            opacity: 1;
+        }
+        #invoice-detail .table {
+            font-size: 0.8125rem;
+            --bs-table-cell-padding-y: 0.35rem;
+            --bs-table-cell-padding-x: 0.4rem;
+        }
+        #invoice-detail .invoice-input-wrap {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+        #invoice-detail .subsection-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #1e4d7b;
+            border-left: 4px solid #1e4d7b;
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        #invoice-detail .order-doc-sheet {
+            font-size: 0.8125rem;
+            background: #fff;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 1rem 1.15rem 1.25rem;
+            max-width: 42rem;
+        }
+        #invoice-detail .order-doc-kind-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-indent: 0.35em;
+            text-align: center;
+            color: #1e4d7b;
+            margin-bottom: 1rem;
+        }
+        #invoice-detail .order-doc-summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            font-size: 0.8125rem;
+        }
+        #invoice-detail .order-doc-summary-table thead th {
+            background: #1e4d7b;
+            color: #fff;
+            border: 1px solid #163a5c;
+            padding: 0.45rem 0.6rem;
+            font-weight: 600;
+        }
+        #invoice-detail .order-doc-summary-table tbody td {
+            border: 1px solid #ced4da;
+            padding: 0.5rem 0.65rem;
+            vertical-align: middle;
+            background: #fff;
+        }
+        #invoice-detail .qp-preview-doc-head {
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #1e4d7b;
+        }
+        #invoice-detail .qp-preview-to {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.75rem;
+        }
+        #invoice-detail .qp-preview-subject {
+            font-size: 0.9rem;
+            color: #212529;
+            margin-bottom: 1rem;
+        }
+        #invoice-detail .qp-preview-head-right { text-align: right; }
+        #invoice-detail .qp-preview-doc-info {
+            font-size: 0.8125rem;
+            margin-left: auto;
+            margin-bottom: 0.75rem;
+            max-width: 22rem;
+        }
+        #invoice-detail .qp-preview-doc-info th {
+            font-weight: 600;
+            color: #495057;
+            text-align: right;
+            white-space: nowrap;
+            vertical-align: top;
+            padding: 0.2rem 0.5rem 0.2rem 0;
+            width: 6.5rem;
+            border: none;
+        }
+        #invoice-detail .qp-preview-doc-info td {
+            text-align: right;
+            vertical-align: top;
+            padding: 0.2rem 0;
+            border: none;
+        }
+        #invoice-detail .qp-preview-issuer {
+            border: 1px solid #ccc;
+            max-width: 22rem;
+            margin-left: auto;
+            text-align: right;
+            background: #fff;
+        }
+        #invoice-detail .qp-preview-issuer-row {
+            border-bottom: 1px solid #ccc;
+            padding: 7px 14px;
+            font-size: 0.8125rem;
+            color: #555;
+        }
+        #invoice-detail .qp-preview-issuer-row:last-child { border-bottom: none; }
+        #invoice-detail .qp-preview-issuer-name {
+            font-size: 0.95rem;
+            padding-top: 9px;
+            padding-bottom: 9px;
+        }
+        #invoice-detail .qp-preview-issuer-name .qp-co-prefix {
+            color: #3d6ea5;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+        #invoice-detail .qp-preview-issuer-name .qp-co-name {
+            color: #1e4d7b;
+            font-weight: 700;
+        }
+        #invoice-detail .inv-preview-bank {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.8125rem;
+        }
+        #invoice-detail .inv-preview-bank th {
+            font-weight: 600;
+            color: #495057;
+            padding: 0.2rem 0.75rem 0.2rem 0;
+            white-space: nowrap;
+        }
+        #invoice-detail .order-doc-closing {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body data-page-name="invoice-detail">
+<main class="main-content">
+        <div id="invoice-detail" class="page-root" data-page-name="invoice-detail">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <h5 class="mb-0">請求書詳細</h5>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <span id="inv-dtl-status-badge" class="badge bg-secondary">下書き</span>
+                    <span class="small text-muted font-monospace" id="inv-dtl-header-no">—</span>
+                </div>
+            </div>
+
+            <div class="alert alert-secondary py-2 small mb-2">
+                <i class="bi bi-lock"></i> 参照のみです。内容の<strong>編集はできません</strong>。
+            </div>
+
+            <ul class="nav nav-tabs mb-2" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="inv-dtl-tab-info" data-bs-toggle="tab" data-bs-target="#inv-dtl-pane-info" type="button" role="tab">内容</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="inv-dtl-tab-preview" data-bs-toggle="tab" data-bs-target="#inv-dtl-pane-preview" type="button" role="tab">請求書プレビュー</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="inv-dtl-pane-info" role="tabpanel">
+                    <div class="invoice-input-wrap p-2 p-md-3 mb-3">
+                        <p class="subsection-title">基本情報</p>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">ステータス</label>
+                                <input type="text" class="form-control form-control-sm" id="inv-dtl-status-text" readonly value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">見積書番号</label>
+                                <input type="text" class="form-control form-control-sm font-monospace" id="inv-dtl-quote-no" readonly value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">宛先会社名</label>
+                                <input type="text" class="form-control form-control-sm" id="inv-dtl-client" readonly value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">案件名</label>
+                                <input type="text" class="form-control form-control-sm" id="inv-dtl-project" readonly value="">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">請求日</label>
+                                <input type="text" class="form-control form-control-sm" id="inv-dtl-inv-date" readonly value="">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">支払期日</label>
+                                <input type="text" class="form-control form-control-sm" id="inv-dtl-due-date" readonly value="">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">支払条件</label>
+                                <input type="text" class="form-control form-control-sm" id="inv-dtl-pay-terms" readonly value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">カテゴリー</label>
+                                <select class="form-select form-select-sm" id="inv-dtl-category" disabled>
+                                    <option value="delivered">納品済み</option>
+                                    <option value="advance">前受金</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <p class="subsection-title">請求明細</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;">No.</th>
+                                        <th>品名</th>
+                                        <th style="width: 100px;">数量</th>
+                                        <th style="width: 100px;">単位</th>
+                                        <th style="width: 140px;">単価(円)</th>
+                                        <th style="width: 140px;">金額(円)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inv-dtl-lines-tbody"></tbody>
+                            </table>
+                        </div>
+
+                        <div class="row g-2 mt-2">
+                            <div class="col-md-8">
+                                <div class="form-section py-2 mb-0">
+                                    <h6 class="form-section-title">振込先情報</h6>
+                                    <table class="table table-sm table-borderless mb-0">
+                                        <tr><th>銀行名:</th><td id="inv-dtl-bank-name">—</td></tr>
+                                        <tr><th>支店名:</th><td id="inv-dtl-bank-branch">—</td></tr>
+                                        <tr><th>口座種別:</th><td id="inv-dtl-bank-type">—</td></tr>
+                                        <tr><th>口座番号:</th><td id="inv-dtl-bank-no">—</td></tr>
+                                        <tr><th>口座名義:</th><td id="inv-dtl-bank-holder">—</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body py-2 px-3">
+                                        <table class="table table-sm table-borderless mb-0">
+                                            <tr><th>小計:</th><td class="text-end font-monospace" id="inv-dtl-sum-sub">—</td></tr>
+                                            <tr><th>消費税(10%):</th><td class="text-end font-monospace" id="inv-dtl-sum-tax">—</td></tr>
+                                            <tr class="table-primary"><th><strong>合計:</strong></th><td class="text-end font-monospace"><strong id="inv-dtl-sum-total">—</strong></td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h6 class="form-section-title">備考・特記事項</h6>
+                        <textarea class="form-control form-control-sm" id="inv-dtl-note" rows="3" readonly></textarea>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='invoice-list.html'"><i class="bi bi-list-ul"></i> 一覧に戻る</button>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="inv-dtl-pane-preview" role="tabpanel">
+                    <p class="small text-muted mb-2">登録内容に基づく請求書体裁のプレビュー（デモ）。</p>
+                    <div class="order-doc-sheet qp-preview-readonly">
+                        <div class="qp-preview-doc-head pt-1">
+                            <div class="row g-3">
+                                <div class="col-md-7">
+                                    <div class="order-doc-kind-title">請求書</div>
+                                    <div class="qp-preview-to" id="inv-dtl-pr-to">—</div>
+                                    <p class="small text-muted mb-2">下記のとおりご請求申し上げます。</p>
+                                    <div class="qp-preview-subject mb-0"><span class="text-muted fw-normal">件名：</span><span id="inv-dtl-pr-subject">—</span></div>
+                                </div>
+                                <div class="col-md-5 qp-preview-head-right">
+                                    <table class="qp-preview-doc-info mb-2">
+                                        <tbody>
+                                            <tr><th>請求日</th><td id="inv-dtl-pr-bill-date">—</td></tr>
+                                            <tr><th>請求書番号</th><td class="font-monospace" id="inv-dtl-pr-inv-no">—</td></tr>
+                                            <tr><th>見積書番号</th><td class="font-monospace" id="inv-dtl-pr-quote-no">—</td></tr>
+                                            <tr><th>カテゴリー</th><td id="inv-dtl-pr-category">—</td></tr>
+                                            <tr><th>ステータス</th><td id="inv-dtl-pr-status">—</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="qp-preview-issuer mb-0">
+                                        <div class="qp-preview-issuer-row text-muted small">請求元</div>
+                                        <div class="qp-preview-issuer-row qp-preview-issuer-name">
+                                            <span class="qp-co-prefix">株式会社</span><span class="qp-co-name">One Technology Japan</span>
+                                        </div>
+                                        <div class="qp-preview-issuer-row small text-muted text-end">東京都港区〇〇 1-2-3</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="order-doc-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>品目</th>
+                                    <th class="text-end" style="width: 5rem;">数量</th>
+                                    <th class="text-end" style="width: 8.5rem;">金額（税抜）</th>
+                                    <th class="text-end" style="width: 8.5rem;">金額（税込）</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inv-dtl-pr-tbody"></tbody>
+                        </table>
+                        <div class="inv-preview-bank">
+                            <div class="fw-semibold text-secondary small mb-1">お振込先</div>
+                            <table class="inv-preview-bank mb-0">
+                                <tr><th>銀行名</th><td id="inv-dtl-pr-bank-name">—</td></tr>
+                                <tr><th>支店名</th><td id="inv-dtl-pr-bank-branch">—</td></tr>
+                                <tr><th>口座種別</th><td id="inv-dtl-pr-bank-type">—</td></tr>
+                                <tr><th>口座番号</th><td id="inv-dtl-pr-bank-no">—</td></tr>
+                                <tr><th>口座名義</th><td id="inv-dtl-pr-bank-holder">—</td></tr>
+                            </table>
+                        </div>
+                        <p class="order-doc-closing mb-0 mt-2">
+                            <span>お支払期日　</span><span id="inv-dtl-pr-due-date">—</span>
+                            <span class="fw-normal text-muted small">　（</span><span id="inv-dtl-pr-pay-terms" class="fw-normal text-muted small">—</span><span class="fw-normal text-muted small">）</span>
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='invoice-list.html'"><i class="bi bi-list-ul"></i> 一覧に戻る</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    var root = document.getElementById('invoice-detail');
+    if (!root) return;
+
+    var STATUS_META = {
+        draft: { label: '下書き', cls: 'bg-secondary' },
+        pending: { label: '承認待ち', cls: 'bg-warning text-dark' },
+        rejected: { label: '差し戻し', cls: 'bg-danger' },
+        approved: { label: '承認済み', cls: 'bg-success' }
+    };
+
+    var BANK = {
+        name: 'サンプル銀行',
+        branch: '東京支店',
+        type: '普通',
+        no: '1234567',
+        holder: 'カ)ワンテックノロジージャパン'
+    };
+
+    var DETAIL = {
+        'INV-2026-0098': {
+            status: 'approved',
+            quoteNo: 'QUO-2026-0045',
+            client: '株式会社テックソリューション',
+            project: 'ECサイトリニューアル',
+            category: 'delivered',
+            invDate: '2026-03-31',
+            dueDate: '2026-04-30',
+            payTerms: '月末締め翌月末払い',
+            lines: [
+                { desc: '要件定義・ディレクション', qty: '1', unit: '式', ex: 5000000, inc: 5500000 },
+                { desc: '開発（製造工程）', qty: '1', unit: '式', ex: 10000000, inc: 11000000 },
+                { desc: 'プロジェクト管理・その他', qty: '1', unit: '式', ex: 1818182, inc: 2000000 }
+            ],
+            note: ''
+        },
+        'INV-2026-0085': {
+            status: 'pending',
+            quoteNo: 'QUO-2026-0038',
+            client: 'グローバル物流株式会社',
+            project: '在庫管理システム開発',
+            category: 'advance',
+            invDate: '2026-02-28',
+            dueDate: '2026-03-08',
+            payTerms: '前受金（契約締結時）',
+            lines: [
+                { desc: '開発・導入支援（前受分）', qty: '1', unit: '式', ex: 8000000, inc: 8800000 },
+                { desc: 'インフラ・ライセンス仮勘定', qty: '1', unit: '式', ex: 3636364, inc: 4000000 }
+            ],
+            note: '残金は納品検収後に別途ご請求予定です。'
+        },
+        'INV-2026-0078': {
+            status: 'draft',
+            quoteNo: '—',
+            client: '株式会社グローバルテック',
+            project: '基幹システム保守',
+            category: 'delivered',
+            invDate: '2026-02-28',
+            dueDate: '2026-03-31',
+            payTerms: '月末締め翌月末払い',
+            lines: [{ desc: '月次保守（2026年2月分）', qty: '1', unit: '式', ex: 2909091, inc: 3200000 }],
+            note: '下書きのため未申請です。'
+        },
+        'INV-2026-0072': {
+            status: 'rejected',
+            quoteNo: 'QUO-2026-0021',
+            client: 'メディアワークス合同会社',
+            project: '社内ポータル刷新',
+            category: 'delivered',
+            invDate: '2026-02-15',
+            dueDate: '2026-03-31',
+            payTerms: '月末締め翌月末払い',
+            lines: [
+                { desc: '基本設計・詳細設計', qty: '1', unit: '式', ex: 2000000, inc: 2200000 },
+                { desc: '実装・テスト', qty: '1', unit: '式', ex: 909091, inc: 1000000 }
+            ],
+            note: '差戻し理由：請求書番号の表記ゆれ。修正のうえ再申請してください。'
+        }
+    };
+
+    function fmtComma(n) {
+        return Math.round(n).toLocaleString('ja-JP');
+    }
+    function fmtYen(n) {
+        return '¥' + fmtComma(n);
+    }
+    function jaDate(iso) {
+        if (!iso || iso === '—') return '—';
+        var p = String(iso).split('-');
+        if (p.length !== 3) return iso;
+        return parseInt(p[0], 10) + '年' + parseInt(p[1], 10) + '月' + parseInt(p[2], 10) + '日';
+    }
+    function slashDate(iso) {
+        if (!iso || iso === '—') return '—';
+        return String(iso).replace(/-/g, '/');
+    }
+    function catLabel(key) {
+        return key === 'advance' ? '前受金' : '納品済み';
+    }
+    function setText(id, t) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = t;
+    }
+    function setVal(id, t) {
+        var el = document.getElementById(id);
+        if (el) el.value = t;
+    }
+
+    function pickNo() {
+        var q = new URLSearchParams(location.search).get('no');
+        return (q && DETAIL[q]) ? q : 'INV-2026-0098';
+    }
+
+    function render() {
+        var no = pickNo();
+        var d = DETAIL[no];
+        if (!d) return;
+
+        var st = STATUS_META[d.status] || STATUS_META.draft;
+        var badge = document.getElementById('inv-dtl-status-badge');
+        if (badge) {
+            badge.className = 'badge ' + st.cls;
+            badge.textContent = st.label;
+        }
+        setVal('inv-dtl-status-text', st.label);
+        setText('inv-dtl-header-no', no);
+
+        setVal('inv-dtl-quote-no', d.quoteNo);
+        setVal('inv-dtl-client', d.client);
+        setVal('inv-dtl-project', d.project);
+        setVal('inv-dtl-inv-date', slashDate(d.invDate));
+        setVal('inv-dtl-due-date', slashDate(d.dueDate));
+        setVal('inv-dtl-pay-terms', d.payTerms);
+        var catSel = document.getElementById('inv-dtl-category');
+        if (catSel) {
+            catSel.value = d.category === 'advance' ? 'advance' : 'delivered';
+        }
+
+        var subEx = 0;
+        var subInc = 0;
+        d.lines.forEach(function (ln) {
+            subEx += ln.ex;
+            subInc += ln.inc;
+        });
+        var tax = subInc - subEx;
+
+        var tb = document.getElementById('inv-dtl-lines-tbody');
+        if (tb) {
+            tb.innerHTML = '';
+            d.lines.forEach(function (ln, i) {
+                var tr = document.createElement('tr');
+                var tdNo = document.createElement('td');
+                tdNo.textContent = String(i + 1);
+                var tdDesc = document.createElement('td');
+                var inDesc = document.createElement('input');
+                inDesc.type = 'text';
+                inDesc.className = 'form-control form-control-sm';
+                inDesc.readOnly = true;
+                inDesc.value = ln.desc;
+                tdDesc.appendChild(inDesc);
+                var tdQty = document.createElement('td');
+                var inQty = document.createElement('input');
+                inQty.type = 'text';
+                inQty.className = 'form-control form-control-sm text-end';
+                inQty.readOnly = true;
+                inQty.value = String(ln.qty);
+                tdQty.appendChild(inQty);
+                var tdUnit = document.createElement('td');
+                var inUnit = document.createElement('input');
+                inUnit.type = 'text';
+                inUnit.className = 'form-control form-control-sm';
+                inUnit.readOnly = true;
+                inUnit.value = ln.unit;
+                tdUnit.appendChild(inUnit);
+                var tdUp = document.createElement('td');
+                var inUp = document.createElement('input');
+                inUp.type = 'text';
+                inUp.className = 'form-control form-control-sm text-end';
+                inUp.readOnly = true;
+                var qn = parseFloat(String(ln.qty)) || 1;
+                inUp.value = fmtComma(Math.round(ln.ex / qn));
+                tdUp.appendChild(inUp);
+                var tdAmt = document.createElement('td');
+                tdAmt.className = 'text-end font-monospace';
+                tdAmt.textContent = fmtComma(ln.ex);
+                tr.appendChild(tdNo);
+                tr.appendChild(tdDesc);
+                tr.appendChild(tdQty);
+                tr.appendChild(tdUnit);
+                tr.appendChild(tdUp);
+                tr.appendChild(tdAmt);
+                tb.appendChild(tr);
+            });
+        }
+
+        setText('inv-dtl-bank-name', BANK.name);
+        setText('inv-dtl-bank-branch', BANK.branch);
+        setText('inv-dtl-bank-type', BANK.type);
+        setText('inv-dtl-bank-no', BANK.no);
+        setText('inv-dtl-bank-holder', BANK.holder);
+        setText('inv-dtl-sum-sub', fmtYen(subEx));
+        setText('inv-dtl-sum-tax', fmtYen(tax));
+        setText('inv-dtl-sum-total', fmtYen(subInc));
+
+        var noteEl = document.getElementById('inv-dtl-note');
+        if (noteEl) noteEl.value = d.note || '';
+
+        /* プレビュー */
+        setText('inv-dtl-pr-to', d.client + '　御中');
+        setText('inv-dtl-pr-subject', d.project);
+        setText('inv-dtl-pr-bill-date', jaDate(d.invDate));
+        setText('inv-dtl-pr-inv-no', no);
+        setText('inv-dtl-pr-quote-no', d.quoteNo);
+        setText('inv-dtl-pr-category', catLabel(d.category));
+        setText('inv-dtl-pr-status', st.label);
+        setText('inv-dtl-pr-due-date', jaDate(d.dueDate));
+        setText('inv-dtl-pr-pay-terms', d.payTerms);
+        setText('inv-dtl-pr-bank-name', BANK.name);
+        setText('inv-dtl-pr-bank-branch', BANK.branch);
+        setText('inv-dtl-pr-bank-type', BANK.type);
+        setText('inv-dtl-pr-bank-no', BANK.no);
+        setText('inv-dtl-pr-bank-holder', BANK.holder);
+
+        var prTb = document.getElementById('inv-dtl-pr-tbody');
+        if (prTb) {
+            prTb.innerHTML = '';
+            d.lines.forEach(function (ln) {
+                var tr = document.createElement('tr');
+                var td0 = document.createElement('td');
+                td0.textContent = ln.desc;
+                var td1 = document.createElement('td');
+                td1.className = 'text-end';
+                td1.textContent = ln.qty + '　' + ln.unit;
+                var td2 = document.createElement('td');
+                td2.className = 'text-end font-monospace';
+                td2.textContent = fmtYen(ln.ex);
+                var td3 = document.createElement('td');
+                td3.className = 'text-end font-monospace';
+                td3.textContent = fmtYen(ln.inc);
+                tr.appendChild(td0);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                prTb.appendChild(tr);
+            });
+        }
+    }
+
+    render();
+})();
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+        :root {
+            --sidebar-width: 260px;
+            --header-height: 60px;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+        }
+        
+        /* サイドバー */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: var(--primary-gradient);
+            color: white;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar-brand {
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .sidebar-nav {
+            padding: 10px 0;
+        }
+        
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .sidebar-nav-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .sidebar-nav-item.active {
+            background-color: rgba(255,255,255,0.15);
+            color: white;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .sidebar-nav-item i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .badge-count {
+            margin-left: auto;
+            font-size: 0.75rem;
+        }
+        
+        /* ヘッダー */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: var(--sidebar-width);
+            right: 0;
+            height: var(--header-height);
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+        }
+        
+        .header-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        /* メインコンテンツ */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            padding: 30px;
+            min-height: calc(100vh - var(--header-height));
+        }
+        
+        body.layout-no-chrome .main-content {
+            margin-left: 0 !important;
+            margin-top: 0 !important;
+            padding: 12px 16px;
+            min-height: 100vh;
+        }
+        
+        /* 各ページのルート（旧 SPA の .screen は廃止） */
+        .page-root {
+            display: block;
+        }
+        
+        /* ステータスバッジ */
+        .badge-draft { background-color: #6c757d; }
+        .badge-pending { background-color: #ffc107; color: #000; }
+        .badge-review { background-color: #17a2b8; }
+        .badge-approved { background-color: #28a745; }
+        .badge-rejected { background-color: #dc3545; }
+        .badge-resubmit { background-color: #007bff; }
+        .badge-ordered { background-color: #6f42c1; }
+        .badge-lost { background-color: #495057; color: #fff; }
+        .badge-declined { background-color: #212529; color: #fff; }
+        .badge-paid { background-color: #28a745; }
+        .badge-partial { background-color: #fd7e14; }
+        .badge-unpaid { background-color: #dc3545; }
+        .badge-overdue { background-color: #e83e8c; }
+        
+        /* 優先度アイコン */
+        .priority-high { color: #dc3545; }
+        .priority-medium { color: #ffc107; }
+        .priority-low { color: #28a745; }
+        
+        /* KPIカード */
+        .kpi-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid #667eea;
+        }
+        
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .kpi-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        /* テーブルスタイル */
+        .table-responsive {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .amount-cell {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+        
+        /* フォームスタイル */
+        .form-section {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        /* ボタンスタイル */
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* パンくずリスト */
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        /* アラート */
+        .alert-card {
+            border-left: 4px solid;
+            border-radius: 4px;
+        }
+        
+        .alert-card.alert-danger {
+            border-left-color: #dc3545;
+        }
+        
+        .alert-card.alert-warning {
+            border-left-color: #ffc107;
+        }
+        
+        .alert-card.alert-info {
+            border-left-color: #17a2b8;
+        }
+        
+        /* タイムライン */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #dee2e6;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #667eea;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px #667eea;
+        }
+        
+        /* モーダル調整 */
+        .modal-header {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+        
+        /* ユーティリティ */
+        .clickable {
+            cursor: pointer;
+        }
+        
+        .clickable:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* レスポンシブ調整 */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-header, .main-content {
+                margin-left: 0;
+                left: 0;
+            }
+        }

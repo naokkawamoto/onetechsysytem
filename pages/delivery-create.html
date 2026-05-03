@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>納品書作成 — 社内業務管理システム</title>
+    <meta name="page-name" content="delivery-create">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body data-page-name="delivery-create">
+<main class="main-content">
+        <div id="delivery-create" class="page-root" data-page-name="delivery-create">
+<h4 class="mb-4">納品書作成</h4>
+
+            <div class="form-section">
+                <h6 class="form-section-title">請求書から読み込み</h6>
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <select class="form-select">
+                            <option>選択してください</option>
+                            <option>INV-2026-0098 - ECサイトリニューアル</option>
+                            <option>INV-2026-0085 - 在庫管理システム開発</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-primary w-100"><i class="bi bi-download"></i> 読み込み</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h6 class="form-section-title">基本情報</h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">納品書番号</label>
+                        <input type="text" class="form-control" value="DEL-2026-0045" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">宛先会社名 <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" value="株式会社テックソリューション">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">案件名 <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" value="ECサイトリニューアル">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">納品日</label>
+                        <input type="date" class="form-control" value="2026-03-31">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">納品場所</label>
+                        <input type="text" class="form-control" value="電子納品">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h6 class="form-section-title">納品明細</h6>
+                <button class="btn btn-sm btn-primary mb-2"><i class="bi bi-plus-circle"></i> 行追加</button>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>品名・仕様</th>
+                                <th style="width: 100px;">数量</th>
+                                <th style="width: 100px;">単位</th>
+                                <th>備考</th>
+                                <th style="width: 80px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control form-control-sm" value="ECサイトリニューアル一式"></td>
+                                <td><input type="number" class="form-control form-control-sm text-end" value="1"></td>
+                                <td><input type="text" class="form-control form-control-sm" value="式"></td>
+                                <td><input type="text" class="form-control form-control-sm"></td>
+                                <td><button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h6 class="form-section-title">出力設定</h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked>
+                            <label class="form-check-label">PDF形式で出力</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked>
+                            <label class="form-check-label">履歴に保存</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">メールで送信</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">押印あり</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">出力フォーマット</label>
+                        <select class="form-select">
+                            <option>標準フォーマット</option>
+                            <option>簡易フォーマット</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <button class="btn btn-secondary" onclick="location.href='invoice-list.html'">キャンセル</button>
+                <button class="btn btn-outline-info"><i class="bi bi-eye"></i> プレビュー</button>
+                <button class="btn btn-primary"><i class="bi bi-file-pdf"></i> 納品書生成</button>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+</body>
+</html>

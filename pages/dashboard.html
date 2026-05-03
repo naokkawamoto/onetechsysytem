@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダッシュボード — 社内業務管理システム</title>
+    <meta name="page-name" content="dashboard">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body data-page-name="dashboard">
+<main class="main-content">
+        <div id="dashboard" class="page-root" data-page-name="dashboard">
+            <!-- 月次サマリー（タブ） -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h5 class="mb-3"><i class="bi bi-table"></i> 月次サマリー</h5>
+                    <div class="table-responsive">
+                        <div class="bg-white rounded shadow-sm p-3">
+                            <ul class="nav nav-tabs mb-3" id="dashboardMonthTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="tab-current" data-bs-toggle="tab" data-bs-target="#pane-current" type="button" role="tab" aria-controls="pane-current" aria-selected="true">当月（2026年5月）</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="tab-prev1" data-bs-toggle="tab" data-bs-target="#pane-prev1" type="button" role="tab" aria-controls="pane-prev1" aria-selected="false">先月（2026年4月）</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="tab-prev2" data-bs-toggle="tab" data-bs-target="#pane-prev2" type="button" role="tab" aria-controls="pane-prev2" aria-selected="false">先々月（2026年3月）</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="dashboardMonthTabContent">
+                                <div class="tab-pane fade show active" id="pane-current" role="tabpanel" aria-labelledby="tab-current" tabindex="0">
+                                    <table class="table table-bordered mb-3">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">有効見積り件数</td>
+                                                <td class="text-end" style="width: 17%">42<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">有効見積額（税抜き）</td>
+                                                <td class="amount-cell">¥58,400,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered mb-3">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">受注件数</td>
+                                                <td class="text-end" style="width: 17%">9<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">受注額（税抜き）</td>
+                                                <td class="amount-cell">¥32,150,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">請求件数</td>
+                                                <td class="text-end" style="width: 17%">11<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">請求額（税込み）</td>
+                                                <td class="amount-cell">¥38,718,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pane-prev1" role="tabpanel" aria-labelledby="tab-prev1" tabindex="0">
+                                    <table class="table table-bordered mb-3">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">有効見積り件数</td>
+                                                <td class="text-end" style="width: 17%">51<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">有効見積額（税抜き）</td>
+                                                <td class="amount-cell">¥62,100,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered mb-3">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">受注件数</td>
+                                                <td class="text-end" style="width: 17%">12<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">受注額（税抜き）</td>
+                                                <td class="amount-cell">¥41,800,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">請求件数</td>
+                                                <td class="text-end" style="width: 17%">15<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">請求額（税込み）</td>
+                                                <td class="amount-cell">¥49,932,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pane-prev2" role="tabpanel" aria-labelledby="tab-prev2" tabindex="0">
+                                    <table class="table table-bordered mb-3">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">有効見積り件数</td>
+                                                <td class="text-end" style="width: 17%">47<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">有効見積額（税抜き）</td>
+                                                <td class="amount-cell">¥55,200,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered mb-3">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">受注件数</td>
+                                                <td class="text-end" style="width: 17%">10<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">受注額（税抜き）</td>
+                                                <td class="amount-cell">¥36,400,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-bordered mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="table-light" style="width: 18%">請求件数</td>
+                                                <td class="text-end" style="width: 17%">13<span class="text-muted small ms-1">件</span></td>
+                                                <td class="table-light" style="width: 22%">請求額（税込み）</td>
+                                                <td class="amount-cell">¥43,692,000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近更新案件 -->
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="mb-3"><i class="bi bi-clock-history"></i> 最近更新案件</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>案件名</th>
+                                    <th>クライアント</th>
+                                    <th>ステータス</th>
+                                    <th>金額</th>
+                                    <th>更新日時</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="clickable" onclick="location.href='quote-detail.html'">
+                                    <td>ECサイトリニューアル</td>
+                                    <td>株式会社テックソリューション</td>
+                                    <td><span class="badge badge-pending">承認待ち</span></td>
+                                    <td class="amount-cell">¥18,500,000</td>
+                                    <td>2026/03/15 14:32</td>
+                                </tr>
+                                <tr class="clickable" onclick="location.href='quote-detail.html'">
+                                    <td>在庫管理システム開発</td>
+                                    <td>サンプル商事株式会社</td>
+                                    <td><span class="badge badge-approved">承認済み</span></td>
+                                    <td class="amount-cell">¥12,800,000</td>
+                                    <td>2026/03/15 11:20</td>
+                                </tr>
+                                <tr class="clickable" onclick="location.href='quote-detail.html'">
+                                    <td>基幹システム保守</td>
+                                    <td>株式会社グローバルテック</td>
+                                    <td><span class="badge badge-rejected">差戻し</span></td>
+                                    <td class="amount-cell">¥3,200,000</td>
+                                    <td>2026/03/14 16:45</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>受注一覧 — 社内業務管理システム</title>
+    <meta name="page-name" content="order-list">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        .order-list-row { cursor: pointer; }
+        .order-list-row:hover { background-color: rgba(13, 110, 253, 0.06); }
+    </style>
+</head>
+<body data-page-name="order-list">
+<main class="main-content">
+        <div id="order-list" class="page-root" data-page-name="order-list">
+            <div class="form-section mb-4">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">受注番号</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">案件名</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">ステータス</label>
+                        <select class="form-select">
+                            <option>すべて</option>
+                            <option>進行中</option>
+                            <option>完了</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">&nbsp;</label>
+                        <button type="button" class="btn btn-primary w-100"><i class="bi bi-search"></i> 検索</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>受注番号</th>
+                            <th>クライアント</th>
+                            <th>案件名</th>
+                            <th>受注金額</th>
+                            <th>納期</th>
+                            <th>ステータス</th>
+                            <th>担当PM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="order-list-row" data-href="order-detail.html?id=00001&amp;no=QUO-2026-0045&amp;ver=2&amp;status=pending&amp;order=ORD-2026-0032" role="button" tabindex="0">
+                            <td>ORD-2026-0032</td>
+                            <td>株式会社テックソリューション</td>
+                            <td>ECサイトリニューアル</td>
+                            <td class="amount-cell">¥18,500,000</td>
+                            <td>2026/06/30</td>
+                            <td><span class="badge bg-primary">進行中</span></td>
+                            <td>山田PM</td>
+                        </tr>
+                        <tr class="order-list-row" data-href="order-detail.html?id=00002&amp;no=QUO-2026-0099&amp;ver=2&amp;status=approved&amp;order=ORD-2026-0031" role="button" tabindex="0">
+                            <td>ORD-2026-0031</td>
+                            <td>サンプル商事株式会社</td>
+                            <td>在庫管理システム開発</td>
+                            <td class="amount-cell">¥12,800,000</td>
+                            <td>2026/08/31</td>
+                            <td><span class="badge bg-success">完了</span></td>
+                            <td>鈴木PM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-muted small mb-0">行をクリックすると受注詳細（見積書 Ver.2）を開きます。</p>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    function goRow(tr) {
+        var href = tr.getAttribute('data-href');
+        if (href) window.location.href = href;
+    }
+    function initOrderListRows() {
+        document.querySelectorAll('.order-list-row').forEach(function (tr) {
+            tr.addEventListener('click', function () {
+                goRow(tr);
+            });
+            tr.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    goRow(tr);
+                }
+            });
+        });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initOrderListRows);
+    else initOrderListRows();
+})();
+    </script>
+</body>
+</html>

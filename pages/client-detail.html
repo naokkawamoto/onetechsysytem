@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クライアント詳細 — 社内業務管理システム</title>
+    <meta name="page-name" content="client-detail">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <style>
+        #client-detail {
+            font-size: 0.875rem;
+        }
+        #client-detail .client-detail-section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1e4d7b;
+            border-left: 4px solid #1e4d7b;
+            padding-left: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+        #client-detail .client-detail-table-wrap {
+            margin-bottom: 1rem;
+        }
+        #client-detail .client-detail-table-wrap table {
+            font-size: 0.8125rem;
+        }
+        #client-detail .client-detail-table-wrap th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #495057;
+            white-space: nowrap;
+            width: 11rem;
+            vertical-align: middle;
+        }
+        #client-detail .client-detail-table-wrap td {
+            vertical-align: middle;
+        }
+        #client-detail #client-stats-table th {
+            background: #1e4d7b;
+            color: #fff;
+            border-color: #163a5c;
+            font-size: 0.75rem;
+        }
+        #client-detail #client-stats-table td {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body data-page-name="client-detail">
+<main class="main-content">
+        <div id="client-detail" class="page-root" data-page-name="client-detail">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <h3 class="h5 mb-0"><i class="bi bi-building"></i> 株式会社テックソリューション</h3>
+                <div class="d-flex flex-wrap gap-1">
+                    <button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i> 編集</button>
+                    <button type="button" class="btn btn-success btn-sm" onclick="location.href='quote-create.html'"><i class="bi bi-plus-circle"></i> 見積新規作成</button>
+                </div>
+            </div>
+
+            <div class="client-detail-table-wrap">
+                <div class="client-detail-section-title">基本情報</div>
+                <table class="table table-sm table-bordered mb-0">
+                    <tbody>
+                        <tr><th scope="row">会社名</th><td>株式会社テックソリューション</td></tr>
+                        <tr><th scope="row">会社名（カナ）</th><td>カブシキガイシャテックソリューション</td></tr>
+                        <tr><th scope="row">業種</th><td>IT・通信</td></tr>
+                        <tr><th scope="row">郵便番号</th><td>100-0001</td></tr>
+                        <tr><th scope="row">住所</th><td>東京都千代田区千代田1-1-1</td></tr>
+                        <tr><th scope="row">電話番号</th><td>03-1234-5678</td></tr>
+                        <tr><th scope="row">FAX番号</th><td>03-1234-5679</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="client-detail-table-wrap">
+                <div class="client-detail-section-title">担当者情報</div>
+                <table class="table table-sm table-bordered mb-0">
+                    <tbody>
+                        <tr><th scope="row">担当者名</th><td>山田太郎</td></tr>
+                        <tr><th scope="row">部署・役職</th><td>情報システム部 部長</td></tr>
+                        <tr><th scope="row">メールアドレス</th><td>yamada@techsolution.co.jp</td></tr>
+                        <tr><th scope="row">携帯電話</th><td>090-1234-5678</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="client-detail-table-wrap">
+                <div class="client-detail-section-title">取引情報</div>
+                <table class="table table-sm table-bordered mb-0">
+                    <tbody>
+                        <tr><th scope="row">取引状況</th><td><span class="badge bg-success">取引中</span></td></tr>
+                        <tr><th scope="row">担当営業</th><td>田中太郎</td></tr>
+                        <tr><th scope="row">取引開始日</th><td>2022/04/01</td></tr>
+                        <tr><th scope="row">最終取引日</th><td>2026/03/15</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="client-detail-table-wrap">
+                <div class="client-detail-section-title">財務情報</div>
+                <table class="table table-sm table-bordered mb-0">
+                    <tbody>
+                        <tr><th scope="row">支払条件</th><td>月末締め翌月末払い</td></tr>
+                        <tr><th scope="row">累計請求額</th><td class="amount-cell">¥245,800,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="client-detail-table-wrap">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                    <div class="client-detail-section-title mb-0">統計情報（見積・請求）</div>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="集計単位">
+                        <button type="button" class="btn btn-outline-secondary active" id="client-stats-btn-month" data-stats-granularity="month">月別</button>
+                        <button type="button" class="btn btn-outline-secondary" id="client-stats-btn-year" data-stats-granularity="year">年別</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered mb-0" id="client-stats-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">対象期間</th>
+                                <th scope="col" class="text-end">見積数</th>
+                                <th scope="col" class="text-end">見積額</th>
+                                <th scope="col" class="text-end">請求数</th>
+                                <th scope="col" class="text-end">請求額</th>
+                            </tr>
+                        </thead>
+                        <tbody id="client-stats-tbody-month">
+                            <tr><td>2026年3月</td><td class="text-end">4</td><td class="text-end amount-cell">¥42,300,000</td><td class="text-end">3</td><td class="text-end amount-cell">¥38,200,000</td></tr>
+                            <tr><td>2026年2月</td><td class="text-end">3</td><td class="text-end amount-cell">¥28,100,000</td><td class="text-end">2</td><td class="text-end amount-cell">¥15,000,000</td></tr>
+                            <tr><td>2026年1月</td><td class="text-end">2</td><td class="text-end amount-cell">¥12,400,000</td><td class="text-end">2</td><td class="text-end amount-cell">¥11,800,000</td></tr>
+                        </tbody>
+                        <tbody id="client-stats-tbody-year" class="d-none">
+                            <tr><td>2026年</td><td class="text-end">18</td><td class="text-end amount-cell">¥186,500,000</td><td class="text-end">14</td><td class="text-end amount-cell">¥162,300,000</td></tr>
+                            <tr><td>2025年</td><td class="text-end">22</td><td class="text-end amount-cell">¥198,200,000</td><td class="text-end">19</td><td class="text-end amount-cell">¥175,400,000</td></tr>
+                            <tr><td>2024年</td><td class="text-end">15</td><td class="text-end amount-cell">¥124,000,000</td><td class="text-end">12</td><td class="text-end amount-cell">¥98,600,000</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small text-muted mb-0 mt-1">月別・年別はボタンで切り替えます（デモ値）。</p>
+            </div>
+
+            <ul class="nav nav-tabs mb-2">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#client-projects">案件一覧 (15)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#client-invoices">請求履歴 (42)</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="client-projects">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                                <tr>
+                                    <th>案件名</th>
+                                    <th>見積番号</th>
+                                    <th>ステータス</th>
+                                    <th class="text-end">金額</th>
+                                    <th>作成日</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="clickable" role="button" tabindex="0" onclick="location.href='quote-detail.html'">
+                                    <td>ECサイトリニューアル</td>
+                                    <td>QUO-2026-0045</td>
+                                    <td><span class="badge badge-pending">承認待ち</span></td>
+                                    <td class="amount-cell text-end">¥18,500,000</td>
+                                    <td>2026/03/15</td>
+                                </tr>
+                                <tr class="clickable" role="button" tabindex="0" onclick="location.href='quote-detail.html'">
+                                    <td>顧客管理システム保守</td>
+                                    <td>QUO-2026-0032</td>
+                                    <td><span class="badge badge-approved">承認済み</span></td>
+                                    <td class="amount-cell text-end">¥2,400,000</td>
+                                    <td>2026/02/20</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="client-invoices">
+                    <p class="text-muted small mb-0">請求履歴が表示されます。</p>
+                </div>
+            </div>
+        </div>
+</main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+(function () {
+    var btnM = document.getElementById('client-stats-btn-month');
+    var btnY = document.getElementById('client-stats-btn-year');
+    var tbM = document.getElementById('client-stats-tbody-month');
+    var tbY = document.getElementById('client-stats-tbody-year');
+    if (!btnM || !btnY || !tbM || !tbY) return;
+    function showMonth() {
+        tbM.classList.remove('d-none');
+        tbY.classList.add('d-none');
+        btnM.classList.add('active');
+        btnY.classList.remove('active');
+    }
+    function showYear() {
+        tbY.classList.remove('d-none');
+        tbM.classList.add('d-none');
+        btnY.classList.add('active');
+        btnM.classList.remove('active');
+    }
+    btnM.addEventListener('click', showMonth);
+    btnY.addEventListener('click', showYear);
+})();
+    </script>
+</body>
+</html>
