@@ -35,18 +35,18 @@
             font-size: 0.7rem;
             color: #6c757d;
         }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card {
+        #quote-document #quote-inline-sheet-readonly-mount .quote-maint-preview-card {
             font-size: 0.8125rem;
             border-radius: 4px;
             margin-bottom: 1rem;
         }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card .card-header {
+        #quote-document #quote-inline-sheet-readonly-mount .quote-maint-preview-card .card-header {
             font-size: 0.8125rem;
         }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card .card-body {
+        #quote-document #quote-inline-sheet-readonly-mount .quote-maint-preview-card .card-body {
             font-size: 0.8125rem;
         }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card .qs-maint-footnote {
+        #quote-document #quote-inline-sheet-readonly-mount .quote-maint-preview-card .qs-maint-footnote {
             font-size: 0.7rem;
         }
         .quote-sheet-preview .qs-total-label { background: #1e4d7b; color: #fff; padding: 12px 16px; font-weight: 700; flex: 0 0 200px; display: flex; align-items: center; letter-spacing: 0.02em; }
@@ -184,6 +184,17 @@
             border-bottom: 2px solid #1e4d7b;
             background: #fff;
         }
+        .qp-preview-doc-title {
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-indent: 0.35em;
+            font-size: 1.15rem;
+            color: #1e4d7b;
+            margin-bottom: 1rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 1px solid #dee2e6;
+        }
         .qp-preview-head-2col { align-items: flex-start; }
         .qp-preview-head-left { padding-right: 0.5rem; }
         .qp-preview-to {
@@ -304,19 +315,24 @@
             color: #212529;
         }
         .qp-preview-readonly .quote-phase .d-flex.justify-content-between { justify-content: flex-start !important; }
-        #modalQuoteSheetPreviewBody .quote-sheet-preview,
-        #modalQuoteDetailPreviewBody .quote-items-preview-root { margin-top: 0; }
-        #modalQuoteDetailPreviewBody .quote-items-preview-root .card { border-radius: 4px; }
-        #modalQuoteSheetPreviewBody.modal-body,
-        #modalQuoteDetailPreviewBody.modal-body { overflow-x: auto; }
-        .modal-quote-preview .modal-content {
-            border: 1px solid #dee2e6;
-            box-shadow: 0 0.5rem 1.25rem rgba(22, 58, 92, 0.12);
-        }
-        .modal-quote-preview .modal-footer {
-            border-top: 1px solid #dee2e6;
+        #quote-document #quote-inline-detail-inner .quote-items-preview-root { margin-top: 0; }
+        #quote-document #quote-inline-detail-inner .quote-items-preview-root .card { border-radius: 4px; }
+        #quote-document #quote-inline-detail-inner {
+            max-height: min(72vh, 900px);
+            overflow: auto;
             background: #f8fafc;
-            gap: 0.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 0.5rem;
+        }
+        #quote-document #quote-inline-sheet-readonly-mount {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: min(72vh, 900px);
+            padding: 0.5rem;
+            background: #f8fafc;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
         }
         .qp-preview-readonly .qp-preview-section {
             background: #fff;
@@ -442,7 +458,6 @@
                             <option selected>通常：請負</option>
                             <option>通常：ラボ</option>
                             <option>通常：保守</option>
-                            <option>通常：概算：請負／保守／サーバー</option>
                             <option>概算：請負</option>
                             <option>概算：ラボ</option>
                             <option>概算：保守</option>
@@ -468,7 +483,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label" for="qc-request-estimator">見積り担当</label>
+                                <label class="form-label" for="qc-request-estimator">見積担当</label>
                                 <select id="qc-request-estimator" class="form-select">
                                     <option selected>鈴木一郎</option>
                                     <option>佐藤花子</option>
@@ -597,25 +612,25 @@
                         <div class="row g-3">
                             <div class="col-md-6 col-lg-4">
                                 <label class="form-label">案件分類</label>
-                                <select class="form-select">
-                                    <option>新規開発</option>
-                                    <option>保守・運用</option>
-                                    <option>機能追加</option>
+                                <select class="form-select" data-qb-default-key="qb_case_category">
+                                    <option value="新規開発" selected>新規開発</option>
+                                    <option value="保守・運用">保守・運用</option>
+                                    <option value="機能追加">機能追加</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row g-3 mt-0">
                             <div class="col-md-4">
                                 <label class="form-label">開始予定日</label>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" value="" data-qb-default-key="qb_start_date">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">納期</label>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" value="" data-qb-default-key="qb_due_date">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">工期（人月）</label>
-                                <input type="number" class="form-control" value="6.5">
+                                <input type="number" class="form-control" value="6.5" step="0.1" min="0" data-qb-default-key="qb_duration_md">
                             </div>
                         </div>
                     </div>
@@ -625,17 +640,17 @@
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label class="form-label">見積有効期限</label>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" value="" data-qb-default-key="qb_valid_until">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">支払条件</label>
-                                <input type="text" class="form-control" value="月末締め翌月末払い">
+                                <input type="text" class="form-control" value="月末締め翌月末払い" data-qb-default-key="qb_payment_terms">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">納品方法</label>
-                                <select class="form-select">
-                                    <option>電子納品</option>
-                                    <option>オンサイト</option>
+                                <select class="form-select" data-qb-default-key="qb_delivery_method">
+                                    <option value="電子納品" selected>電子納品</option>
+                                    <option value="オンサイト">オンサイト</option>
                                 </select>
                             </div>
                         </div>
@@ -648,23 +663,30 @@
                             <div class="col-md-6 col-lg-4">
                                 <label class="form-label" for="qc-maint-estimate-amount">月間概算（税別）</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control text-end" id="qc-maint-estimate-amount" min="0" step="1" value="60000" inputmode="numeric" placeholder="0">
+                                    <input type="number" class="form-control text-end" id="qc-maint-estimate-amount" min="0" step="1" value="60000" inputmode="numeric" placeholder="0" data-qb-default-key="qc-maint-estimate-amount">
                                     <span class="input-group-text">円／月（税別）〜</span>
                                 </div>
                             </div>
                         </div>
                         <hr class="my-3 text-muted">
                         <p class="small fw-semibold text-secondary mb-2">クラウド</p>
-                        <p class="text-muted small mb-2">プロバイダー名と<strong>月間</strong>概算を記入してください（例：AWS）。</p>
+                        <p class="text-muted small mb-2"><strong>対象／対象外</strong>で見積への計上を切り替えます。対象のときだけプロバイダー名と<strong>月間</strong>概算を記入してください（例：AWS）。</p>
                         <div class="row g-3 align-items-end">
-                            <div class="col-md-6 col-lg-4">
-                                <label class="form-label" for="qc-cloud-provider">プロバイダー</label>
-                                <input type="text" class="form-control" id="qc-cloud-provider" value="AWS" placeholder="AWS など">
+                            <div class="col-md-4 col-lg-3">
+                                <label class="form-label" for="qc-cloud-scope">クラウド（見積計上）</label>
+                                <select class="form-select" id="qc-cloud-scope" data-qb-default-key="qc-cloud-scope">
+                                    <option value="対象" selected>対象</option>
+                                    <option value="対象外">対象外</option>
+                                </select>
                             </div>
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col-md-4 col-lg-3">
+                                <label class="form-label" for="qc-cloud-provider">プロバイダー</label>
+                                <input type="text" class="form-control" id="qc-cloud-provider" value="AWS" placeholder="AWS など" data-qb-default-key="qc-cloud-provider">
+                            </div>
+                            <div class="col-md-4 col-lg-5">
                                 <label class="form-label" for="qc-cloud-estimate-amount">月間概算（税別）</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control text-end" id="qc-cloud-estimate-amount" min="0" step="1" value="30000" inputmode="numeric" placeholder="0">
+                                    <input type="number" class="form-control text-end" id="qc-cloud-estimate-amount" min="0" step="1" value="30000" inputmode="numeric" placeholder="0" data-qb-default-key="qc-cloud-estimate-amount">
                                     <span class="input-group-text">円／月（税別）〜</span>
                                 </div>
                             </div>
@@ -675,11 +697,20 @@
 
                 <!-- 見積書タブ（帳票プレビュー） -->
                 <div class="tab-pane fade" id="quote-document">
-                    <p class="text-muted small mb-2">クライアント提出用の見積書レイアウト（デモ）。明細タブの金額と連動する想定です。</p>
-                    <div class="d-flex justify-content-end gap-2 mb-2 flex-wrap">
-                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalQuoteSheetPreview"><i class="bi bi-file-earmark-text"></i> 見積書プレビュー</button>
-                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalQuoteDetailPreview"><i class="bi bi-table"></i> 見積詳細プレビュー</button>
+                    <p class="text-muted small mb-2">クライアント提出用の見積書（デモ）。<strong>見積書プレビュー</strong>は<strong>見積書PDF</strong>と同じ体裁（宛先・見積No.・明細表・保守概算・納品物・条件付録）で表示します。下のボタンで<strong>見積詳細プレビュー</strong>（明細表のみ）に切り替えられます。PDFはブラウザの印刷ダイアログで「PDFに保存」してください。帳票サンプル用の簡易レイアウトは画面外に保持し、クローンの元データにしています。</p>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="見積プレビュー表示の切替">
+                            <button type="button" class="btn btn-primary" id="btn-quote-preview-mode-sheet" aria-pressed="true"><i class="bi bi-file-earmark-text"></i> 見積書プレビュー</button>
+                            <button type="button" class="btn btn-outline-primary" id="btn-quote-preview-mode-detail" aria-pressed="false"><i class="bi bi-table"></i> 見積詳細プレビュー</button>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="btnQuoteSheetPdfDownload" title="見積書一式を印刷またはPDF保存"><i class="bi bi-file-earmark-pdf"></i> 見積書PDF</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="btnQuoteDetailPdfDownload" title="見積明細を印刷またはPDF保存"><i class="bi bi-file-earmark-pdf"></i> 見積詳細PDF</button>
+                        </div>
                     </div>
+                    <div id="quote-inline-pane-sheet">
+                    <div id="quote-inline-sheet-readonly-mount" aria-label="見積書（PDFと同体裁のプレビュー）"></div>
+                    <div id="quote-inline-sheet-editor-source" class="d-none" aria-hidden="true">
                     <div class="quote-sheet-preview">
                         <div class="qs-meta">
                             <div>
@@ -750,6 +781,11 @@
                             <p class="mb-0 mt-2 qs-maint-footnote"><span class="text-secondary">※</span> 開発時にも発生します。</p>
                         </div>
                     </div>
+                    </div>
+                    </div>
+                    <div id="quote-inline-pane-detail" class="d-none">
+                        <div id="quote-inline-detail-inner" class="qp-preview-readonly"></div>
+                    </div>
                 </div>
 
                 <!-- 詳細設定タブ -->
@@ -793,7 +829,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -807,7 +842,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -819,7 +853,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="10.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -831,7 +864,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -855,7 +887,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -869,7 +900,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="1.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="BSEが理解するための工数"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -881,7 +911,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="業務と技術分析"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -905,7 +934,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -919,7 +947,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -943,7 +970,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -957,7 +983,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="原則：クライアント作成"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -969,7 +994,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="1.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -981,7 +1005,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="28.5"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="日本語"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -993,7 +1016,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1017,7 +1039,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1031,7 +1052,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1043,7 +1063,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1055,7 +1074,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1067,7 +1085,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1091,7 +1108,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1105,7 +1121,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="1.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="※サーバ費用は含まれておりません"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1117,7 +1132,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1129,7 +1143,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1141,7 +1154,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="1.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1165,7 +1177,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1179,7 +1190,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="2.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1191,7 +1201,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1203,7 +1212,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="既存システムの影響範囲対応"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1215,7 +1223,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="標準準拠で対応"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1227,7 +1234,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="3.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="1件あたり4時間程度の修正"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1251,7 +1257,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1265,7 +1270,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="28.5"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="テスト項目書・エビデンス"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1277,7 +1281,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="18.5"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="日本語"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1289,7 +1292,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1313,7 +1315,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1327,7 +1328,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="標準準拠で対応"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1339,7 +1339,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1363,7 +1362,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1377,7 +1375,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="1.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1389,7 +1386,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1401,7 +1397,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="1.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1425,7 +1420,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1433,25 +1427,23 @@
                                 </thead>
                                 <tbody>
                                     <tr class="quote-item-row" data-default-rate="AI_VN">
-                                        <td><input type="text" class="form-control form-control-sm qi-task" value="11.5 受入テストサポート"></td>
+                                        <td><input type="text" class="form-control form-control-sm qi-task" value="11.1 受入テストサポート"></td>
                                         <td><select class="form-select form-select-sm qi-kind"><option value="日" selected>日</option><option value="越">越</option></select></td>
                                         <td><select class="form-select form-select-sm qi-scope"><option value="対象" selected>対象</option><option value="対象外">対象外</option></select></td>
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="7.5"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="デフォルト5%"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
                                     </tr>
                                     <tr class="quote-item-row" data-default-rate="PG_VN">
-                                        <td><input type="text" class="form-control form-control-sm qi-task" value="11.6 システムマニュアル作成"></td>
+                                        <td><input type="text" class="form-control form-control-sm qi-task" value="11.2 システムマニュアル作成"></td>
                                         <td><select class="form-select form-select-sm qi-kind"><option value="日" selected>日</option><option value="越">越</option></select></td>
                                         <td><select class="form-select form-select-sm qi-scope"><option value="対象">対象</option><option value="対象外" selected>対象外</option></select></td>
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="別途費用"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1475,7 +1467,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1489,7 +1480,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="※保守契約なしの場合の一時的保守対応"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1501,7 +1491,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1525,7 +1514,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1539,7 +1527,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="開発費用20%増"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1551,7 +1538,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="0.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="通常工数の200%"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1574,7 +1560,6 @@
                                         <th style="width: 110px;">対応区分</th>
                                         <th class="d-none" aria-hidden="true"><span class="visually-hidden">工数・単価区分（集計用）</span></th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1590,7 +1575,6 @@
                                             <select class="form-select form-select-sm qi-rate-type visually-hidden" tabindex="-1" aria-hidden="true"></select>
                                         </td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" value="0" inputmode="numeric"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1604,7 +1588,6 @@
                                             <select class="form-select form-select-sm qi-rate-type visually-hidden" tabindex="-1" aria-hidden="true"></select>
                                         </td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" value="0" inputmode="numeric"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1627,7 +1610,6 @@
                                         <th style="width: 110px;">対応区分</th>
                                         <th class="d-none" aria-hidden="true"><span class="visually-hidden">工数・単価区分（集計用）</span></th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1643,7 +1625,6 @@
                                             <select class="form-select form-select-sm qi-rate-type visually-hidden" tabindex="-1" aria-hidden="true"></select>
                                         </td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" value="0" inputmode="numeric"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value=""></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1667,7 +1648,6 @@
                                         <th style="width: 120px;">工数（人日）</th>
                                         <th style="width: 140px;">単価区分</th>
                                         <th style="width: 100px;">売上単価（円）</th>
-                                        <th style="width: 100px;">原価単価（円）</th>
                                         <th style="width: 100px;">金額（円）</th>
                                         <th style="min-width: 180px;">備考</th>
                                         <th style="width: 64px;">操作</th>
@@ -1681,7 +1661,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="8.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="開発・テスト工程の5%"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1693,7 +1672,6 @@
                                         <td><input type="number" class="form-control form-control-sm text-end qi-md" step="0.1" min="0" value="17.0"></td>
                                         <td><select class="form-select form-select-sm qi-rate-type"></select></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-unit-price" readonly tabindex="-1"></td>
-                                        <td><input type="text" class="form-control form-control-sm text-end qi-cost-unit-price" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm text-end qi-amount" readonly tabindex="-1"></td>
                                         <td><input type="text" class="form-control form-control-sm qi-note" value="全体工数の10%"></td>
                                         <td><button type="button" class="btn btn-sm btn-outline-danger qi-del" title="行削除"><i class="bi bi-trash"></i></button></td>
@@ -1713,7 +1691,7 @@
                             <label class="form-label fw-semibold mb-1">見積元</label>
                             <div id="ota-quote-source-display" class="form-control form-control-sm bg-light border text-break user-select-all" title="依頼情報の見積元に連動します">OTA</div>
                             <input type="hidden" id="ota-quote-source" value="OTA" />
-                            <p class="text-muted small mb-0 mt-1">依頼情報の見積元と連動します。詳細設定の原価単価（掛け率）に反映されます。</p>
+                            <p class="text-muted small mb-0 mt-1">依頼情報の見積元と連動します。利益管理タブの原価率・集計に反映されます。</p>
                         </div>
                     </div>
                     <h6 class="form-section-title mb-2">利益管理</h6>
@@ -1942,7 +1920,7 @@
                             </table>
                         </div>
                         <div class="small text-secondary mt-3 mb-0">
-                            <p class="mb-2"><strong>【納品条件】</strong> ①全納品物の提供が完了していること　②受入テスト期間内の不具合修正が完了していること　③クライアントより検収完了の連絡があること、または受入テスト期間が経過していること</p>
+                            <p class="mb-2"><strong>【納品条件】</strong> ①全納品物の提供が完了していること　②受入テスト期間内の不具合修正が完了していること　③「検収完了日」が確定していること（検収完了の意味は固定条件「4. 受入テスト・検収」【検収完了の定義】①②に従います）</p>
                             <p class="mb-0"><strong>【保存期間】</strong> 納品ドキュメントの保存期間は検収完了後1ヶ月間とします。期間経過後のドキュメント提供は保証いたしかねます。</p>
                         </div>
                     </div>
@@ -1951,7 +1929,7 @@
                 <!-- 詳細条件設定タブ -->
                 <div class="tab-pane fade" id="quote-conditions">
                     <div class="form-section mb-0">
-                        <h5 class="mb-2"><i class="bi bi-file-earmark-richtext"></i> 詳細条件設定</h5>
+                        <h5 class="mb-2"><i class="bi bi-file-earmark-richtext"></i> 詳細条件設定（請負）</h5>
                         <p class="small text-muted mb-3">以下は<strong>1. 見積条件</strong>ブロックのデフォルト文言です。再委託以降の標準条項は<strong>固定条件</strong>タブにあります（『基本条件・前提条件』Word に準拠）。紙面と差異がある場合はテキストを直接修正するか、元ファイルを共有いただければ完全一致に寄せられます。</p>
 
                         <div class="qc-toolbar d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
@@ -1967,6 +1945,7 @@
 
                         <div class="qc-hint small mb-3">
                             <strong>使い方</strong>：下のチェックと表で見積書への掲載ON／OFFおよび内容を編集します。ツールバーの件数は<strong>見積条件＋固定条件タブ内の全ブロック</strong>を合算しています（一括ON/OFFも両方に適用されます）。
+                            <span class="text-muted d-block mt-1">凡例：詳細条件の第1ブロックは「1. 見積条件」（小見出しは 1.1・1.2 形式）。固定条件タブは「2.」からの連番で条を把握してください。</span>
                         </div>
 
                         <div class="qc-blocks mb-3">
@@ -1984,9 +1963,9 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>資料</th><th style="width:9rem">作成日</th><th>備考</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-doc-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm" value=""></td><td><input type="date" class="form-control form-control-sm"></td><td><input type="text" class="form-control form-control-sm" value="なし"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm" value=""></td><td><input type="date" class="form-control form-control-sm"></td><td><input type="text" class="form-control form-control-sm" value=""></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm" value=""></td><td><input type="date" class="form-control form-control-sm"></td><td><input type="text" class="form-control form-control-sm" value=""></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm" value="" data-qc-default-key="qc_d_doc_1a"></td><td><input type="date" class="form-control form-control-sm" data-qc-default-key="qc_d_doc_1b"></td><td><input type="text" class="form-control form-control-sm" value="なし" data-qc-default-key="qc_d_doc_1c"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm" value="" data-qc-default-key="qc_d_doc_2a"></td><td><input type="date" class="form-control form-control-sm" data-qc-default-key="qc_d_doc_2b"></td><td><input type="text" class="form-control form-control-sm" value="" data-qc-default-key="qc_d_doc_2c"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm" value="" data-qc-default-key="qc_d_doc_3a"></td><td><input type="date" class="form-control form-control-sm" data-qc-default-key="qc_d_doc_3b"></td><td><input type="text" class="form-control form-control-sm" value="" data-qc-default-key="qc_d_doc_3c"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1999,12 +1978,13 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-req-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm" value="機能・非機能要件（画面一覧、帳票、バッチ、外部連携の範囲および優先度）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm" value="セキュリティ・運用要件（認証方式、ログ保管、監査、SLA目安など）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm" value="インフラ・環境（クラウド／オンプレ、既存システムとの接続条件、利用ブラウザ・端末）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm" value="機能・非機能要件（画面一覧、帳票、バッチ、外部連携の範囲および優先度）" data-qc-default-key="qc_d_req_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm" value="セキュリティ・運用要件（認証方式、ログ保管、監査、SLA目安など）" data-qc-default-key="qc_d_req_2"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm" value="インフラ・環境（クラウド／オンプレ、既存システムとの接続条件、利用ブラウザ・端末）" data-qc-default-key="qc_d_req_3"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <p class="small text-muted mb-2">※1.2の「SLA目安」等は要件メモです。SLAの数値・営業時間等の契約上の定めは、固定条件「6. 対応時間・休日」および別紙SLA（ある場合）を正本としてください。</p>
                                         <div class="d-flex flex-wrap gap-2 mb-3">
                                             <button type="button" class="btn btn-sm btn-outline-primary qc-row-add" data-qc-tbody="qc-req-tbody" data-qc-kind="req"><i class="bi bi-plus-lg"></i> 行を追加</button>
                                         </div>
@@ -2014,11 +1994,11 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-requote-tbody">
-                                                    <tr><td class="text-center">1</td><td><textarea class="form-control form-control-sm qc-body" rows="2">前提条件・仮定が変更された場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><textarea class="form-control form-control-sm qc-body" rows="2">見積有効期限が過ぎた場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">3</td><td><textarea class="form-control form-control-sm qc-body" rows="2">仕様凍結時期を双方合意の上、設定させて頂き、それを10%以上超えた仕様の追加・変更が発生した場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">4</td><td><textarea class="form-control form-control-sm qc-body" rows="2">御社の担当設計書に10%以上の修正が発生する場合（仕様変更、設計レベルの不良が発生した場合など）。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">5</td><td><textarea class="form-control form-control-sm qc-body" rows="2">当初見積の範囲に含まれない作業、範囲、開発環境、言語が発生した場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><textarea class="form-control form-control-sm qc-body" rows="2" data-qc-default-key="qc_d_rq_1">前提条件・仮定が変更された場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><textarea class="form-control form-control-sm qc-body" rows="2" data-qc-default-key="qc_d_rq_2">見積有効期限が過ぎた場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">3</td><td><textarea class="form-control form-control-sm qc-body" rows="2" data-qc-default-key="qc_d_rq_3">仕様凍結時期を双方合意の上、設定させて頂き、それを10%以上超えた仕様の追加・変更が発生した場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">4</td><td><textarea class="form-control form-control-sm qc-body" rows="2" data-qc-default-key="qc_d_rq_4">御社の担当設計書に10%以上の修正が発生する場合（仕様変更、設計レベルの不良が発生した場合など）。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">5</td><td><textarea class="form-control form-control-sm qc-body" rows="2" data-qc-default-key="qc_d_rq_5">当初見積の範囲に含まれない作業、範囲、開発環境、言語が発生した場合。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2031,7 +2011,7 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>期間</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-period-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="1.5カ月"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="1.5カ月" data-qc-default-key="qc_d_period_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2045,7 +2025,7 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th style="width:11rem">クラウド</th><th>アカウント準備・備考（アカウントID・窓口等）</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-cloudacct-tbody">
-                                                    <tr><td class="text-center">1</td><td><select class="form-select form-select-sm qc-body" aria-label="クラウド事業者"><option value="AWS" selected>AWS</option><option value="GCP">GCP</option><option value="Azure">Microsoft Azure</option><option value="その他">その他</option></select></td><td><input type="text" class="form-control form-control-sm qc-body" value="貴社アカウントにて本プロジェクト用の環境を準備いただきます（詳細は別紙または非機能要件で確定）。"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><select class="form-select form-select-sm qc-body" aria-label="クラウド事業者" data-qc-default-key="qc_d_cloud_sel_1"><option value="AWS" selected>AWS</option><option value="GCP">GCP</option><option value="Azure">Microsoft Azure</option><option value="その他">その他</option></select></td><td><input type="text" class="form-control form-control-sm qc-body" value="貴社アカウントにて本プロジェクト用の環境を準備いただきます（詳細は別紙または非機能要件で確定）。" data-qc-default-key="qc_d_cloud_txt_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2054,15 +2034,15 @@
                                         </div>
 
                                         <div class="qc-sub">1.6 開発環境</div>
-                                        <p class="small text-muted mb-2">インフラの構成・リージョン・アカウント境界は別紙または非機能要件で確定します。利用クラウドは上記 1.5 の選択に合わせ、下記の文言を編集してください。</p>
+                                        <p class="small text-muted mb-2">インフラの構成・リージョン・アカウント境界は別紙または非機能要件で確定します。利用クラウドは上記 1.5 の選択に合わせ、下記の文言を編集してください。<strong>言語・フレームワーク・OSS・ランタイム等の技術スタックおよび前提バージョンは本節（下表）を正本</strong>とし、固定条件第9項は本条を参照する形で読み合わせます。</p>
                                         <div class="table-responsive mb-2">
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-dev-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="AWSクラウド環境（VPC／コンテナ基盤等 ※詳細は設計で確定）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="ローカル環境（Docker Compose 等）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="React / NestJS (Node.js)"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">4</td><td><input type="text" class="form-control form-control-sm qc-body" value="PostgreSQL"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="AWSクラウド環境（VPC／コンテナ基盤等 ※詳細は設計で確定）" data-qc-default-key="qc_d_dev_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="ローカル環境（Docker Compose 等）" data-qc-default-key="qc_d_dev_2"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="React / NestJS (Node.js)" data-qc-default-key="qc_d_dev_3"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">4</td><td><input type="text" class="form-control form-control-sm qc-body" value="PostgreSQL" data-qc-default-key="qc_d_dev_4"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2076,8 +2056,8 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-compat-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="PC：Google Chrome / Safari / Microsoft Edge（各最新版に準拠）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="スマートフォン（iOS / Android 主要ブラウザ）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="PC：Google Chrome / Safari / Microsoft Edge（各最新版に準拠）" data-qc-default-key="qc_d_compat_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="スマートフォン（iOS / Android 主要ブラウザ）" data-qc-default-key="qc_d_compat_2"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2085,7 +2065,7 @@
                                             <button type="button" class="btn btn-sm btn-outline-primary qc-row-add" data-qc-tbody="qc-compat-tbody" data-qc-kind="env2"><i class="bi bi-plus-lg"></i> 行を追加</button>
                                         </div>
                                         <label class="form-label small text-muted mb-1">対応デバイスに関する補足（編集可）</label>
-                                        <textarea class="form-control form-control-sm qc-body mb-3" rows="3">PC・スマートフォンを標準とします。タブレット対応・その他デバイスが必要な場合は別途お見積もりとなります。詳細な表示仕様は非機能要件定義書に準じます。</textarea>
+                                        <textarea class="form-control form-control-sm qc-body mb-3" rows="3" data-qc-default-key="qc_d_compat_note">PC・スマートフォンを標準とします。タブレット対応・その他デバイスが必要な場合は別途お見積もりとなります。詳細な表示仕様は非機能要件定義書に準じます。</textarea>
 
                                         <div class="qc-sub">1.8 テスト環境</div>
                                         <p class="small text-muted mb-2">検証・受入前に用いる実行基盤です。開発と同様、クラウドとローカルを併記できます。</p>
@@ -2093,9 +2073,9 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-testenv-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="AWSクラウド環境（検証／ステージング）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="ローカル環境（開発者端末・コンテナ）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="（任意）ステージング URL・接続制限・テストデータ投入方法"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="AWSクラウド環境（検証／ステージング）" data-qc-default-key="qc_d_testenv_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="ローカル環境（開発者端末・コンテナ）" data-qc-default-key="qc_d_testenv_2"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="（任意）ステージング URL・接続制限・テストデータ投入方法" data-qc-default-key="qc_d_testenv_3"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2109,9 +2089,9 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-prod-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="AWSクラウド環境（本番）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="ドメイン・DNS・証明書（運用主体：貴社／弊社で記載）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="（任意）監視・ログ保管・バックアップ方針"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="AWSクラウド環境（本番）" data-qc-default-key="qc_d_prod_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="ドメイン・DNS・証明書（運用主体：貴社／弊社で記載）" data-qc-default-key="qc_d_prod_2"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="（任意）監視・ログ保管・バックアップ方針" data-qc-default-key="qc_d_prod_3"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2125,9 +2105,9 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-testdevice-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="iOS実機（例：Safari／機種・OSは非機能要件で定義）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="Android実機（例：Chrome／機種・OSは非機能要件で定義）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="（任意）タブレット・特定端末（貴社支給／弊社貸与など）"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="iOS実機（例：Safari／機種・OSは非機能要件で定義）" data-qc-default-key="qc_d_testdev_1"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="Android実機（例：Chrome／機種・OSは非機能要件で定義）" data-qc-default-key="qc_d_testdev_2"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">3</td><td><input type="text" class="form-control form-control-sm qc-body" value="（任意）タブレット・特定端末（貴社支給／弊社貸与など）" data-qc-default-key="qc_d_testdev_3"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2140,8 +2120,8 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>項目</th><th>備考</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-accept-tbody">
-                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="納品物を全て提供した。"></td><td><input type="text" class="form-control form-control-sm" value=""></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
-                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="全てのコメント・不具合を修正した。"></td><td><input type="text" class="form-control form-control-sm" value=""></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><input type="text" class="form-control form-control-sm qc-body" value="納品物を全て提供した。" data-qc-default-key="qc_d_acc_1_item"></td><td><input type="text" class="form-control form-control-sm" value="" data-qc-default-key="qc_d_acc_1_note"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">2</td><td><input type="text" class="form-control form-control-sm qc-body" value="全てのコメント・不具合を修正した。" data-qc-default-key="qc_d_acc_2_item"></td><td><input type="text" class="form-control form-control-sm" value="" data-qc-default-key="qc_d_acc_2_note"></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2155,7 +2135,7 @@
                                             <table class="table table-sm qc-mini-table mb-0 align-middle">
                                                 <thead><tr><th style="width:3.25rem">No.</th><th>方針・内容</th><th class="qc-act-col"><span class="visually-hidden">削除</span></th></tr></thead>
                                                 <tbody id="qc-ssl-tbody">
-                                                    <tr><td class="text-center">1</td><td><textarea class="form-control form-control-sm qc-body" rows="3">SSL/TLS証明書はAWS Certificate Manager（ACM）によるドメイン認証（DV）を標準とします。別の証明書を希望される場合は事前にご相談ください。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
+                                                    <tr><td class="text-center">1</td><td><textarea class="form-control form-control-sm qc-body" rows="3" data-qc-default-key="qc_d_ssl_1">SSL/TLS証明書はAWS Certificate Manager（ACM）によるドメイン認証（DV）を標準とします。別の証明書を希望される場合は事前にご相談ください。</textarea></td><td class="qc-act-col text-center"><button type="button" class="btn btn-sm btn-outline-danger qc-tr-del" title="この行を削除"><i class="bi bi-trash"></i></button></td></tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -2165,20 +2145,22 @@
                                 </div>
                             </div>
                         </div>
+                        <p class="small text-muted mb-2">※「営業時間」および「休業日」の定義は、固定条件「6. 対応時間・休日」に従います。</p>
                         <div class="border rounded p-3 bg-light">
                             <label class="form-label fw-semibold mb-1">追加条項・特記事項</label>
                             <p class="small text-muted mb-2">上記にない案件固有の条件を記載してください。</p>
-                            <textarea class="form-control qc-body" rows="4" name="qc_extra"></textarea>
+                            <textarea class="form-control qc-body" rows="4" name="qc_extra" data-qc-default-key="qc_extra"></textarea>
                         </div>
                     </div>
                 </div>
                 <!-- 固定条件タブ -->
                 <div class="tab-pane fade" id="quote-fixed-conditions">
                     <div class="form-section mb-0">
-                        <h5 class="mb-2"><i class="bi bi-journal-bookmark"></i> 固定条件</h5>
-                        <p class="small text-muted mb-3">再委託、開発・納期、検収・瑕疵担保、作業時間、支払、納品物・保存期間、免責、発注・仕様管理、知的財産、損害賠償・準拠法の標準条項です。編集は各欄で行えます。一括ON/OFFは「詳細条件設定」タブ上部のツールバーから操作してください。</p>
+                        <h5 class="mb-2"><i class="bi bi-journal-bookmark"></i> 固定条件（請負）</h5>
+                        <p class="small text-muted mb-3">再委託、開発・納期、検収・瑕疵担保、対応時間・休日、支払、納品物・保存期間、免責、発注・仕様管理、知的財産、損害賠償・準拠法の標準条項です。編集は各欄で行えます。一括ON/OFFは「詳細条件設定」タブ上部のツールバーから操作してください。</p>
                         <div class="qc-hint small mb-3">
                             <strong>使い方</strong>：各ブロック先頭のチェックで見積書への掲載ON／OFF。本文はセクションごとにスクロールして確認・編集してください。
+                            <span class="text-muted d-block mt-1">凡例：本条から「2.」連番（詳細条件の「1. 見積条件」とは別タブ）。他形態（ラボ・保守）との照合は条名と番号で行ってください。</span>
                         </div>
                         <div class="qc-blocks mb-3">
                             <div class="qc-block">
@@ -2196,19 +2178,16 @@
                                                         <td>
                                                             <label class="form-label small text-muted mb-1" for="qc_re_sub_party_sel">再委託先の表記</label>
                                                             <select class="form-select form-select-sm mb-2" id="qc_re_sub_party_sel" aria-describedby="qc_re_sub_party_hint">
-                                                                <option value="otasia" selected>ONETECH ASIA JSC（ONETECH ASIA JSC / NeXConstructグループ企業・ベトナム）</option>
-                                                                <option value="otasia_short">ONETECH ASIA JSC（NeXConstructグループ企業・ベトナム）</option>
-                                                                <option value="otasia_only">ONETECH ASIA JSC</option>
-                                                                <option value="nexconstruct_bracket">NeXConstruct（グループ企業・ベトナム）</option>
-                                                                <option value="nexconstruct_only">NeXConstruct</option>
-                                                                <option value="other">その他（下欄に記載）</option>
-                                                                <option value="none">再委託なし（弊社のみで実施）</option>
+                                                                <option value="otasjc" selected>ONETECH ASIA JOINT STOCK COMPANY</option>
+                                                                <option value="nexconstruct">NeXConstruct</option>
+                                                                <option value="other">その他の企業（下欄に会社名を記載）</option>
+                                                                <option value="none">再委託なし（One Technology Japanが対応）</option>
                                                             </select>
-                                                            <label class="form-label small text-muted mb-1 d-none" for="qc_re_sub_party_custom" id="qc_re_sub_party_custom_label">その他の再委託先（自由記入）</label>
-                                                            <input type="text" class="form-control form-control-sm mb-2 d-none" id="qc_re_sub_party_custom" disabled placeholder="正式名称・所在地などを入力" autocomplete="organization">
-                                                            <p class="small text-muted mb-2" id="qc_re_sub_party_hint">「その他」を選んだときだけ、下の欄に任意の表記を入力できます。本文中の「上記」は、次の再委託先の定義を指します。</p>
-                                                            <p class="small mb-2 p-2 bg-light border rounded" id="qc_re_sub_party_defined" aria-live="polite"><span class="text-muted">上記の再委託先：</span><span id="qc_re_sub_party_defined_val">ONETECH ASIA JSC（ONETECH ASIA JSC / NeXConstructグループ企業・ベトナム）</span></p>
-                                                            <textarea class="form-control form-control-sm qc-body border-0 rounded-0" rows="3" name="qc_a1" id="qc_a1">本プロジェクトの開発業務の一部は、上記に委託して実施します。品質管理および顧客窓口は弊社（One Technology Japan）が責任を持って担当いたします。</textarea>
+                                                            <label class="form-label small text-muted mb-1 d-none" for="qc_re_sub_party_custom" id="qc_re_sub_party_custom_label">その他の再委託先（会社名）</label>
+                                                            <input type="text" class="form-control form-control-sm mb-2 d-none" id="qc_re_sub_party_custom" disabled placeholder="会社名を入力" autocomplete="organization">
+                                                            <p class="small text-muted mb-2" id="qc_re_sub_party_hint">「その他の企業」を選んだときは、下欄に再委託先の会社名を記載してください。本文中の「上記」は、次の再委託先の定義を指します。</p>
+                                                            <p class="small mb-2 p-2 bg-light border rounded" id="qc_re_sub_party_defined" aria-live="polite"><span class="text-muted">上記の再委託先：</span><span id="qc_re_sub_party_defined_val">ONETECH ASIA JOINT STOCK COMPANY</span></p>
+                                                            <textarea class="form-control form-control-sm qc-body border-0 rounded-0" rows="3" name="qc_a1" id="qc_a1" data-qc-default-key="qc_a1">本プロジェクトの開発業務の一部は、上記に委託して実施します。品質管理および顧客窓口は弊社（One Technology Japan）が責任を持って担当いたします。</textarea>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -2223,7 +2202,7 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a2" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a2">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="16" name="qc_a2">【着手遅延・納期変更】
+                                        <textarea class="form-control qc-body" rows="16" name="qc_a2" data-qc-default-key="qc_a2">【着手遅延・納期変更】
 以下の事由によりスケジュールに遅延が生じた場合、納期は遅延日数分を延長します。延長に伴いリソース再確保が必要な場合は別途費用が発生します。①開発着手の遅延　②仕様確認・意思決定の遅延　③素材・資料・アカウント等の提供遅延　④受入テスト（UAT）の開始・完了遅延　⑤クライアント側提出物の遅延
 
 【要件定義サポート範囲】
@@ -2240,7 +2219,10 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a3" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a3">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="18" name="qc_a3">【受入テスト】
+                                        <textarea class="form-control qc-body" rows="30" name="qc_a3" data-qc-default-key="qc_a3">【本章の読み方（納品から検収完了まで）】
+全納品物の提供完了を経て受入テスト（UAT）を実施し、本章【検収完了の定義】により「検収完了日」を確定します。固定条件「8. 納品物・保存期間」【納品条件】は同じ流れを①〜③で整理しており、特に③は本章【検収完了の定義】①②と読み合わせください。
+
+【受入テスト】
 受入テストはお客様にて実施いただき検収確認を兼ねます。UAT1（納品後1週間以内）・UAT2（修正後3営業日以内）の計2回。期間経過後は自動検収とします。
 
 【修正・仕様変更の扱い】
@@ -2250,7 +2232,17 @@
 基本設計書に記載されている機能の軽微な改善（1件あたり4時間以内）はKAIZENとして扱い、検収完了後に対応します。
 
 【保守契約なしの場合】
-保守契約がない場合は、受入テスト期間終了後に本プロジェクトチームは解散します。</textarea>
+保守契約がない場合は、受入テスト期間終了後に本プロジェクトチームは解散します。
+
+【検収完了の定義】
+本契約における「検収完了日」とは、次の各号に定めるとおりとします。
+この定義は本契約の全条項に共通して適用されます。
+
+  ① お客様より検収完了の意思表示を書面またはメール等の記録が残る
+    方法により弊社が受領したときは、その受領日を検収完了日とします。
+
+  ② 最終の受入テスト期間（UAT1・UAT2を通じた全期間）の末日までに前号の受領がない場合に限り、
+    当該末日までに異議の申し出がなかったときは、当該末日を検収完了日とみなします（自動検収）。</textarea>
                                 </div>
                             </div>
                             <div class="qc-block">
@@ -2260,14 +2252,20 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a4" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a4">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="18" name="qc_a4">【保証期間】
-10人月未満：検収後2ヶ月　／　30人月未満：6ヶ月　／　30人月以上：1年（仕様書および業務範囲内で発生した不具合のみ対象）
+                                        <textarea class="form-control qc-body" rows="22" name="qc_a4" data-qc-default-key="qc_a4">【保証期間】
+保証期間は「検収完了日」を起点として以下のとおりとします。
+「検収完了日」の定義は固定条件「4. 受入テスト・検収」に従います。
+
+  10人月未満：検収完了日から2ヶ月
+  30人月未満：検収完了日から6ヶ月
+  30人月以上：検収完了日から1年
+  （仕様書および業務範囲内で発生した不具合のみ対象）
 
 【対応時間】
-平日9:00〜18:00（ベトナム時間）土日・ベトナム祝日を除く。日本との時差は2時間（日本が早い）。
+「営業時間」「休業日」および瑕疵担保対応の時間帯は、固定条件「6. 対応時間・休日」に従います。
 
 【レスポンスタイム】
-検収後最初の2ヶ月：2営業日以内。以降：4営業日以内。
+検収完了日から起算した最初の2ヶ月間：2営業日以内。以降：4営業日以内。
 
 【不具合申告方法】
 メール・チャット等、記録の残る方法にて申告ください。弊社からの受領確認をもって対応開始とします。
@@ -2277,20 +2275,45 @@
                                 </div>
                             </div>
                             <div class="qc-block">
-                                <h3 class="qc-block-title">6. 作業時間・休日</h3>
+                                <h3 class="qc-block-title">6. 対応時間・休日</h3>
                                 <div class="qc-block-body">
                                         <div class="form-check mb-3">
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a5" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a5">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="14" name="qc_a5">【日本側】
-平日9:00〜18:00（昼休み12:00〜13:00）土日・日本祝日を除く。
+                                        <textarea class="form-control qc-body" rows="31" name="qc_a5" data-qc-default-key="qc_a5">【SLA・別紙との関係】
+別紙または本件で SLA を定める場合、「営業時間」「休業日」および一次回答・解決目標等の算定は、本条の定義に従います。
 
-【ベトナム側】
-平日8:00〜17:15（昼休み11:45〜13:00）土日・ベトナム祝日を除く。
+【詳細条件との優先順位】
+見積条件「1.2 お客様からの要求」一覧に記載したSLA目安・運用要件は、協議・整理用のメモです。別紙SLAまたは本条に数値・時間目標・営業時間等を定めるときはその定めを正本とし、当該一覧の目安と抵触するときは別紙または本条を優先します。
 
-【ベトナム休日（2026年）】
-1/1 元旦　／　1/29〜30 社旅行　／　2/14〜20 テト休暇　／　4/25〜27 フング王記念日　／　4/30〜5/1 南部解放記念日・メーデー　／　8/31〜9/2 建国記念日　／　11/24 ベトナム文化の日</textarea>
+【営業時間の定義】
+本契約における「営業時間」とは、以下の時間帯を指します。
+SLAおよび各条項における「営業時間」はすべて本条の定義に従います。
+
+  日本拠点：平日 9:00〜18:00（昼休み 12:00〜13:00）
+  ベトナム拠点：平日 8:00〜17:15（昼休み 11:45〜13:00）
+
+【日本の休業日】
+以下の日は日本拠点の休業日とします。
+
+  ・土曜日・日曜日
+  ・国民の祝日（祝日法に定める祝日および振替休日）
+  ・夏季休業：8月13日〜8月16日（年度により変動する場合があります）
+  ・年末年始：12月29日〜1月3日（年度により変動する場合があります）
+
+【ベトナムの休業日】
+以下の日はベトナム拠点の休業日とします。
+
+  ・土曜日・日曜日
+  ・ベトナム国定休日（年度ごとに政府が定める日程に従います）
+  ・2026年の主な休業日：
+    1/1 元旦　／　2/14〜20 テト休暇　／　4/25〜27 雄王祭（ハング王記念日）
+    4/30〜5/1 南部解放記念日・メーデー　／　8/31〜9/2 建国記念日
+
+【緊急時の時間外対応】
+緊急障害発生時は状況に応じて営業時間外・休業日の対応を両者で協議します。
+時間外・休業日対応が発生した場合は別途費用を申し受けることがあります。</textarea>
                                 </div>
                             </div>
                             <div class="qc-block">
@@ -2300,7 +2323,8 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a6" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a6">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="16" name="qc_a6">【初回取引】
+                                        <!-- R3: 【支払遅延】の年利率は ../js/quote-legal-common.js の delayedDamagesAnnualPercent が読込時に同期（ラボ・保守の同趣旨条と併せて更新） -->
+                                        <textarea class="form-control qc-body" rows="16" name="qc_a6" data-qc-default-key="qc_a6">【初回取引】
 発注後1週間以内に見積額の50%を前払い。残金は検収完了月末請求・翌月末払い。
 
 【通常取引】
@@ -2320,14 +2344,16 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a7" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a7">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="12" name="qc_a7" id="qc_a7">【納品物】
+                                        <textarea class="form-control qc-body" rows="14" name="qc_a7" id="qc_a7" data-qc-default-key="qc_a7">（受入テストおよび「検収完了日」の確定は、固定条件「4. 受入テスト・検収」に従います。）
+
+【納品物】
 ①納品ドキュメント一式（電子ファイル・貴社指定場所へ納品）②ソースコード一式（ダウンロードリンクを送付・検収完了後1ヶ月以内）詳細は別紙「納品物件一覧」に準じます。
 
 【保存期間】
 納品ドキュメントの保存期間は検収完了後1ヶ月間とします。期間経過後のドキュメント提供は保証いたしかねます。期間経過後に資料提供が必要な場合は別途費用にてご対応いたします。削除をご希望の場合は事前にご連絡ください。
 
 【納品条件】
-①全納品物の提供が完了していること　②受入テスト期間内の不具合修正が完了していること　③クライアントより検収完了の連絡があること、または受入テスト期間が経過していること</textarea>
+①全納品物の提供が完了していること　②受入テスト期間内の不具合修正が完了していること　③「検収完了日」が確定していること（検収完了の意味は固定条件「4. 受入テスト・検収」【検収完了の定義】①②に従います）</textarea>
                                 </div>
                             </div>
                             <div class="qc-block">
@@ -2337,14 +2363,14 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a8" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a8">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="14" name="qc_a8">【サードパーティサービス】
+                                        <textarea class="form-control qc-body" rows="14" name="qc_a8" data-qc-default-key="qc_a8">【サードパーティサービス】
 外部API・決済サービス・SNS認証・アプリストア等のサードパーティサービスの仕様変更・停止・料金変更・リジェクト・承認遅延による影響については弊社は責任を負いかねます。対応が必要な場合は別途費用を申し受けます。
 
 【性能・動作保証】
 システムの性能・レスポンス速度はクライアント側のハードウェア・ネットワーク環境・サードパーティサービスの状態に依存します。これらの要因による性能未達については弊社は責任を負いかねます。
 
-【開発環境・技術】
-開発期間中または契約不適合保証期間中にリリースされた新デバイス/OS依存の不具合は別途費用が発生します。OSS・フレームワークのバージョンアップによる追加対応も別途費用となります。技術的担保ができない場合は研究開発費用が発生しますが、技術的な動作保証はいたしかねます。</textarea>
+【開発環境・技術（詳細条件との関係）】
+採用する開発環境・OSS・フレームワーク等の具体的な組合せおよび前提バージョンは、詳細条件「1.6 開発環境」に記載された内容に従います（同欄を正本とします）。開発期間中または契約不適合保証期間中にリリースされた新デバイス／OS依存の不具合、および同記載の技術スタックの変更・バージョンアップに伴う追加対応が必要な場合は、別途費用を申し受けます。技術的担保ができない場合は研究開発費用が発生することがありますが、技術的な動作保証はいたしかねます。</textarea>
                                 </div>
                             </div>
                             <div class="qc-block">
@@ -2354,7 +2380,7 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a9" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a9">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="18" name="qc_a9">【発注と契約書がない場合の取扱い】
+                                        <textarea class="form-control qc-body" rows="18" name="qc_a9" data-qc-default-key="qc_a9">【発注と契約書がない場合の取扱い】
 書面による個別契約書を締結しない場合であっても、本見積書に基づきご発注いただいた時点で、本見積書に記載の条件・条項に同意いただいたものとみなします。
 
 【正式な依頼方法】
@@ -2374,7 +2400,7 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a10" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a10">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="14" name="qc_a10">【著作権の帰属】
+                                        <textarea class="form-control qc-body" rows="14" name="qc_a10" data-qc-default-key="qc_a10">【著作権の帰属】
 本件開発物の著作権は弊社に帰属します。クライアントには本件システムを利用するための非独占的なライセンスを付与します。著作権の譲渡を希望される場合は、別途協議の上、譲渡契約を締結するものとします。なお、開発に使用した汎用的なフレームワーク・ライブラリ・共通部品の著作権は譲渡対象外とします。
 
 【開発実績の公開】
@@ -2388,7 +2414,7 @@
                                             <input class="form-check-input qc-include" type="checkbox" id="qc_inc_a11" checked>
                                             <label class="form-check-label fw-semibold" for="qc_inc_a11">このセクションを見積書に含める</label>
                                         </div>
-                                        <textarea class="form-control qc-body" rows="12" name="qc_a11">【損害賠償】
+                                        <textarea class="form-control qc-body" rows="12" name="qc_a11" data-qc-default-key="qc_a11">【損害賠償】
 賠償責任は、契約不適合の扱い期間内かつ直接かつ通常の損害に限ります。逸失利益・事業機会の喪失等の間接的な損害は含まないものとし、本見積額を上限とします。
 
 【準拠法・管轄裁判所】
@@ -2401,47 +2427,14 @@
             </div>
         </div>
 
-            <!-- 見積書プレビュー（モーダル） -->
-            <div class="modal fade modal-quote-sheet-preview modal-quote-preview" id="modalQuoteSheetPreview" tabindex="-1" aria-labelledby="modalQuoteSheetPreviewLabel" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header border-secondary">
-                            <h5 class="modal-title" id="modalQuoteSheetPreviewLabel">見積書</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
-                        </div>
-                        <div class="modal-body bg-light" id="modalQuoteSheetPreviewBody"></div>
-                        <div class="modal-footer d-flex flex-wrap align-items-center justify-content-end">
-                            <div class="d-flex flex-wrap gap-2">
-                                <button type="button" class="btn btn-outline-primary" id="btnQuoteSheetPdfDownload"><i class="bi bi-file-earmark-pdf"></i> PDFダウンロード</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 見積詳細プレビュー -->
-            <div class="modal fade modal-quote-preview" id="modalQuoteDetailPreview" tabindex="-1" aria-labelledby="modalQuoteDetailPreviewLabel" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header border-secondary">
-                            <h5 class="modal-title" id="modalQuoteDetailPreviewLabel">見積詳細</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
-                        </div>
-                        <div class="modal-body bg-light" id="modalQuoteDetailPreviewBody"></div>
-                        <div class="modal-footer d-flex flex-wrap align-items-center justify-content-end">
-                            <div class="d-flex flex-wrap gap-2">
-                                <button type="button" class="btn btn-outline-primary" id="btnQuoteDetailPdfDownload"><i class="bi bi-file-earmark-pdf"></i> PDFダウンロード</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/quote-unit-price-config.js"></script>
+    <script src="../js/quote-ukeoi-condition-defaults.js"></script>
+    <script src="../js/quote-ukeoi-basic-defaults.js"></script>
+    <script src="../js/quote-ukeoi-items-defaults.js"></script>
+    <script src="../js/quote-legal-common.js"></script>
     <script src="../js/layout.js"></script>
     <script>
 (function () {
@@ -2455,15 +2448,6 @@
     RATE_TYPES.forEach(function (rt) {
         if (rt && typeof rt.price === "number") rt.price = 50000;
     });
-
-    var OTA_COST_RATIO = { OTA: 0.72, NC: 0.65, OTHERS: 0.78 };
-
-    function getOtaQuoteSourceRatio() {
-        var srcEl = document.getElementById('ota-quote-source');
-        var r = OTA_COST_RATIO[srcEl && srcEl.value ? srcEl.value : 'OTA'];
-        if (typeof r !== 'number' || isNaN(r)) return 0.72;
-        return r;
-    }
 
     function fmtComma(n) {
         return Math.round(n).toLocaleString('ja-JP');
@@ -2499,29 +2483,23 @@
         var rtSel = tr.querySelector('.qi-rate-type');
         var scopeSel = tr.querySelector('.qi-scope');
         var upInp = tr.querySelector('.qi-unit-price');
-        var cuInp = tr.querySelector('.qi-cost-unit-price');
         var amInp = tr.querySelector('.qi-amount');
         if (!mdInp || !rtSel || !upInp || !amInp) return;
         if (tr.classList.contains('quote-item-row--flat-amount')) {
             var flatId = tr.getAttribute('data-flat-rate-id');
             if (flatId) fillRateSelect(rtSel, flatId);
             mdInp.value = '1.0';
-            var ratio = getOtaQuoteSourceRatio();
             var amt = parseInt(String(amInp.value).replace(/,/g, ''), 10);
             if (isNaN(amt)) amt = 0;
             if (scopeSel && scopeSel.value === '対象外') amt = 0;
             amInp.value = fmtComma(amt);
             upInp.value = fmtComma(amt);
-            if (cuInp) cuInp.value = fmtComma(Math.round(amt * ratio));
             return;
         }
         var md = roundMd(mdInp.value);
         mdInp.value = md.toFixed(1);
         var unit = priceById(rtSel.value);
-        var ratio = getOtaQuoteSourceRatio();
-        var costUnit = Math.round(unit * ratio);
         upInp.value = fmtComma(unit);
-        if (cuInp) cuInp.value = fmtComma(costUnit);
         var amt = scopeSel && scopeSel.value === '対象外' ? 0 : Math.round(md * unit);
         amInp.value = fmtComma(amt);
     }
@@ -2546,6 +2524,7 @@
         if (elTot) elTot.textContent = fmtYen(total);
         refreshOtjCostTable();
     }
+    window.QuoteUkeoiCreateRecalc = { recalcAll: recalcAll };
 
     function collectRevenueByRate() {
         var byRate = {};
@@ -2964,11 +2943,8 @@
         var defBox = document.getElementById('qc_re_sub_party_defined');
         var defVal = document.getElementById('qc_re_sub_party_defined_val');
         var PHRASES = {
-            otasia: 'ONETECH ASIA JSC（ONETECH ASIA JSC / NeXConstructグループ企業・ベトナム）',
-            otasia_short: 'ONETECH ASIA JSC（NeXConstructグループ企業・ベトナム）',
-            otasia_only: 'ONETECH ASIA JSC',
-            nexconstruct_bracket: 'NeXConstruct（グループ企業・ベトナム）',
-            nexconstruct_only: 'NeXConstruct'
+            otasjc: 'ONETECH ASIA JOINT STOCK COMPANY',
+            nexconstruct: 'NeXConstruct'
         };
         function partyPhrase() {
             var v = sel.value;
@@ -2976,7 +2952,7 @@
                 var c = customInp && customInp.value.trim();
                 return c || '（再委託先を入力してください）';
             }
-            return PHRASES[v] || PHRASES.otasia;
+            return PHRASES[v] || PHRASES.otasjc;
         }
         function toggleCustom() {
             var isOther = sel.value === 'other';
@@ -2989,7 +2965,7 @@
         function apply() {
             toggleCustom();
             if (sel.value === 'none') {
-                ta.value = '本プロジェクトの開発業務は、弊社（One Technology Japan）にて実施します。品質管理および顧客窓口は弊社が責任を持って担当いたします。';
+                ta.value = '本プロジェクトの開発業務は、再委託を行わず、One Technology Japan（弊社）が対応いたします。品質管理および顧客窓口は弊社が責任を持って担当いたします。';
                 if (defBox) defBox.classList.add('d-none');
                 return;
             }
@@ -3076,7 +3052,19 @@
         if (tot) out.total = tot.textContent.trim();
         return out;
     }
-    function buildQuotePreviewHeaderCreate() {
+    function getQuoteItemsSummaryAmountsForPreviewCreate() {
+        var out = { sub: '—', tax: '—', total: '—' };
+        var elSub = document.getElementById('qi-subtotal');
+        var elTax = document.getElementById('qi-tax');
+        var elTot = document.getElementById('qi-total');
+        if (elSub) out.sub = elSub.textContent.trim();
+        if (elTax) out.tax = elTax.textContent.trim();
+        if (elTot) out.total = elTot.textContent.trim();
+        return out;
+    }
+    function buildQuotePreviewHeaderCreate(opts) {
+        opts = opts || {};
+        var amountsFromItems = !!opts.amountsFromItems;
         var p = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
         var no = p.get('no') || '';
         var client = getQuoteSheetClientNameForPreviewCreate();
@@ -3086,6 +3074,7 @@
         var wrap = document.createElement('div');
         wrap.className = 'qp-preview-doc-head';
         wrap.innerHTML =
+            '<div class="qp-preview-doc-title">お見積書</div>' +
             '<div class="row qp-preview-head-2col g-4">' +
             '<div class="col-md-6 qp-preview-head-left">' +
             '<div class="qp-preview-to"></div>' +
@@ -3123,7 +3112,9 @@
         if (nEl) nEl.textContent = no || '—';
         if (dEl) dEl.textContent = formatJaDatePreview(today);
         if (vEl) vEl.textContent = formatJaDatePreview(validUntil) + 'まで（発行日より30日間）';
-        var sums = getQuoteSheetSummaryAmountsForPreviewCreate();
+        var sums = amountsFromItems
+            ? getQuoteItemsSummaryAmountsForPreviewCreate()
+            : getQuoteSheetSummaryAmountsForPreviewCreate();
         var sSub = wrap.querySelector('.qp-preview-sum-sub');
         var sTax = wrap.querySelector('.qp-preview-sum-tax');
         var sTot = wrap.querySelector('.qp-preview-sum-total');
@@ -3173,7 +3164,7 @@
                 '記載事項以外の機能追加・変更に関しては別途お見積り',
                 '上記にない案件固有の条件を記載してください',
                 '紙面と差異がある場合はテキストを直接修正するか、元ファイルを共有いただければ完全一致に寄せられます',
-                '再委託、開発・納期、検収・瑕疵担保、作業時間、支払、納品物・保存期間、免責、発注・仕様管理、知的財産、損害賠償・準拠法の標準条項です。編集は各欄で行えます',
+                '再委託、開発・納期、検収・瑕疵担保、対応時間・休日、支払、納品物・保存期間、免責、発注・仕様管理、知的財産、損害賠償・準拠法の標準条項です。編集は各欄で行えます',
                 '「詳細条件設定」タブ上部のツールバーから操作してください',
                 'OTJの見積をクライアントに提出する前提で',
                 '明細ベースの原価単価（掛け率）に反映されます',
@@ -3191,35 +3182,111 @@
         };
         root.querySelectorAll('p').forEach(removeIfHintParagraph);
     }
-    function printQuotePreviewModalCreate(modalEl) {
-        if (!modalEl) return;
+    function printQuotePreviewTargetCreate(targetEl, opts) {
+        if (!targetEl) return;
+        var dispose = opts && opts.dispose;
         var cleanup = function () {
             document.body.classList.remove('qp-printing-preview');
-            modalEl.classList.remove('qp-print-target');
+            targetEl.classList.remove('qp-print-target');
+            if (dispose && targetEl.parentNode) targetEl.parentNode.removeChild(targetEl);
             window.removeEventListener('afterprint', cleanup);
         };
         window.addEventListener('afterprint', cleanup);
         document.body.classList.add('qp-printing-preview');
-        modalEl.classList.add('qp-print-target');
+        targetEl.classList.add('qp-print-target');
         requestAnimationFrame(function () {
             window.print();
         });
     }
+    function cloneFilteredQcBlocksForPreviewCreate(selector) {
+        var el = document.querySelector(selector);
+        if (!el) return null;
+        var clone = el.cloneNode(true);
+        clone.querySelectorAll('.qc-block').forEach(function (block) {
+            var inc = block.querySelector('input.qc-include');
+            if (inc && !inc.checked) block.remove();
+        });
+        stripCustomerPreviewNoiseCreate(clone);
+        finalizeAsReadonlyPreviewCreate(clone);
+        return clone;
+    }
+    function appendPreviewSectionCreate(body, title, innerNode) {
+        if (!body || !innerNode) return;
+        var sec = document.createElement('section');
+        sec.className = 'qp-preview-section';
+        if (title) {
+            var ht = document.createElement('h6');
+            ht.className = 'qp-preview-section-title';
+            ht.textContent = title;
+            sec.appendChild(ht);
+        }
+        sec.appendChild(innerNode);
+        body.appendChild(sec);
+    }
+    function appendReadonlySheetAppendixIntoCreate(body) {
+        if (!body) return;
+        var sheet = document.querySelector('#quote-document .quote-sheet-preview');
+        if (sheet) {
+            var sheetClone = sheet.cloneNode(true);
+            prepareQuoteSheetCloneForPreviewCreate(sheetClone);
+            finalizeAsReadonlyPreviewCreate(sheetClone);
+            body.appendChild(sheetClone);
+        }
+        var maintSrc = document.getElementById('quote-maint-preview-card');
+        if (maintSrc) {
+            var maintClone = maintSrc.cloneNode(true);
+            finalizeAsReadonlyPreviewCreate(maintClone);
+            syncMaintEstimatePreviewCreate(maintClone);
+            body.appendChild(maintClone);
+        }
+        var delSrc = document.querySelector('#quote-deliverables .deliverables-sheet');
+        if (delSrc) {
+            var delClone = delSrc.cloneNode(true);
+            stripCustomerPreviewNoiseCreate(delClone);
+            finalizeAsReadonlyPreviewCreate(delClone);
+            appendPreviewSectionCreate(body, '納品物', delClone);
+        }
+        var detClone = cloneFilteredQcBlocksForPreviewCreate('#quote-conditions .qc-blocks');
+        if (detClone) appendPreviewSectionCreate(body, '詳細条件設定（請負）', detClone);
+        var fixClone = cloneFilteredQcBlocksForPreviewCreate('#quote-fixed-conditions .qc-blocks');
+        if (fixClone) appendPreviewSectionCreate(body, '固定条件（請負）', fixClone);
+    }
+    function rebuildQuoteInlineSheetPreviewCreate() {
+        var mount = document.getElementById('quote-inline-sheet-readonly-mount');
+        if (!mount) return;
+        mount.innerHTML = '';
+        var doc = buildQuoteSheetReadonlyDocumentRootCreate();
+        if (doc) mount.appendChild(doc);
+    }
+    function buildQuoteSheetReadonlyDocumentRootCreate() {
+        var wrap = document.createElement('div');
+        wrap.className = 'qp-preview-readonly';
+        wrap.appendChild(buildQuotePreviewHeaderCreate());
+        appendReadonlySheetAppendixIntoCreate(wrap);
+        return wrap;
+    }
     function initQuotePreviewPdfDownloadsCreate() {
         var sheetBtn = document.getElementById('btnQuoteSheetPdfDownload');
         var detBtn = document.getElementById('btnQuoteDetailPdfDownload');
-        var mSheet = document.getElementById('modalQuoteSheetPreview');
-        var mDet = document.getElementById('modalQuoteDetailPreview');
-        if (sheetBtn && mSheet) {
+        var main = document.querySelector('main.main-content');
+        if (sheetBtn && main) {
             sheetBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                printQuotePreviewModalCreate(mSheet);
+                var wrap = buildQuoteSheetReadonlyDocumentRootCreate();
+                main.appendChild(wrap);
+                printQuotePreviewTargetCreate(wrap, { dispose: true });
             });
         }
-        if (detBtn && mDet) {
+        if (detBtn && main) {
             detBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                printQuotePreviewModalCreate(mDet);
+                var wrap = document.createElement('div');
+                wrap.className = 'qp-preview-readonly';
+                wrap.appendChild(buildQuotePreviewHeaderCreate({ amountsFromItems: true }));
+                var c = buildQuoteDetailPreviewCloneCreate();
+                if (c) wrap.appendChild(c);
+                main.appendChild(wrap);
+                printQuotePreviewTargetCreate(wrap, { dispose: true });
             });
         }
     }
@@ -3317,6 +3384,8 @@
         var mIn = document.getElementById('qc-maint-estimate-amount');
         var cIn = document.getElementById('qc-cloud-estimate-amount');
         var pIn = document.getElementById('qc-cloud-provider');
+        var scopeSel = document.getElementById('qc-cloud-scope');
+        var cloudOut = scopeSel && scopeSel.value === '対象外';
         function fmtYenInt(n) {
             var v = typeof n === 'number' ? n : parseInt(String(n).replace(/,/g, ''), 10);
             if (isNaN(v) || v < 0) v = 0;
@@ -3326,16 +3395,29 @@
         var ac = root.querySelector('.qs-preview-cloud-amt');
         var pr = root.querySelector('.qs-preview-cloud-provider');
         if (am) am.textContent = fmtYenInt(mIn && mIn.value !== '' ? mIn.value : 60000);
-        if (ac) ac.textContent = fmtYenInt(cIn && cIn.value !== '' ? cIn.value : 30000);
-        if (pr) pr.textContent = (pIn && pIn.value.trim()) ? pIn.value.trim() : 'AWS';
+        if (ac) ac.textContent = cloudOut ? '対象外' : fmtYenInt(cIn && cIn.value !== '' ? cIn.value : 30000);
+        if (pr) pr.textContent = cloudOut ? '—' : (pIn && pIn.value.trim() ? pIn.value.trim() : 'AWS');
+    }
+    function syncCloudScopeInputsDisabledCreate() {
+        var s = document.getElementById('qc-cloud-scope');
+        var out = s && s.value === '対象外';
+        ['qc-cloud-provider', 'qc-cloud-estimate-amount'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.disabled = !!out;
+            el.classList.toggle('bg-light', !!out);
+        });
     }
     function bindMaintPreviewLiveSyncCreate() {
         var card = document.getElementById('quote-maint-preview-card');
         if (!card) return;
         function go() {
+            syncCloudScopeInputsDisabledCreate();
             syncMaintEstimatePreviewCreate(card);
+            var pane = document.getElementById('quote-inline-pane-sheet');
+            if (pane && !pane.classList.contains('d-none')) rebuildQuoteInlineSheetPreviewCreate();
         }
-        ['qc-maint-estimate-amount', 'qc-cloud-estimate-amount', 'qc-cloud-provider'].forEach(function (id) {
+        ['qc-maint-estimate-amount', 'qc-cloud-estimate-amount', 'qc-cloud-provider', 'qc-cloud-scope'].forEach(function (id) {
             var el = document.getElementById(id);
             if (!el) return;
             el.addEventListener('input', go);
@@ -3343,82 +3425,145 @@
         });
         go();
     }
-    function initQuoteCreatePreviewModals() {
-        if (document.body.getAttribute('data-page-name') !== 'quote-create') return;
-        var mSheet = document.getElementById('modalQuoteSheetPreview');
-        if (mSheet) {
-            mSheet.addEventListener('show.bs.modal', function () {
-                var body = document.getElementById('modalQuoteSheetPreviewBody');
-                if (!body) return;
-                body.innerHTML = '';
-                body.classList.add('qp-preview-readonly');
-                body.appendChild(buildQuotePreviewHeaderCreate());
-                var sheet = document.querySelector('#quote-document .quote-sheet-preview');
-                if (sheet) {
-                    var sheetClone = sheet.cloneNode(true);
-                    prepareQuoteSheetCloneForPreviewCreate(sheetClone);
-                    finalizeAsReadonlyPreviewCreate(sheetClone);
-                    body.appendChild(sheetClone);
-                }
-                var maintSrc = document.getElementById('quote-maint-preview-card');
-                if (maintSrc) {
-                    var maintClone = maintSrc.cloneNode(true);
-                    finalizeAsReadonlyPreviewCreate(maintClone);
-                    syncMaintEstimatePreviewCreate(maintClone);
-                    body.appendChild(maintClone);
-                }
-                function addSection(title, sel) {
-                    var el = document.querySelector(sel);
-                    if (!el) return;
-                    var sec = document.createElement('section');
-                    sec.className = 'qp-preview-section';
-                    if (title) {
-                        var ht = document.createElement('h6');
-                        ht.className = 'qp-preview-section-title';
-                        ht.textContent = title;
-                        sec.appendChild(ht);
-                    }
-                    var inner = el.cloneNode(true);
-                    stripCustomerPreviewNoiseCreate(inner);
-                    finalizeAsReadonlyPreviewCreate(inner);
-                    sec.appendChild(inner);
-                    body.appendChild(sec);
-                }
-                addSection('納品物', '#quote-deliverables .deliverables-sheet');
-                addSection('', '#quote-conditions .qc-blocks');
-                addSection('', '#quote-fixed-conditions .qc-blocks');
-            });
-        }
-        var mDet = document.getElementById('modalQuoteDetailPreview');
-        if (mDet) {
-            mDet.addEventListener('show.bs.modal', function () {
-                var body = document.getElementById('modalQuoteDetailPreviewBody');
-                if (!body) return;
-                body.innerHTML = '';
-                body.classList.add('qp-preview-readonly');
-                var src = document.getElementById('quote-items');
-                if (!src) return;
-                var clone = src.cloneNode(true);
-                clone.removeAttribute('id');
-                clone.classList.remove('tab-pane', 'fade');
-                clone.classList.add('quote-items-preview-root');
-                clone.style.display = 'block';
-                clone.style.opacity = '1';
-                stripCustomerPreviewNoiseCreate(clone);
-                stripQuoteDetailPreviewCustomerColumnsCreate(clone);
-                finalizeAsReadonlyPreviewCreate(clone);
-                body.appendChild(clone);
-            });
-        }
-        initQuotePreviewPdfDownloadsCreate();
+    function buildQuoteDetailPreviewCloneCreate() {
+        var src = document.getElementById('quote-items');
+        if (!src) return null;
+        var clone = src.cloneNode(true);
+        clone.removeAttribute('id');
+        clone.classList.remove('tab-pane', 'fade');
+        clone.classList.add('quote-items-preview-root');
+        clone.style.display = 'block';
+        clone.style.opacity = '1';
+        stripCustomerPreviewNoiseCreate(clone);
+        stripQuoteDetailPreviewCustomerColumnsCreate(clone);
+        finalizeAsReadonlyPreviewCreate(clone);
+        return clone;
     }
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () {
-        initQuoteCreatePreviewModals();
+    function initQuoteDocumentInlinePreviewToggle() {
+        if (document.body.getAttribute('data-page-name') !== 'quote-create') return;
+        var btnSheet = document.getElementById('btn-quote-preview-mode-sheet');
+        var btnDetail = document.getElementById('btn-quote-preview-mode-detail');
+        var paneSheet = document.getElementById('quote-inline-pane-sheet');
+        var paneDetail = document.getElementById('quote-inline-pane-detail');
+        var inner = document.getElementById('quote-inline-detail-inner');
+        if (!btnSheet || !btnDetail || !paneSheet || !paneDetail || !inner) return;
+        function setMode(isSheet) {
+            if (isSheet) {
+                rebuildQuoteInlineSheetPreviewCreate();
+                paneSheet.classList.remove('d-none');
+                paneDetail.classList.add('d-none');
+                btnSheet.classList.remove('btn-outline-primary');
+                btnSheet.classList.add('btn-primary');
+                btnDetail.classList.remove('btn-primary');
+                btnDetail.classList.add('btn-outline-primary');
+                btnSheet.setAttribute('aria-pressed', 'true');
+                btnDetail.setAttribute('aria-pressed', 'false');
+            } else {
+                inner.innerHTML = '';
+                inner.appendChild(buildQuotePreviewHeaderCreate({ amountsFromItems: true }));
+                var clone = buildQuoteDetailPreviewCloneCreate();
+                if (clone) inner.appendChild(clone);
+                paneSheet.classList.add('d-none');
+                paneDetail.classList.remove('d-none');
+                btnDetail.classList.remove('btn-outline-primary');
+                btnDetail.classList.add('btn-primary');
+                btnSheet.classList.remove('btn-primary');
+                btnSheet.classList.add('btn-outline-primary');
+                btnSheet.setAttribute('aria-pressed', 'false');
+                btnDetail.setAttribute('aria-pressed', 'true');
+            }
+        }
+        btnSheet.addEventListener('click', function () {
+            setMode(true);
+        });
+        btnDetail.addEventListener('click', function () {
+            setMode(false);
+        });
+    }
+    function initQuoteDocumentPreviewCreate() {
+        if (document.body.getAttribute('data-page-name') !== 'quote-create') return;
+        initQuotePreviewPdfDownloadsCreate();
+        rebuildQuoteInlineSheetPreviewCreate();
+        var root = document.getElementById('quote-create');
+        var sheetPane = document.getElementById('quote-inline-pane-sheet');
+        function rebuildIfSheetVisible() {
+            var pane = document.getElementById('quote-inline-pane-sheet');
+            if (!pane || pane.classList.contains('d-none')) return;
+            rebuildQuoteInlineSheetPreviewCreate();
+        }
+        var debPreview;
+        function scheduleRebuildIfSheetVisible() {
+            clearTimeout(debPreview);
+            debPreview = setTimeout(rebuildIfSheetVisible, 250);
+        }
+        if (root) {
+            root.addEventListener('change', function (e) {
+                var t = e.target;
+                if (!t || !t.closest) return;
+                var pane = document.getElementById('quote-inline-pane-sheet');
+                if (!pane || pane.classList.contains('d-none')) return;
+                if (t.classList.contains('qc-include')) {
+                    rebuildQuoteInlineSheetPreviewCreate();
+                    return;
+                }
+                if (t.closest('#quote-deliverables')) rebuildQuoteInlineSheetPreviewCreate();
+                if (
+                    t.closest('#quote-conditions') ||
+                    t.closest('#quote-fixed-conditions')
+                ) {
+                    rebuildQuoteInlineSheetPreviewCreate();
+                }
+            });
+            root.addEventListener('input', function (e) {
+                var t = e.target;
+                if (!t || !t.closest) return;
+                if (
+                    !(
+                        t.closest('#quote-conditions') ||
+                        t.closest('#quote-fixed-conditions') ||
+                        t.closest('#quote-deliverables')
+                    )
+                )
+                    return;
+                if (t.matches('textarea, input, select')) scheduleRebuildIfSheetVisible();
+            });
+            root.addEventListener('shown.bs.tab', function (e) {
+                var tgt = e.target;
+                if (!tgt || typeof tgt.getAttribute !== 'function') return;
+                if (tgt.getAttribute('href') === '#quote-document') rebuildQuoteInlineSheetPreviewCreate();
+            });
+        }
+    }
+    function initQuoteCreatePreviewOnReady() {
+        initQuoteDocumentPreviewCreate();
+        initQuoteDocumentInlinePreviewToggle();
         bindMaintPreviewLiveSyncCreate();
-    });
-    else {
-        initQuoteCreatePreviewModals();
-        bindMaintPreviewLiveSyncCreate();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initQuoteCreatePreviewOnReady);
+    else initQuoteCreatePreviewOnReady();
+
+    function applyMasterStoredDefaultsAfterInits() {
+        if (typeof QuoteUkeoiConditionDefaults !== 'undefined' && QuoteUkeoiConditionDefaults.applyFromStorage) {
+            QuoteUkeoiConditionDefaults.applyFromStorage('#quote-create');
+        }
+        if (typeof QuoteUkeoiBasicDefaults !== 'undefined' && QuoteUkeoiBasicDefaults.applyFromStorage) {
+            QuoteUkeoiBasicDefaults.applyFromStorage('#quote-create');
+        }
+        if (typeof QuoteUkeoiItemsDefaults !== 'undefined' && QuoteUkeoiItemsDefaults.applyFromStorage) {
+            QuoteUkeoiItemsDefaults.applyFromStorage('#quote-create');
+        }
+        if (typeof syncCloudScopeInputsDisabledCreate === 'function') {
+            syncCloudScopeInputsDisabledCreate();
+        }
+        var card = document.getElementById('quote-maint-preview-card');
+        if (typeof syncMaintEstimatePreviewCreate === 'function' && card) {
+            syncMaintEstimatePreviewCreate(card);
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyMasterStoredDefaultsAfterInits);
+    } else {
+        applyMasterStoredDefaultsAfterInits();
     }
 })();
     </script>

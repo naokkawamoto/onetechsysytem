@@ -8,7 +8,7 @@
         "client-list": "クライアント一覧",
         "client-detail": "クライアント詳細",
         "client-create": "クライアント登録",
-        "quote-hub": "見積・承認",
+        "quote-hub": "見積一覧",
         "quote-list": "見積一覧",
         "quote-create": "見積新規作成",
         "quote-create-lab": "ラボ見積新規作成",
@@ -40,8 +40,8 @@
         {
             page: "quote-hub",
             href: "quote-hub.html",
-            icon: "bi-file-earmark-check",
-            label: "見積・承認",
+            icon: "bi-list-ul",
+            label: "見積一覧",
             quoteNavGroup: true,
             badge: null,
         },
@@ -105,8 +105,6 @@
             esc(title) +
             "</h1>" +
             '<div class="header-actions">' +
-            '<button type="button" class="btn btn-light btn-sm"><i class="bi bi-bell"></i></button>' +
-            '<button type="button" class="btn btn-light btn-sm"><i class="bi bi-question-circle"></i></button>' +
             '<div class="dropdown">' +
             '<button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">' +
             '<i class="bi bi-person-circle"></i> 管理者</button>' +

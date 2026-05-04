@@ -31,14 +31,14 @@
         }
         #quote-detail #quote-doc-v2 .quote-maint-preview-card .qs-maint-footnote,
         #quote-detail #quote-doc-v1 .quote-maint-preview-card .qs-maint-footnote { font-size: 0.7rem; color: #6c757d; }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card {
+        #quote-doc-v2 #quote-doc-v2-inline-sheet-editor-source .quote-maint-preview-card {
             font-size: 0.8125rem;
             border-radius: 4px;
             margin-bottom: 1rem;
         }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card .card-header { font-size: 0.8125rem; }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card .card-body { font-size: 0.8125rem; }
-        .modal-quote-sheet-preview #modalQuoteSheetPreviewBody .quote-maint-preview-card .qs-maint-footnote { font-size: 0.7rem; }
+        #quote-doc-v2 #quote-doc-v2-inline-sheet-editor-source .quote-maint-preview-card .card-header { font-size: 0.8125rem; }
+        #quote-doc-v2 #quote-doc-v2-inline-sheet-editor-source .quote-maint-preview-card .card-body { font-size: 0.8125rem; }
+        #quote-doc-v2 #quote-doc-v2-inline-sheet-editor-source .quote-maint-preview-card .qs-maint-footnote { font-size: 0.7rem; }
         .quote-sheet-preview .qs-greeting { padding: 10px 14px; margin: 0; border-bottom: 1px solid #dee2e6; }
         .quote-sheet-preview .qs-total-bar { display: flex; align-items: stretch; border-bottom: 2px solid #1e4d7b; }
         .quote-sheet-preview .qs-total-label { background: #1e4d7b; color: #fff; padding: 12px 16px; font-weight: 700; flex: 0 0 200px; display: flex; align-items: center; letter-spacing: 0.02em; }
@@ -153,6 +153,17 @@
             padding-bottom: 1rem;
             border-bottom: 2px solid #1e4d7b;
             background: #fff;
+        }
+        .qp-preview-doc-title {
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-indent: 0.35em;
+            font-size: 1.15rem;
+            color: #1e4d7b;
+            margin-bottom: 1rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 1px solid #dee2e6;
         }
         .qp-preview-head-2col { align-items: flex-start; }
         .qp-preview-head-left {
@@ -297,11 +308,33 @@
             color: #212529;
         }
         .qp-preview-readonly .quote-phase .d-flex.justify-content-between { justify-content: flex-start !important; }
-        #modalQuoteSheetPreviewBody .quote-sheet-preview,
-        #modalQuoteDetailPreviewBody .quote-items-preview-root { margin-top: 0; }
-        #modalQuoteDetailPreviewBody .quote-items-preview-root .card { border-radius: 4px; }
-        #modalQuoteSheetPreviewBody.modal-body,
-        #modalQuoteDetailPreviewBody.modal-body { overflow-x: auto; }
+        #quote-doc-v2 #quote-doc-v2-inline-detail-inner .quote-items-preview-root { margin-top: 0; }
+        #quote-doc-v2 #quote-doc-v2-inline-detail-inner .quote-items-preview-root .card { border-radius: 4px; }
+        #quote-doc-v2 #quote-doc-v2-inline-detail-inner {
+            max-height: min(72vh, 900px);
+            overflow: auto;
+            background: #f8fafc;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 0.5rem;
+        }
+        #quote-doc-v2 #quote-doc-v2-sheet-readonly-mount {
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: min(72vh, 900px);
+            padding: 0.5rem;
+            background: #f8fafc;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+        #quote-doc-v2 #quote-doc-v2-sheet-readonly-mount .quote-maint-preview-card {
+            font-size: 0.8125rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        #quote-doc-v2 #quote-doc-v2-sheet-readonly-mount .quote-maint-preview-card .card-header { font-size: 0.8125rem; }
+        #quote-doc-v2 #quote-doc-v2-sheet-readonly-mount .quote-maint-preview-card .card-body { font-size: 0.8125rem; }
+        #quote-doc-v2 #quote-doc-v2-sheet-readonly-mount .quote-maint-preview-card .qs-maint-footnote { font-size: 0.7rem; }
         .modal-quote-preview .modal-content {
             border: 1px solid #dee2e6;
             box-shadow: 0 0.5rem 1.25rem rgba(22, 58, 92, 0.12);
@@ -473,7 +506,6 @@
                             <option selected>通常：請負</option>
                             <option>通常：ラボ</option>
                             <option>通常：保守</option>
-                            <option>通常：概算：請負／保守／サーバー</option>
                             <option>概算：請負</option>
                             <option>概算：ラボ</option>
                             <option>概算：保守</option>
@@ -494,7 +526,7 @@
                                 <input type="text" class="form-control" id="quote-detail-quote-source" value="OTA" readonly>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">見積り担当者</label>
+                                <label class="form-label">見積担当者</label>
                                 <input type="text" class="form-control" value="鈴木一郎" readonly>
                             </div>
                             <div class="col-md-4">
@@ -601,7 +633,7 @@
 
                 <!-- 見積書タブ（Ver.2＝差分＋改訂案、Ver.1＝確定前）※詳細ページのみ -->
                 <div class="tab-pane fade" id="quote-document">
-                    <p class="text-muted small mb-2">クライアント提出用の見積書レイアウト（デモ）。Ver.2 の上部に Ver.1 からの差分を表示します。</p>
+                    <p class="text-muted small mb-2">クライアント提出用の見積書（デモ）。Ver.2 の上部に Ver.1 からの差分を表示します。<strong>見積書プレビュー</strong>は<strong>見積書PDF</strong>と同じ体裁で表示し、ボタンで<strong>見積詳細プレビュー</strong>に切り替えられます。PDFはブラウザの印刷で「PDFに保存」してください。</p>
                     <ul class="nav nav-tabs mb-3" id="quote-doc-version-nav" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="quote-doc-v2-tab" data-bs-toggle="tab" href="#quote-doc-v2" role="tab" aria-controls="quote-doc-v2" aria-selected="true">Ver.2</a>
@@ -612,10 +644,6 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="quote-doc-v2" role="tabpanel" aria-labelledby="quote-doc-v2-tab">
-                            <div class="d-flex justify-content-end gap-2 mb-2 flex-wrap">
-                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalQuoteSheetPreview"><i class="bi bi-file-earmark-text"></i> 見積書プレビュー</button>
-                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalQuoteDetailPreview"><i class="bi bi-table"></i> 見積詳細プレビュー</button>
-                            </div>
                             <div class="card border-secondary quote-sheet-version-meta mb-3">
                                 <div class="card-header bg-light py-2 d-flex flex-wrap justify-content-between align-items-start gap-2">
                                     <div class="fw-semibold text-secondary"><i class="bi bi-arrow-left-right me-1" aria-hidden="true"></i>Ver.1 からの変更（差分）</div>
@@ -633,74 +661,92 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="quote-sheet-preview">
-                                <div class="qs-meta">
-                                    <div>
-                                        <label>クライアント名</label>
-                                        <div class="qs-static-value">株式会社テックソリューション</div>
-                                    </div>
-                                    <div>
-                                        <label>件名</label>
-                                        <div class="qs-static-value">ECサイトリニューアル開発（改訂版）</div>
-                                    </div>
-                                    <div>
-                                        <label>開発期間</label>
-                                        <div class="qs-static-value">2026年5月 〜 2026年10月（予定）</div>
-                                    </div>
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2 quote-doc-v2-top-toolbar">
+                                <div class="btn-group btn-group-sm quote-doc-v2-inline-toolbar-left" role="group" aria-label="見積プレビュー表示の切替">
+                                    <button type="button" class="btn btn-sm btn-primary quote-doc-v2-interactive-btn" id="btn-quote-doc-v2-preview-mode-sheet" aria-pressed="true"><i class="bi bi-file-earmark-text"></i> 見積書プレビュー</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary quote-doc-v2-interactive-btn" id="btn-quote-doc-v2-preview-mode-detail" aria-pressed="false"><i class="bi bi-table"></i> 見積詳細プレビュー</button>
                                 </div>
-                                <p class="qs-greeting mb-0 small">下記のとおり御見積申し上げます。</p>
-                                <div class="qs-total-bar">
-                                    <div class="qs-total-label">合計金額（税込）</div>
-                                    <div class="qs-total-value">¥6,200,000</div>
+                                <div class="d-flex flex-wrap gap-2 align-items-center">
+                                    <button type="button" class="btn btn-sm btn-outline-primary quote-doc-v2-interactive-btn" id="btnQuoteSheetPdfDownload" title="見積書一式を印刷またはPDF保存"><i class="bi bi-file-earmark-pdf"></i> 見積書PDF</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary quote-doc-v2-interactive-btn" id="btnQuoteDetailPdfDownload" title="見積明細を印刷またはPDF保存"><i class="bi bi-file-earmark-pdf"></i> 見積詳細PDF</button>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="qs-table">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 2rem;">No.</th>
-                                                <th>工程</th>
-                                                <th style="width: 3rem;">区分</th>
-                                                <th style="width: 8rem;">金額（税抜）</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td class="qs-no">1</td><td>要件定義・ディレクション</td><td class="qs-cat">日</td><td class="qs-amt">¥520,000</td></tr>
-                                            <tr><td class="qs-no">2</td><td>仕様理解・検討</td><td class="qs-cat">日</td><td class="qs-na">対象外</td></tr>
-                                            <tr><td class="qs-no">3</td><td>研究開発</td><td class="qs-cat">日</td><td class="qs-na">対象外</td></tr>
-                                            <tr><td class="qs-no">4</td><td>システム設計</td><td class="qs-cat">日</td><td class="qs-amt">¥920,000</td></tr>
-                                            <tr><td class="qs-no">5</td><td>デザイン</td><td class="qs-cat">日</td><td class="qs-amt">¥450,000</td></tr>
-                                            <tr><td class="qs-no">6</td><td>環境構築（開発・本番）</td><td class="qs-cat">越</td><td class="qs-na">対象外</td></tr>
-                                            <tr><td class="qs-no">7</td><td>開発</td><td class="qs-cat">日</td><td class="qs-amt">¥700,000</td></tr>
-                                            <tr><td class="qs-no">8</td><td>機能要件テスト</td><td class="qs-cat">日</td><td class="qs-amt">¥330,000</td></tr>
-                                            <tr><td class="qs-no">9</td><td>非機能要件テスト</td><td class="qs-cat">日</td><td class="qs-amt">¥290,000</td></tr>
-                                            <tr><td class="qs-no">10</td><td>アプリ申請・パッケージ</td><td class="qs-cat">越</td><td class="qs-na">対象外</td></tr>
-                                            <tr><td class="qs-no">11</td><td>受入テスト支援</td><td class="qs-cat">越</td><td class="qs-amt">¥460,000</td></tr>
-                                            <tr><td class="qs-no">12</td><td>保守運用設定</td><td class="qs-cat">日</td><td class="qs-amt">¥230,000</td></tr>
-                                            <tr><td class="qs-no">13</td><td>特急対応</td><td class="qs-cat">日</td><td class="qs-na">対象外</td></tr>
-                                            <tr><td class="qs-no">14</td><td>購入費</td><td class="qs-cat">日</td><td class="qs-amt">¥390,000</td></tr>
-                                            <tr><td class="qs-no">15</td><td>旅費・交通費</td><td class="qs-cat">越</td><td class="qs-amt">¥310,000</td></tr>
-                                            <tr><td class="qs-no">16</td><td>プロジェクト管理</td><td class="qs-cat">日</td><td class="qs-amt">¥1,000,000</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="qs-summary">
-                                    <div class="qs-sum-row"><span>小計</span><span class="qs-amt">¥5,636,364</span></div>
-                                    <div class="qs-sum-row"><span>消費税（10%）</span><span class="qs-amt">¥563,636</span></div>
-                                    <div class="qs-sum-row qs-sum-total d-flex align-items-stretch p-0">
-                                        <span class="qs-sum-l d-flex align-items-center">合計（税込）</span>
-                                        <span class="qs-sum-r flex-grow-1 text-end py-2 pe-3">¥6,200,000</span>
+                            </div>
+                            <div id="quote-doc-v2-inline-pane-sheet">
+                                <div id="quote-doc-v2-sheet-readonly-mount" aria-label="見積書（PDFと同体裁のプレビュー）"></div>
+                                <div id="quote-doc-v2-inline-sheet-editor-source" class="d-none" aria-hidden="true">
+                                    <div class="quote-sheet-preview">
+                                        <div class="qs-meta">
+                                            <div>
+                                                <label>クライアント名</label>
+                                                <div class="qs-static-value">株式会社テックソリューション</div>
+                                            </div>
+                                            <div>
+                                                <label>件名</label>
+                                                <div class="qs-static-value">ECサイトリニューアル開発（改訂版）</div>
+                                            </div>
+                                            <div>
+                                                <label>開発期間</label>
+                                                <div class="qs-static-value">2026年5月 〜 2026年10月（予定）</div>
+                                            </div>
+                                        </div>
+                                        <p class="qs-greeting mb-0 small">下記のとおり御見積申し上げます。</p>
+                                        <div class="qs-total-bar">
+                                            <div class="qs-total-label">合計金額（税込）</div>
+                                            <div class="qs-total-value">¥6,200,000</div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="qs-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 2rem;">No.</th>
+                                                        <th>工程</th>
+                                                        <th style="width: 3rem;">区分</th>
+                                                        <th style="width: 8rem;">金額（税抜）</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td class="qs-no">1</td><td>要件定義・ディレクション</td><td class="qs-cat">日</td><td class="qs-amt">¥520,000</td></tr>
+                                                    <tr><td class="qs-no">2</td><td>仕様理解・検討</td><td class="qs-cat">日</td><td class="qs-na">対象外</td></tr>
+                                                    <tr><td class="qs-no">3</td><td>研究開発</td><td class="qs-cat">日</td><td class="qs-na">対象外</td></tr>
+                                                    <tr><td class="qs-no">4</td><td>システム設計</td><td class="qs-cat">日</td><td class="qs-amt">¥920,000</td></tr>
+                                                    <tr><td class="qs-no">5</td><td>デザイン</td><td class="qs-cat">日</td><td class="qs-amt">¥450,000</td></tr>
+                                                    <tr><td class="qs-no">6</td><td>環境構築（開発・本番）</td><td class="qs-cat">越</td><td class="qs-na">対象外</td></tr>
+                                                    <tr><td class="qs-no">7</td><td>開発</td><td class="qs-cat">日</td><td class="qs-amt">¥700,000</td></tr>
+                                                    <tr><td class="qs-no">8</td><td>機能要件テスト</td><td class="qs-cat">日</td><td class="qs-amt">¥330,000</td></tr>
+                                                    <tr><td class="qs-no">9</td><td>非機能要件テスト</td><td class="qs-cat">日</td><td class="qs-amt">¥290,000</td></tr>
+                                                    <tr><td class="qs-no">10</td><td>アプリ申請・パッケージ</td><td class="qs-cat">越</td><td class="qs-na">対象外</td></tr>
+                                                    <tr><td class="qs-no">11</td><td>受入テスト支援</td><td class="qs-cat">越</td><td class="qs-amt">¥460,000</td></tr>
+                                                    <tr><td class="qs-no">12</td><td>保守運用設定</td><td class="qs-cat">日</td><td class="qs-amt">¥230,000</td></tr>
+                                                    <tr><td class="qs-no">13</td><td>特急対応</td><td class="qs-cat">日</td><td class="qs-na">対象外</td></tr>
+                                                    <tr><td class="qs-no">14</td><td>購入費</td><td class="qs-cat">日</td><td class="qs-amt">¥390,000</td></tr>
+                                                    <tr><td class="qs-no">15</td><td>旅費・交通費</td><td class="qs-cat">越</td><td class="qs-amt">¥310,000</td></tr>
+                                                    <tr><td class="qs-no">16</td><td>プロジェクト管理</td><td class="qs-cat">日</td><td class="qs-amt">¥1,000,000</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="qs-summary">
+                                            <div class="qs-sum-row"><span>小計</span><span class="qs-amt">¥5,636,364</span></div>
+                                            <div class="qs-sum-row"><span>消費税（10%）</span><span class="qs-amt">¥563,636</span></div>
+                                            <div class="qs-sum-row qs-sum-total d-flex align-items-stretch p-0">
+                                                <span class="qs-sum-l d-flex align-items-center">合計（税込）</span>
+                                                <span class="qs-sum-r flex-grow-1 text-end py-2 pe-3">¥6,200,000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card border quote-maint-preview-card mb-2" id="quote-maint-preview-card">
+                                        <div class="card-header bg-light py-2 px-3 border-bottom">
+                                            <span class="fw-semibold">保守運用月間費用概算</span>
+                                        </div>
+                                        <div class="card-body py-3 px-3">
+                                            <div>月間：<strong class="font-monospace qs-preview-maint-amt">¥60,000</strong>（税別）〜</div>
+                                            <div class="mt-2">クラウド（<span class="qs-preview-cloud-provider">AWS</span>）：<strong class="font-monospace qs-preview-cloud-amt">¥30,000</strong>（税別）〜</div>
+                                            <p class="mb-0 mt-2 qs-maint-footnote"><span class="text-secondary">※</span> 開発時にも発生します。</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card border quote-maint-preview-card mb-2" id="quote-maint-preview-card">
-                                <div class="card-header bg-light py-2 px-3 border-bottom">
-                                    <span class="fw-semibold">保守運用月間費用概算</span>
-                                </div>
-                                <div class="card-body py-3 px-3">
-                                    <div>月間：<strong class="font-monospace qs-preview-maint-amt">¥60,000</strong>（税別）〜</div>
-                                    <div class="mt-2">クラウド（<span class="qs-preview-cloud-provider">AWS</span>）：<strong class="font-monospace qs-preview-cloud-amt">¥30,000</strong>（税別）〜</div>
-                                    <p class="mb-0 mt-2 qs-maint-footnote"><span class="text-secondary">※</span> 開発時にも発生します。</p>
-                                </div>
+                            <div id="quote-doc-v2-inline-pane-detail" class="d-none">
+                                <div id="quote-doc-v2-inline-detail-inner" class="qp-preview-readonly"></div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="quote-doc-v1" role="tabpanel" aria-labelledby="quote-doc-v1-tab">
@@ -1901,42 +1947,6 @@
                 </div>
             </div>
 
-            <!-- 見積書プレビュー（モーダル） -->
-            <div class="modal fade modal-quote-sheet-preview modal-quote-preview" id="modalQuoteSheetPreview" tabindex="-1" aria-labelledby="modalQuoteSheetPreviewLabel" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header border-secondary">
-                            <h5 class="modal-title" id="modalQuoteSheetPreviewLabel">見積書</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
-                        </div>
-                        <div class="modal-body bg-light" id="modalQuoteSheetPreviewBody"></div>
-                        <div class="modal-footer d-flex flex-wrap align-items-center justify-content-end">
-                            <div class="d-flex flex-wrap gap-2">
-                                <button type="button" class="btn btn-outline-primary" id="btnQuoteSheetPdfDownload"><i class="bi bi-file-earmark-pdf"></i> PDFダウンロード</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 見積詳細プレビュー -->
-            <div class="modal fade modal-quote-preview" id="modalQuoteDetailPreview" tabindex="-1" aria-labelledby="modalQuoteDetailPreviewLabel" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header border-secondary">
-                            <h5 class="modal-title" id="modalQuoteDetailPreviewLabel">見積詳細</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
-                        </div>
-                        <div class="modal-body bg-light" id="modalQuoteDetailPreviewBody"></div>
-                        <div class="modal-footer d-flex flex-wrap align-items-center justify-content-end">
-                            <div class="d-flex flex-wrap gap-2">
-                                <button type="button" class="btn btn-outline-primary" id="btnQuoteDetailPdfDownload"><i class="bi bi-file-earmark-pdf"></i> PDFダウンロード</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- 受注詳細（embed=order）用：発注書・発注請書プレビュー（デモ） -->
             <div class="modal fade modal-quote-preview" id="modalPurchaseOrderPreview" tabindex="-1" aria-labelledby="modalPurchaseOrderPreviewLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
@@ -2163,16 +2173,16 @@
                 v2.classList.add('show', 'active');
                 var metaCard = v2.querySelector('.quote-sheet-version-meta');
                 if (metaCard) metaCard.remove();
-                var toolbar = v2.querySelector('.d-flex.justify-content-end.gap-2.mb-2.flex-wrap');
+                var toolbar = v2.querySelector('.quote-doc-v2-top-toolbar');
                 if (toolbar) {
-                    var btnSheet = toolbar.querySelector('[data-bs-target="#modalQuoteSheetPreview"]');
-                    var btnDetail = toolbar.querySelector('[data-bs-target="#modalQuoteDetailPreview"]');
-                    toolbar.classList.remove('justify-content-end');
+                    var leftWrap = toolbar.querySelector('.quote-doc-v2-inline-toolbar-left');
+                    var pdfSheet = document.getElementById('btnQuoteSheetPdfDownload');
+                    var pdfDet = document.getElementById('btnQuoteDetailPdfDownload');
                     toolbar.classList.add('justify-content-between', 'align-items-center');
                     toolbar.innerHTML = '';
                     var leftCol = document.createElement('div');
                     leftCol.className = 'd-flex align-items-center flex-shrink-0';
-                    if (btnSheet) leftCol.appendChild(btnSheet);
+                    if (leftWrap) leftCol.appendChild(leftWrap);
                     var rightCol = document.createElement('div');
                     rightCol.className = 'd-flex flex-wrap gap-2 justify-content-end align-items-center';
                     var btnPo = document.createElement('button');
@@ -2187,9 +2197,10 @@
                     btnPr.setAttribute('data-bs-toggle', 'modal');
                     btnPr.setAttribute('data-bs-target', '#modalPurchaseRequestDocPreview');
                     btnPr.innerHTML = '<i class="bi bi-file-earmark-check"></i> 発注請書プレビュー';
+                    if (pdfSheet) rightCol.appendChild(pdfSheet);
+                    if (pdfDet) rightCol.appendChild(pdfDet);
                     rightCol.appendChild(btnPo);
                     rightCol.appendChild(btnPr);
-                    if (btnDetail) rightCol.appendChild(btnDetail);
                     toolbar.appendChild(leftCol);
                     toolbar.appendChild(rightCol);
                 }
@@ -2733,6 +2744,7 @@
         root.querySelectorAll('button').forEach(function (el) {
             if (el.closest && el.closest('.modal')) return;
             if (el.getAttribute('data-bs-toggle') === 'modal') return;
+            if (el.classList && el.classList.contains('quote-doc-v2-interactive-btn')) return;
             el.disabled = true;
         });
     }
@@ -2790,6 +2802,16 @@
         if (tot) out.total = tot.textContent.trim();
         return out;
     }
+    function getQuoteItemsSummaryAmountsForPreview() {
+        var out = { sub: '—', tax: '—', total: '—' };
+        var elSub = document.getElementById('qi-subtotal');
+        var elTax = document.getElementById('qi-tax');
+        var elTot = document.getElementById('qi-total');
+        if (elSub) out.sub = elSub.textContent.trim();
+        if (elTax) out.tax = elTax.textContent.trim();
+        if (elTot) out.total = elTot.textContent.trim();
+        return out;
+    }
     /** 受注管理タブ：発注書・発注請書に見積番号・件名・金額等を反映 */
     function initOrderMgmtDocs() {
         if (document.body.getAttribute('data-page-name') !== 'quote-detail') return;
@@ -2834,7 +2856,9 @@
             body.appendChild(snap);
         });
     }
-    function buildQuotePreviewHeader() {
+    function buildQuotePreviewHeader(opts) {
+        opts = opts || {};
+        var amountsFromItems = !!opts.amountsFromItems;
         var p = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
         var no = p.get('no') || '';
         var client = getQuoteSheetClientNameForPreview();
@@ -2844,6 +2868,7 @@
         var wrap = document.createElement('div');
         wrap.className = 'qp-preview-doc-head';
         wrap.innerHTML =
+            '<div class="qp-preview-doc-title">お見積書</div>' +
             '<div class="row qp-preview-head-2col g-4">' +
             '<div class="col-md-6 qp-preview-head-left">' +
             '<div class="qp-preview-to"></div>' +
@@ -2881,7 +2906,7 @@
         if (nEl) nEl.textContent = no || '—';
         if (dEl) dEl.textContent = formatJaDate(today);
         if (vEl) vEl.textContent = formatJaDate(validUntil) + 'まで（発行日より30日間）';
-        var sums = getQuoteSheetSummaryAmountsForPreview();
+        var sums = amountsFromItems ? getQuoteItemsSummaryAmountsForPreview() : getQuoteSheetSummaryAmountsForPreview();
         var sSub = wrap.querySelector('.qp-preview-sum-sub');
         var sTax = wrap.querySelector('.qp-preview-sum-tax');
         var sTot = wrap.querySelector('.qp-preview-sum-total');
@@ -2938,8 +2963,10 @@
                 '明細ベースの原価単価（掛け率）に反映されます',
                 'OTJ売上は明細から自動集計します',
                 'クライアント提出用の見積書レイアウト（デモ）',
+                'クライアント提出用の見積書（デモ）',
                 '明細タブの金額と連動する想定です',
-                'Ver.2 の上部に Ver.1 からの差分を表示します'
+                'Ver.2 の上部に Ver.1 からの差分を表示します',
+                'PDFはブラウザの印刷で「PDFに保存」してください'
             ];
             for (var i = 0; i < sub.length; i++) {
                 if (txt.indexOf(sub[i]) !== -1) {
@@ -2950,37 +2977,174 @@
         };
         root.querySelectorAll('p').forEach(removeIfHintParagraph);
     }
-    function printQuotePreviewModal(modalEl) {
-        if (!modalEl) return;
+    function printQuotePreviewTarget(targetEl, opts) {
+        if (!targetEl) return;
+        var dispose = opts && opts.dispose;
         var cleanup = function () {
             document.body.classList.remove('qp-printing-preview');
-            modalEl.classList.remove('qp-print-target');
+            targetEl.classList.remove('qp-print-target');
+            if (dispose && targetEl.parentNode) targetEl.parentNode.removeChild(targetEl);
             window.removeEventListener('afterprint', cleanup);
         };
         window.addEventListener('afterprint', cleanup);
         document.body.classList.add('qp-printing-preview');
-        modalEl.classList.add('qp-print-target');
+        targetEl.classList.add('qp-print-target');
         requestAnimationFrame(function () {
             window.print();
         });
     }
-    function initQuotePreviewPdfDownloads() {
+    function appendPreviewSectionDetail(body, title, innerNode) {
+        if (!body || !innerNode) return;
+        var sec = document.createElement('section');
+        sec.className = 'qp-preview-section';
+        if (title) {
+            var ht = document.createElement('h6');
+            ht.className = 'qp-preview-section-title';
+            ht.textContent = title;
+            sec.appendChild(ht);
+        }
+        sec.appendChild(innerNode);
+        body.appendChild(sec);
+    }
+    function cloneFilteredQcBlocksForPreviewDetail(selector) {
+        var el = document.querySelector(selector);
+        if (!el) return null;
+        var clone = el.cloneNode(true);
+        clone.querySelectorAll('.qc-block').forEach(function (block) {
+            var inc = block.querySelector('input.qc-include');
+            if (inc && !inc.checked) block.remove();
+        });
+        stripCustomerPreviewNoise(clone);
+        finalizeAsReadonlyPreview(clone);
+        return clone;
+    }
+    function appendReadonlySheetAppendixIntoDetail(body) {
+        if (!body) return;
+        var sheet = document.querySelector('#quote-doc-v2-inline-sheet-editor-source .quote-sheet-preview');
+        if (sheet) {
+            var sheetClone = sheet.cloneNode(true);
+            prepareQuoteSheetCloneForPreview(sheetClone);
+            finalizeAsReadonlyPreview(sheetClone);
+            body.appendChild(sheetClone);
+        }
+        var maintSrc = document.getElementById('quote-maint-preview-card');
+        if (maintSrc) {
+            var maintClone = maintSrc.cloneNode(true);
+            finalizeAsReadonlyPreview(maintClone);
+            body.appendChild(maintClone);
+        }
+        var delSrc = document.querySelector('#quote-deliverables .deliverables-sheet');
+        if (delSrc) {
+            var delClone = delSrc.cloneNode(true);
+            stripCustomerPreviewNoise(delClone);
+            finalizeAsReadonlyPreview(delClone);
+            appendPreviewSectionDetail(body, '納品物', delClone);
+        }
+        var detClone = cloneFilteredQcBlocksForPreviewDetail('#quote-conditions .qc-blocks');
+        if (detClone) appendPreviewSectionDetail(body, '', detClone);
+        var fixClone = cloneFilteredQcBlocksForPreviewDetail('#quote-fixed-conditions .qc-blocks');
+        if (fixClone) appendPreviewSectionDetail(body, '', fixClone);
+    }
+    function rebuildQuoteInlineSheetPreviewDetail() {
+        var mount = document.getElementById('quote-doc-v2-sheet-readonly-mount');
+        if (!mount) return;
+        mount.innerHTML = '';
+        var doc = buildQuoteSheetReadonlyDocumentRootDetail();
+        if (doc) mount.appendChild(doc);
+    }
+    function buildQuoteSheetReadonlyDocumentRootDetail() {
+        var wrap = document.createElement('div');
+        wrap.className = 'qp-preview-readonly';
+        wrap.appendChild(buildQuotePreviewHeader());
+        appendReadonlySheetAppendixIntoDetail(wrap);
+        return wrap;
+    }
+    function buildQuoteDetailPreviewCloneDetail() {
+        var src = document.getElementById('quote-items');
+        if (!src) return null;
+        var clone = src.cloneNode(true);
+        clone.removeAttribute('id');
+        clone.classList.remove('tab-pane', 'fade');
+        clone.classList.add('quote-items-preview-root');
+        clone.style.display = 'block';
+        clone.style.opacity = '1';
+        stripCustomerPreviewNoise(clone);
+        stripQuoteDetailPreviewCustomerColumns(clone);
+        finalizeAsReadonlyPreview(clone);
+        return clone;
+    }
+    function initQuotePreviewPdfDownloadsDetail() {
         var sheetBtn = document.getElementById('btnQuoteSheetPdfDownload');
         var detBtn = document.getElementById('btnQuoteDetailPdfDownload');
-        var mSheet = document.getElementById('modalQuoteSheetPreview');
-        var mDet = document.getElementById('modalQuoteDetailPreview');
-        if (sheetBtn && mSheet) {
+        var main = document.querySelector('main.main-content');
+        if (sheetBtn && main) {
             sheetBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                printQuotePreviewModal(mSheet);
+                var wrap = buildQuoteSheetReadonlyDocumentRootDetail();
+                main.appendChild(wrap);
+                printQuotePreviewTarget(wrap, { dispose: true });
             });
         }
-        if (detBtn && mDet) {
+        if (detBtn && main) {
             detBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                printQuotePreviewModal(mDet);
+                var wrap = document.createElement('div');
+                wrap.className = 'qp-preview-readonly';
+                wrap.appendChild(buildQuotePreviewHeader({ amountsFromItems: true }));
+                var c = buildQuoteDetailPreviewCloneDetail();
+                if (c) wrap.appendChild(c);
+                main.appendChild(wrap);
+                printQuotePreviewTarget(wrap, { dispose: true });
             });
         }
+    }
+    function initQuoteDocumentInlinePreviewToggleDetail() {
+        if (document.body.getAttribute('data-page-name') !== 'quote-detail') return;
+        var btnSheet = document.getElementById('btn-quote-doc-v2-preview-mode-sheet');
+        var btnDetail = document.getElementById('btn-quote-doc-v2-preview-mode-detail');
+        var paneSheet = document.getElementById('quote-doc-v2-inline-pane-sheet');
+        var paneDetail = document.getElementById('quote-doc-v2-inline-pane-detail');
+        var inner = document.getElementById('quote-doc-v2-inline-detail-inner');
+        if (!btnSheet || !btnDetail || !paneSheet || !paneDetail || !inner) return;
+        function setMode(isSheet) {
+            if (isSheet) {
+                rebuildQuoteInlineSheetPreviewDetail();
+                paneSheet.classList.remove('d-none');
+                paneDetail.classList.add('d-none');
+                btnSheet.classList.remove('btn-outline-primary');
+                btnSheet.classList.add('btn-primary');
+                btnDetail.classList.remove('btn-primary');
+                btnDetail.classList.add('btn-outline-primary');
+                btnSheet.setAttribute('aria-pressed', 'true');
+                btnDetail.setAttribute('aria-pressed', 'false');
+            } else {
+                inner.innerHTML = '';
+                inner.appendChild(buildQuotePreviewHeader({ amountsFromItems: true }));
+                var clone = buildQuoteDetailPreviewCloneDetail();
+                if (clone) inner.appendChild(clone);
+                paneSheet.classList.add('d-none');
+                paneDetail.classList.remove('d-none');
+                btnDetail.classList.remove('btn-outline-primary');
+                btnDetail.classList.add('btn-primary');
+                btnSheet.classList.remove('btn-primary');
+                btnSheet.classList.add('btn-outline-primary');
+                btnSheet.setAttribute('aria-pressed', 'false');
+                btnDetail.setAttribute('aria-pressed', 'true');
+            }
+        }
+        btnSheet.addEventListener('click', function () {
+            setMode(true);
+        });
+        btnDetail.addEventListener('click', function () {
+            setMode(false);
+        });
+    }
+    function initQuoteDocV2InlinePreviewOnReady() {
+        if (document.body.getAttribute('data-page-name') !== 'quote-detail') return;
+        if (!document.getElementById('quote-doc-v2-sheet-readonly-mount')) return;
+        initQuotePreviewPdfDownloadsDetail();
+        rebuildQuoteInlineSheetPreviewDetail();
+        initQuoteDocumentInlinePreviewToggleDetail();
     }
     /** 見積詳細プレビュー：お客様向けに単価区分・原価単価列（フラット工程の工数・単価区分隠し列を含む）を削除 */
     function stripQuoteDetailPreviewCustomerColumns(root) {
@@ -3072,74 +3236,6 @@
             inp.parentNode.replaceChild(s, inp);
         });
     }
-    function initQuotePreviewModals() {
-        if (document.body.getAttribute('data-page-name') !== 'quote-detail') return;
-        var mSheet = document.getElementById('modalQuoteSheetPreview');
-        if (mSheet) {
-            mSheet.addEventListener('show.bs.modal', function () {
-                var body = document.getElementById('modalQuoteSheetPreviewBody');
-                if (!body) return;
-                body.innerHTML = '';
-                body.classList.add('qp-preview-readonly');
-                body.appendChild(buildQuotePreviewHeader());
-                var sheet = document.querySelector('#quote-doc-v2 .quote-sheet-preview');
-                if (sheet) {
-                    var sheetClone = sheet.cloneNode(true);
-                    prepareQuoteSheetCloneForPreview(sheetClone);
-                    finalizeAsReadonlyPreview(sheetClone);
-                    body.appendChild(sheetClone);
-                }
-                var maintSrc = document.getElementById('quote-maint-preview-card');
-                if (maintSrc) {
-                    var maintClone = maintSrc.cloneNode(true);
-                    finalizeAsReadonlyPreview(maintClone);
-                    body.appendChild(maintClone);
-                }
-                function addSection(title, sel) {
-                    var el = document.querySelector(sel);
-                    if (!el) return;
-                    var sec = document.createElement('section');
-                    sec.className = 'qp-preview-section';
-                    if (title) {
-                        var ht = document.createElement('h6');
-                        ht.className = 'qp-preview-section-title';
-                        ht.textContent = title;
-                        sec.appendChild(ht);
-                    }
-                    var inner = el.cloneNode(true);
-                    stripCustomerPreviewNoise(inner);
-                    finalizeAsReadonlyPreview(inner);
-                    sec.appendChild(inner);
-                    body.appendChild(sec);
-                }
-                addSection('納品物', '#quote-deliverables .deliverables-sheet');
-                addSection('', '#quote-conditions .qc-blocks');
-                addSection('', '#quote-fixed-conditions .qc-blocks');
-            });
-        }
-        var mDet = document.getElementById('modalQuoteDetailPreview');
-        if (mDet) {
-            mDet.addEventListener('show.bs.modal', function () {
-                var body = document.getElementById('modalQuoteDetailPreviewBody');
-                if (!body) return;
-                body.innerHTML = '';
-                body.classList.add('qp-preview-readonly');
-                var src = document.getElementById('quote-items');
-                if (!src) return;
-                var clone = src.cloneNode(true);
-                clone.removeAttribute('id');
-                clone.classList.remove('tab-pane', 'fade');
-                clone.classList.add('quote-items-preview-root');
-                clone.style.display = 'block';
-                clone.style.opacity = '1';
-                stripCustomerPreviewNoise(clone);
-                stripQuoteDetailPreviewCustomerColumns(clone);
-                finalizeAsReadonlyPreview(clone);
-                body.appendChild(clone);
-            });
-        }
-        initQuotePreviewPdfDownloads();
-    }
     function initQuoteDetailView() {
         initQuoteDetailFromQuery();
         initQuoteDetailReadonly();
@@ -3147,7 +3243,7 @@
         initOrderMgmtDocs();
         cloneOrderDocIntoModal('modalPurchaseOrderPreview', 'po-order-doc-source');
         cloneOrderDocIntoModal('modalPurchaseRequestDocPreview', 'ack-order-doc-source');
-        initQuotePreviewModals();
+        initQuoteDocV2InlinePreviewOnReady();
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initQuoteDetailView);
     else initQuoteDetailView();

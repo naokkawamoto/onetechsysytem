@@ -87,7 +87,7 @@
             <div class="mm-section-title">共通</div>
             <div class="card mb-2">
                 <div class="card-header py-2 fw-semibold small d-flex align-items-center gap-2">
-                    <i class="bi bi-folder2"></i> 見積りカテゴリ
+                    <i class="bi bi-folder2"></i> 見積カテゴリ
                 </div>
                 <div class="card-body py-2 px-0">
                     <div class="table-responsive px-2">
@@ -135,7 +135,7 @@
                 <div class="card-body py-2 px-3">
                     <div class="mm-setting-row border-0 pt-0">
                         <div>
-                            <div class="fw-semibold">見積りステータス設定</div>
+                            <div class="fw-semibold">見積ステータス設定</div>
                             <div class="small text-muted">見積一覧のカテゴリー／フィルタと整合する表示名・コード（デモ）</div>
                         </div>
                         <button type="button" class="btn btn-sm btn-outline-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#quoteStatusModal"><i class="bi bi-pencil"></i> 編集</button>
@@ -160,13 +160,13 @@
                 <div class="tab-pane fade show active" id="mm-cat-ukeoi" role="tabpanel">
                     <div class="card mm-cat-card border-primary">
                         <div class="card-header bg-primary-subtle text-primary d-flex align-items-center justify-content-between flex-wrap gap-2">
-                            <span><i class="bi bi-briefcase me-1"></i>請負 — 見積りカテゴリ別マスタ</span>
+                            <span><i class="bi bi-briefcase me-1"></i>請負 — 見積カテゴリ別マスタ</span>
                             <span class="badge bg-primary">運用中</span>
                         </div>
                         <div class="card-body py-2 px-3">
                             <div class="mm-setting-row">
                                 <div>
-                                    <div class="fw-semibold">見積り単価設定</div>
+                                    <div class="fw-semibold">見積単価設定</div>
                                     <div class="small text-muted">単価区分・OTJ売上単価・原価率・発注先原価（請負見積で利用）</div>
                                 </div>
                                 <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#quoteUnitPriceModal"><i class="bi bi-pencil"></i> 編集</button>
@@ -174,30 +174,42 @@
                             <div class="mm-setting-row">
                                 <div>
                                     <div class="fw-semibold">基本設定</div>
-                                    <div class="small text-muted">案件分類・見積有効期限・支払条件・納品方法などの既定（デモ）</div>
+                                    <div class="small text-muted"><code>quote-create.html</code> の「基本設定」タブ（案件分類・日程・見積条件・保守／クラウド概算）の<strong>初期値</strong>を編集します。保存は localStorage（キー <code class="font-monospace small">mmUkeoiQuoteBasicDefaults_v1</code>）です。</div>
                                 </div>
-                                <a class="btn btn-sm btn-outline-primary flex-shrink-0" href="quote-create.html" title="見積作成画面の基本設定タブを参照">画面イメージ</a>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create.html#quote-basic" title="請負見積新規作成の基本設定タブ">請負見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmUkeoiBasicSettingsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                             <div class="mm-setting-row">
                                 <div>
                                     <div class="fw-semibold">詳細見積設定</div>
-                                    <div class="small text-muted">工程・明細行の既定構成・単価区分の初期値など（デモ）</div>
+                                    <div class="small text-muted"><code>quote-create.html</code> の「詳細設定」タブ（工程・明細行・単価区分・金額）の<strong>初期行データ</strong>を JSON（localStorage キー <code class="font-monospace small">mmUkeoiQuoteItemsDefaults_v1</code>）で保存します。行数は HTML 組み込みと一致している必要があります。</div>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create.html#quote-items" title="請負見積の詳細設定タブ">請負見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmUkeoiDetailItemsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                             <div class="mm-setting-row">
                                 <div>
-                                    <div class="fw-semibold">見積り詳細条件設定</div>
-                                    <div class="small text-muted">見積詳細の「詳細条件設定」ブロックに相当するマスタ</div>
+                                    <div class="fw-semibold">見積詳細条件設定</div>
+                                    <div class="small text-muted"><code>quote-create.html</code> の「詳細条件設定」タブ（1.1〜追加条項）の<strong>初期表示文言</strong>を編集します。保存はブラウザの localStorage（キー <code class="font-monospace small">mmUkeoiConditionTextDefaults_v1</code>）です。</div>
                                 </div>
-                                <a class="btn btn-sm btn-outline-primary flex-shrink-0" href="quote-detail.html#quote-conditions">画面イメージ（見積詳細）</a>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create.html#quote-conditions" title="請負見積新規作成">請負見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmUkeoiDetailConditionsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                             <div class="mm-setting-row">
                                 <div>
-                                    <div class="fw-semibold">見積り固定条件設定</div>
-                                    <div class="small text-muted">固定条件タブ・標準条項のマスタ</div>
+                                    <div class="fw-semibold">見積固定条件設定</div>
+                                    <div class="small text-muted"><code>quote-create.html</code> の「固定条件」タブ（2.再委託〜12.損害賠償）の<strong>初期表示文言</strong>を編集します。保存先は詳細条件と同じ localStorage です。</div>
                                 </div>
-                                <a class="btn btn-sm btn-outline-primary flex-shrink-0" href="quote-detail.html">画面イメージ（見積詳細）</a>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create.html#quote-fixed-conditions">請負見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmUkeoiFixedConditionsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -206,52 +218,112 @@
                 <div class="tab-pane fade" id="mm-cat-maint" role="tabpanel">
                     <div class="card mm-cat-card border-secondary">
                         <div class="card-header bg-light text-secondary d-flex align-items-center justify-content-between flex-wrap gap-2">
-                            <span><i class="bi bi-wrench-adjustable me-1"></i>保守 — 見積りカテゴリ別マスタ</span>
-                            <span class="badge bg-secondary">準備中</span>
+                            <span><i class="bi bi-wrench-adjustable me-1"></i>保守 — 見積カテゴリ別マスタ</span>
+                            <span class="badge bg-secondary">一部運用中</span>
                         </div>
                         <div class="card-body py-2 px-3">
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">見積り単価設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">見積単価設定</div>
+                                    <div class="small text-muted">単価区分・OTJ売上単価・原価率・発注先原価（保守見積の詳細設定で利用）。請負の「見積単価設定」と<strong>同じデータ</strong>（localStorage）を編集します。</div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#quoteMaintUnitPriceModal"><i class="bi bi-pencil"></i> 編集</button>
                             </div>
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">詳細見積設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">基本設定</div>
+                                    <div class="small text-muted"><code>quote-create-maint.html</code> の「基本設定」タブ（案件分類・日程・見積条件・保守／クラウド概算）の<strong>初期値</strong>を編集します。保存は localStorage（キー <code class="font-monospace small">mmMaintQuoteBasicDefaults_v1</code>）です。</div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create-maint.html#quote-basic" title="保守見積新規作成の基本設定タブ">保守見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmMaintBasicSettingsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">見積り詳細条件設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">詳細見積設定</div>
+                                    <div class="small text-muted"><code>quote-create-maint.html</code> の「詳細設定」タブ（工程・明細行・単価区分・金額）の<strong>初期行データ</strong>を JSON（localStorage キー <code class="font-monospace small">mmMaintQuoteItemsDefaults_v1</code>）で保存します。行数は HTML 組み込みの <code>.quote-item-row</code> と一致させてください。</div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create-maint.html#quote-items" title="保守見積の詳細設定タブ">保守見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmMaintDetailItemsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">見積り固定条件設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">見積詳細条件設定</div>
+                                    <div class="small text-muted"><code>quote-create-maint.html</code> の「詳細条件設定」タブ（■1.1 表の入力欄・1.2・6.1・6.2・■7 など）の<strong>初期表示文言</strong>を編集します。保存は localStorage（キー <code class="font-monospace small">mmMaintConditionTextDefaults_v1</code>）です。</div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create-maint.html#quote-conditions" title="保守見積の詳細条件設定タブ">保守見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmMaintDetailConditionsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div>
+                                    <div class="fw-semibold">見積固定条件設定</div>
+                                    <div class="small text-muted"><code>quote-create-maint.html</code> の「固定条件」タブ（2.再委託〜13.契約変更・解約）の<strong>初期表示文言</strong>を編集します。保存先は詳細条件と同じ localStorage です。</div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create-maint.html#quote-fixed-conditions">保守見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmMaintFixedConditionsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="tab-pane fade" id="mm-cat-lab" role="tabpanel">
-                    <div class="card mm-cat-card border-secondary">
-                        <div class="card-header bg-light text-secondary d-flex align-items-center justify-content-between flex-wrap gap-2">
-                            <span><i class="bi bi-flask me-1"></i>ラボ — 見積りカテゴリ別マスタ</span>
-                            <span class="badge bg-secondary">準備中</span>
+                    <div class="card mm-cat-card border-info">
+                        <div class="card-header bg-info-subtle text-info-emphasis d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <span><i class="bi bi-flask me-1"></i>ラボ — 見積カテゴリ別マスタ</span>
+                            <span class="badge bg-info">運用中</span>
                         </div>
                         <div class="card-body py-2 px-3">
+                            <p class="small text-muted mb-2">依頼カテゴリ（例：<code>STD_LAB</code>／<code>EST_LAB</code>）に応じてテンプレを切替えます。<code>EST_</code> 系は見積書・詳細／固定条件を出力しない想定です。文言の正本は <code>pages/quote-create-lab.html</code>（ラボ見積新規作成）と整合させます。</p>
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">見積り単価設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">見積単価設定（ラボ）</div>
+                                    <div class="small text-muted">ラボ見積の<strong>詳細設定</strong>と同じ単価区分マスタです。<strong>1人月＝20人日</strong>で売上単価（円/人月）を算出します。数値の正本は<strong>OTJ売上単価（円/人日）</strong>で、請負の単価設定と<strong>同一の保存先</strong>（localStorage）です。</div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#quoteLabUnitPriceModal"><i class="bi bi-pencil"></i> 編集</button>
                             </div>
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">詳細見積設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">詳細設定（画面イメージ）</div>
+                                    <div class="small text-muted">月次明細の単価区分・売上単価（円/人月）の表示イメージ</div>
+                                </div>
+                                <a class="btn btn-sm btn-outline-primary flex-shrink-0" href="quote-create-lab.html#quote-items" title="ラボ見積新規作成の詳細設定タブ">ラボ見積を開く</a>
                             </div>
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">見積り詳細条件設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">詳細見積設定</div>
+                                    <div class="small text-muted"><code>quote-create-lab.html</code> の「詳細設定」タブ内<strong>月別明細</strong>（<code>#lab-months-container</code>）の初期値を JSON（キー <code class="font-monospace small">mmLabQuoteItemsDefaults_v1</code>）で保存します。<code>months[].ym</code> が <code>data-lab-ym</code> と一致するカードにのみ反映されます（確定済みカードはスキップ）。</div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create-lab.html#quote-items" title="ラボ見積の詳細設定タブ">ラボ見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmLabDetailItemsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                             <div class="mm-setting-row">
-                                <div class="fw-semibold">見積り固定条件設定</div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" disabled>準備中</button>
+                                <div>
+                                    <div class="fw-semibold">見積詳細条件設定</div>
+                                    <div class="small text-muted"><code>quote-create-lab.html</code> の「詳細条件設定」タブ（1.1〜1.13・表・追加条項）の<strong>初期表示文言</strong>を編集します。保存は localStorage（キー <code class="font-monospace small">mmLabConditionTextDefaults_v1</code>）です。</div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create-lab.html#quote-conditions" title="ラボ見積の詳細条件設定タブ">ラボ見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmLabDetailConditionsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
+                            </div>
+                            <div class="mm-setting-row">
+                                <div>
+                                    <div class="fw-semibold">見積固定条件設定</div>
+                                    <div class="small text-muted"><code>quote-create-lab.html</code> の「固定条件」タブ（2.再委託〜17.損害賠償）の<strong>初期表示文言</strong>を編集します。保存先は詳細条件と同じ localStorage です。</div>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-outline-secondary flex-shrink-0" href="quote-create-lab.html#quote-fixed-conditions">ラボ見積を開く</a>
+                                    <button type="button" class="btn btn-sm btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#mmLabFixedConditionsModal"><i class="bi bi-pencil"></i> 編集</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -397,14 +469,14 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="card mm-bank-template-card h-100">
-                                <div class="card-header bg-light">テンプレート 1</div>
+                                <div class="card-header bg-light">テンプレート 1（横浜銀行）</div>
                                 <div class="card-body py-2 small">
                                     <table class="table table-sm table-borderless mb-0">
-                                        <tr><th class="text-muted" style="width: 6rem;">銀行名</th><td>楽天銀行</td></tr>
-                                        <tr><th class="text-muted">支店名</th><td>第二営業部</td></tr>
+                                        <tr><th class="text-muted" style="width: 6rem;">銀行名</th><td>横浜銀行</td></tr>
+                                        <tr><th class="text-muted">支店名</th><td>溝口支店（店番825）</td></tr>
                                         <tr><th class="text-muted">口座種別</th><td>普通</td></tr>
-                                        <tr><th class="text-muted">口座番号</th><td class="font-monospace">1234567</td></tr>
-                                        <tr><th class="text-muted">口座名義</th><td>カ）ワンテックノロジージャパン</td></tr>
+                                        <tr><th class="text-muted">口座番号</th><td class="font-monospace">6125481</td></tr>
+                                        <tr><th class="text-muted">口座名義</th><td>株式会社One Technology Japan 代表取締役 河本直己</td></tr>
                                     </table>
                                     <button type="button" class="btn btn-sm btn-outline-primary mt-2">編集（デモ）</button>
                                 </div>
@@ -412,14 +484,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="card mm-bank-template-card h-100">
-                                <div class="card-header bg-light">テンプレート 2</div>
+                                <div class="card-header bg-light">テンプレート 2（楽天銀行）</div>
                                 <div class="card-body py-2 small">
                                     <table class="table table-sm table-borderless mb-0">
-                                        <tr><th class="text-muted" style="width: 6rem;">銀行名</th><td>横浜銀行</td></tr>
-                                        <tr><th class="text-muted">支店名</th><td>溝口支店</td></tr>
+                                        <tr><th class="text-muted" style="width: 6rem;">銀行名</th><td>楽天銀行</td></tr>
+                                        <tr><th class="text-muted">支店名</th><td>第四営業部（店番254）</td></tr>
                                         <tr><th class="text-muted">口座種別</th><td>普通</td></tr>
-                                        <tr><th class="text-muted">口座番号</th><td class="font-monospace">7654321</td></tr>
-                                        <tr><th class="text-muted">口座名義</th><td>カ）ワンテックノロジージャパン</td></tr>
+                                        <tr><th class="text-muted">口座番号</th><td class="font-monospace">7230828</td></tr>
+                                        <tr><th class="text-muted">口座名義</th><td>カ）ワン　テクノロジー　ジャパン</td></tr>
                                     </table>
                                     <button type="button" class="btn btn-sm btn-outline-primary mt-2">編集（デモ）</button>
                                 </div>
@@ -473,7 +545,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="quoteStatusModalLabel">見積りステータス設定（共通）</h5>
+                    <h5 class="modal-title" id="quoteStatusModalLabel">見積ステータス設定（共通）</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
                 <div class="modal-body">
@@ -492,11 +564,10 @@
                                 <tr><td>2</td><td><input type="text" class="form-control form-control-sm" value="通常：請負"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_CONT"></td></tr>
                                 <tr><td>3</td><td><input type="text" class="form-control form-control-sm" value="通常：ラボ"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_LAB"></td></tr>
                                 <tr><td>4</td><td><input type="text" class="form-control form-control-sm" value="通常：保守"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_MAINT"></td></tr>
-                                <tr><td>5</td><td><input type="text" class="form-control form-control-sm" value="通常：概算：請負／保守／サーバー"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="STD_EST_MCS"></td></tr>
-                                <tr><td>6</td><td><input type="text" class="form-control form-control-sm" value="概算：請負"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_CONT"></td></tr>
-                                <tr><td>7</td><td><input type="text" class="form-control form-control-sm" value="概算：ラボ"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_LAB"></td></tr>
-                                <tr><td>8</td><td><input type="text" class="form-control form-control-sm" value="概算：保守"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_MAINT"></td></tr>
-                                <tr><td>9</td><td><input type="text" class="form-control form-control-sm" value="概算：請負／保守／サーバー"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_MCS"></td></tr>
+                                <tr><td>5</td><td><input type="text" class="form-control form-control-sm" value="概算：請負"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_CONT"></td></tr>
+                                <tr><td>6</td><td><input type="text" class="form-control form-control-sm" value="概算：ラボ"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_LAB"></td></tr>
+                                <tr><td>7</td><td><input type="text" class="form-control form-control-sm" value="概算：保守"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_MAINT"></td></tr>
+                                <tr><td>8</td><td><input type="text" class="form-control form-control-sm" value="概算：請負／保守／サーバー"></td><td><input type="text" class="form-control form-control-sm font-monospace" value="EST_MCS"></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -513,7 +584,7 @@
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="quoteUnitPriceModalLabel">見積り単価設定（請負）</h5>
+                    <h5 class="modal-title" id="quoteUnitPriceModalLabel">見積単価設定（請負）</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
                 <div class="modal-body">
@@ -541,8 +612,322 @@
         </div>
     </div>
 
+    <div class="modal fade" id="quoteLabUnitPriceModal" tabindex="-1" aria-labelledby="quoteLabUnitPriceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quoteLabUnitPriceModalLabel">見積単価設定（ラボ）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">カテゴリ：<strong>ラボ</strong>。<code>pages/quote-create-lab.html</code> の詳細設定タブと同じ考え方です。単価区分ごとに<strong>名前</strong>・<strong>OTJ売上単価（円/人日）</strong>・<strong>OTJ原価率（%）</strong>・<strong>発注先原価（円/人日）</strong>・<strong>発注先原価率（%）</strong>を設定します（請負の「見積単価設定」と<strong>同じデータ</strong>を編集します）。<strong>参考：売上単価（円/人月）</strong>は 人日単価×20 で表示のみ更新されます。</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="min-width: 9rem;">名前</th>
+                                    <th class="text-end text-nowrap" style="width: 7rem;">OTJ売上単価<br><span class="small fw-normal">（円/人日）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 8rem;">参考：売上単価<br><span class="small fw-normal">（円/人月）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 6.5rem;">OTJ原価率<br><span class="small fw-normal">（%）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 7rem;">発注先原価<br><span class="small fw-normal">（円/人日）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 6.5rem;">発注先原価率<br><span class="small fw-normal">（%）</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="quote-lab-unit-price-modal-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="quote-lab-unit-price-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmUkeoiDetailConditionsModal" tabindex="-1" aria-labelledby="mmUkeoiDetailConditionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmUkeoiDetailConditionsModalLabel">見積詳細条件設定（請負）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">初期値は <code>quote-create.html</code> から読み込みます（同一オリジンで開いている場合）。未保存の変更は「保存」で localStorage に書き込み、<strong>請負見積新規作成</strong>を開き直すと反映されます。</p>
+                    <div id="mm-ukeoi-detail-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-ukeoi-detail-reset">このタブ分をリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-ukeoi-detail-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmUkeoiFixedConditionsModal" tabindex="-1" aria-labelledby="mmUkeoiFixedConditionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmUkeoiFixedConditionsModalLabel">見積固定条件設定（請負）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">各条の本文テンプレートを編集します。保存後は請負見積新規作成の固定条件タブに反映されます（同一ブラウザ・localStorage）。</p>
+                    <div id="mm-ukeoi-fixed-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-ukeoi-fixed-reset">このタブ分をリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-ukeoi-fixed-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmUkeoiBasicSettingsModal" tabindex="-1" aria-labelledby="mmUkeoiBasicSettingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmUkeoiBasicSettingsModalLabel">基本設定（請負見積）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">初期値は <code>quote-create.html</code> の基本設定タブから取得します。保存後は請負見積新規作成を開き直すと反映されます。見積書プレビュー内の保守／クラウド表示も、該当フィールドに連動します。</p>
+                    <div id="mm-ukeoi-basic-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-ukeoi-basic-reset">基本設定の上書きをリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-ukeoi-basic-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmUkeoiDetailItemsModal" tabindex="-1" aria-labelledby="mmUkeoiDetailItemsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmUkeoiDetailItemsModalLabel">詳細見積設定（請負）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2"><code>quote-create.html</code> の「詳細設定」タブと<strong>同じ行順・行数</strong>の配列 <code>rows</code> を保持します。「組み込みHTMLから読込」でリポジトリの HTML 定義を取得するか、下の JSON を直接編集して保存してください。保存後は<strong>請負見積新規作成を開き直す</strong>と反映されます（単価区分のプルダウンは画面初期化後に値のみ上書きし、<code>quote-create</code> 内の単価デモ設定と整合します）。</p>
+                    <div class="d-flex flex-wrap gap-2 mb-2">
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="mm-ukeoi-items-load-builtin"><i class="bi bi-download"></i> 組み込みHTMLから読込</button>
+                        <span class="small text-muted align-self-center" id="mm-ukeoi-items-rowcount"></span>
+                    </div>
+                    <label class="form-label small fw-semibold" for="mm-ukeoi-items-json">JSON（<code>v</code> と <code>rows</code>）</label>
+                    <textarea id="mm-ukeoi-items-json" class="form-control font-monospace small" rows="18" spellcheck="false" aria-describedby="mm-ukeoi-items-json-hint"></textarea>
+                    <div id="mm-ukeoi-items-json-hint" class="form-text">各行: <code>flat</code>, <code>flatRateId</code>, <code>defaultRate</code>, <code>task</code>, <code>kind</code>, <code>scope</code>, <code>md</code>, <code>rateType</code>, <code>amount</code>（定額行のみ）, <code>note</code></div>
+                    <div id="mm-ukeoi-items-json-err" class="text-danger small mt-2 d-none"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-ukeoi-items-reset">詳細設定の上書きをリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-ukeoi-items-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="quoteMaintUnitPriceModal" tabindex="-1" aria-labelledby="quoteMaintUnitPriceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quoteMaintUnitPriceModalLabel">見積単価設定（保守）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">カテゴリ：<strong>保守</strong>。請負の「見積単価設定」と<strong>同じデータ</strong>を編集します（<code>pages/quote-create-maint.html</code> の詳細設定タブの単価区分と連動）。単価区分ごとに<strong>名前</strong>・<strong>OTJ売上単価（円/人日）</strong>・<strong>OTJ原価率（%）</strong>・<strong>発注先原価（円/人日）</strong>・<strong>発注先原価率（%）</strong>を設定します。</p>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="min-width: 9rem;">名前</th>
+                                    <th class="text-end text-nowrap" style="width: 7rem;">OTJ売上単価<br><span class="small fw-normal">（円/人日）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 6.5rem;">OTJ原価率<br><span class="small fw-normal">（%）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 7rem;">発注先原価<br><span class="small fw-normal">（円/人日）</span></th>
+                                    <th class="text-end text-nowrap" style="width: 6.5rem;">発注先原価率<br><span class="small fw-normal">（%）</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="quote-maint-unit-price-modal-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="quote-maint-unit-price-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmMaintBasicSettingsModal" tabindex="-1" aria-labelledby="mmMaintBasicSettingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmMaintBasicSettingsModalLabel">基本設定（保守見積）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">初期値は <code>quote-create-maint.html</code> の基本設定タブから取得します。保存後は保守見積新規作成を開き直すと反映されます。</p>
+                    <div id="mm-maint-basic-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-maint-basic-reset">基本設定の上書きをリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-maint-basic-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmMaintDetailConditionsModal" tabindex="-1" aria-labelledby="mmMaintDetailConditionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmMaintDetailConditionsModalLabel">見積詳細条件設定（保守）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">初期値は <code>quote-create-maint.html</code> から読み込みます（同一オリジンで開いている場合）。未保存の変更は「保存」で localStorage に書き込み、<strong>保守見積新規作成</strong>を開き直すと反映されます。</p>
+                    <div id="mm-maint-detail-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-maint-detail-reset">このタブ分をリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-maint-detail-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmMaintFixedConditionsModal" tabindex="-1" aria-labelledby="mmMaintFixedConditionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmMaintFixedConditionsModalLabel">見積固定条件設定（保守）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">各条の本文テンプレートを編集します。保存後は保守見積新規作成の固定条件タブに反映されます（同一ブラウザ・localStorage）。再委託先のプルダウンは保存後、保守見積を開き直したときに「上記の再委託先」表示へ反映されます。</p>
+                    <div id="mm-maint-fixed-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-maint-fixed-reset">このタブ分をリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-maint-fixed-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmLabDetailConditionsModal" tabindex="-1" aria-labelledby="mmLabDetailConditionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmLabDetailConditionsModalLabel">見積詳細条件設定（ラボ）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">初期値は <code>quote-create-lab.html</code> から読み込みます（同一オリジンで開いている場合）。保存後はラボ見積新規作成を開き直すと反映されます。</p>
+                    <div id="mm-lab-detail-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-lab-detail-reset">このタブ分をリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-lab-detail-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmLabFixedConditionsModal" tabindex="-1" aria-labelledby="mmLabFixedConditionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmLabFixedConditionsModalLabel">見積固定条件設定（ラボ）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2">各条の本文テンプレートを編集します。保存後はラボ見積新規作成の固定条件タブに反映されます。再委託先の表示は、ラボ見積を開き直したあと「上記の再委託先」欄と整合します。</p>
+                    <div id="mm-lab-fixed-fields" class="small"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-lab-fixed-reset">このタブ分をリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-lab-fixed-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmMaintDetailItemsModal" tabindex="-1" aria-labelledby="mmMaintDetailItemsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmMaintDetailItemsModalLabel">詳細見積設定（保守）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2"><code>quote-create-maint.html</code> の「詳細設定」と<strong>同じ行順・行数</strong>の <code>rows</code> 配列を保存します。請負の詳細見積設定と同じフィールド形式です。保存後は<strong>保守見積新規作成を開き直す</strong>と反映されます。</p>
+                    <div class="d-flex flex-wrap gap-2 mb-2">
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="mm-maint-items-load-builtin"><i class="bi bi-download"></i> 組み込みHTMLから読込</button>
+                        <span class="small text-muted align-self-center" id="mm-maint-items-rowcount"></span>
+                    </div>
+                    <label class="form-label small fw-semibold" for="mm-maint-items-json">JSON（<code>v</code> と <code>rows</code>）</label>
+                    <textarea id="mm-maint-items-json" class="form-control font-monospace small" rows="18" spellcheck="false"></textarea>
+                    <div class="form-text">各行: <code>flat</code>, <code>flatRateId</code>, <code>defaultRate</code>, <code>task</code>, <code>kind</code>, <code>scope</code>, <code>md</code>, <code>rateType</code>, <code>amount</code>（定額行のみ）, <code>note</code></div>
+                    <div id="mm-maint-items-json-err" class="text-danger small mt-2 d-none"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-maint-items-reset">詳細設定の上書きをリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-maint-items-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mmLabDetailItemsModal" tabindex="-1" aria-labelledby="mmLabDetailItemsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mmLabDetailItemsModalLabel">詳細見積設定（ラボ）</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-2"><code>quote-create-lab.html</code> の <code>months</code> 配列（各要素に <code>ym</code>（例: <code>2026-04</code>）と <code>rows</code>）を保存します。月カードの <code>data-lab-ym</code> と一致するものだけが上書き対象です。<strong>確定済み</strong>（<code>data-confirmed="1"</code>）の月は変更しません。保存後は<strong>ラボ見積を開き直す</strong>と反映されます。</p>
+                    <div class="d-flex flex-wrap gap-2 mb-2">
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="mm-lab-items-load-builtin"><i class="bi bi-download"></i> 組み込みHTMLから読込</button>
+                        <span class="small text-muted align-self-center" id="mm-lab-items-summary"></span>
+                    </div>
+                    <label class="form-label small fw-semibold" for="mm-lab-items-json">JSON（<code>v</code> と <code>months</code>）</label>
+                    <textarea id="mm-lab-items-json" class="form-control font-monospace small" rows="18" spellcheck="false"></textarea>
+                    <div class="form-text">各月の <code>rows[]</code>: <code>defaultRate</code>, <code>itemName</code>, <code>kind</code>, <code>rateType</code>, <code>mm</code></div>
+                    <div id="mm-lab-items-json-err" class="text-danger small mt-2 d-none"></div>
+                </div>
+                <div class="modal-footer flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-danger me-auto" id="mm-lab-items-reset">詳細設定の上書きをリセット</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+                    <button type="button" class="btn btn-primary" id="mm-lab-items-save"><i class="bi bi-check2"></i> 保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/quote-unit-price-config.js"></script>
+    <script src="../js/quote-ukeoi-condition-defaults.js"></script>
+    <script src="../js/quote-ukeoi-basic-defaults.js"></script>
+    <script src="../js/quote-ukeoi-items-defaults.js"></script>
+    <script src="../js/quote-maint-basic-defaults.js"></script>
+    <script src="../js/quote-maint-condition-defaults.js"></script>
+    <script src="../js/quote-maint-items-defaults.js"></script>
+    <script src="../js/quote-lab-condition-defaults.js"></script>
+    <script src="../js/quote-lab-items-defaults.js"></script>
     <script src="../js/layout.js"></script>
     <script>
 (function () {
@@ -589,12 +974,1070 @@
         });
     }
 
-    var modal = document.getElementById("quoteUnitPriceModal");
-    var tbody = document.getElementById("quote-unit-price-modal-tbody");
-    var btnSave = document.getElementById("quote-unit-price-save");
-    if (!modal || !tbody || !btnSave || typeof QuoteUnitPriceConfig === "undefined") return;
+    (function initMmUkeoiConditionModals() {
+        var Q = typeof QuoteUkeoiConditionDefaults !== "undefined" ? QuoteUkeoiConditionDefaults : null;
+        if (!Q) return;
+        var builtinCache = null;
+        function ensureBuiltins(cb) {
+            if (builtinCache) {
+                cb(builtinCache);
+                return;
+            }
+            Q.fetchBuiltinMapFromQuoteCreateHtml("quote-create.html").then(function (map) {
+                builtinCache = map || {};
+                cb(builtinCache);
+            });
+        }
+        function buildControl(meta, saved, builtin) {
+            var val = saved[meta.key] != null ? saved[meta.key] : builtin[meta.key] != null ? builtin[meta.key] : "";
+            var wrap = document.createElement("div");
+            wrap.className = "mb-3 pb-2 border-bottom";
+            var lab = document.createElement("label");
+            lab.className = "form-label fw-semibold mb-1 d-block";
+            lab.setAttribute("for", "mm-qc-" + meta.key);
+            lab.textContent = meta.label;
+            wrap.appendChild(lab);
+            if (meta.key === "qc_d_cloud_sel_1") {
+                var sel = document.createElement("select");
+                sel.className = "form-select form-select-sm";
+                sel.id = "mm-qc-" + meta.key;
+                sel.setAttribute("data-mm-ukey", meta.key);
+                [["AWS", "AWS"], ["GCP", "GCP"], ["Azure", "Microsoft Azure"], ["その他", "その他"]].forEach(function (pair) {
+                    var o = document.createElement("option");
+                    o.value = pair[0];
+                    o.textContent = pair[1];
+                    sel.appendChild(o);
+                });
+                sel.value = val && ["AWS", "GCP", "Azure", "その他"].indexOf(String(val)) >= 0 ? String(val) : "AWS";
+                wrap.appendChild(sel);
+                return wrap;
+            }
+            if (meta.input === "date") {
+                var dt = document.createElement("input");
+                dt.type = "date";
+                dt.className = "form-control form-control-sm";
+                dt.id = "mm-qc-" + meta.key;
+                dt.setAttribute("data-mm-ukey", meta.key);
+                dt.value = val ? String(val).slice(0, 10) : "";
+                wrap.appendChild(dt);
+                return wrap;
+            }
+            var ta = document.createElement("textarea");
+            ta.className = "form-control form-control-sm";
+            ta.rows = meta.rows || 4;
+            ta.id = "mm-qc-" + meta.key;
+            ta.setAttribute("data-mm-ukey", meta.key);
+            ta.value = String(val);
+            wrap.appendChild(ta);
+            return wrap;
+        }
+        function fillDetailModal() {
+            var container = document.getElementById("mm-ukeoi-detail-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBuiltins(function (builtin) {
+                var saved = Q.loadAll();
+                container.innerHTML = "";
+                Q.UKEOI_DETAIL_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み文言を取得できませんでした（<code>file://</code> などで fetch がブロックされている可能性）。空のまま編集・保存すると、その値が初期表示になります。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function fillFixedModal() {
+            var container = document.getElementById("mm-ukeoi-fixed-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBuiltins(function (builtin) {
+                var saved = Q.loadAll();
+                container.innerHTML = "";
+                Q.UKEOI_FIXED_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み文言を取得できませんでした。ブラウザで <code>pages/</code> を HTTP 配信して開くか、直接文言を入力して保存してください。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function collectFromContainer(container) {
+            var out = {};
+            if (!container) return out;
+            container.querySelectorAll("[data-mm-ukey]").forEach(function (el) {
+                var k = el.getAttribute("data-mm-ukey");
+                if (!k) return;
+                out[k] = el.tagName === "SELECT" ? el.value : el.value;
+            });
+            return out;
+        }
+        function clearKeys(keys) {
+            var all = Q.loadAll();
+            keys.forEach(function (k) {
+                delete all[k];
+            });
+            Q.saveAll(all);
+        }
+        var detailModal = document.getElementById("mmUkeoiDetailConditionsModal");
+        var fixedModal = document.getElementById("mmUkeoiFixedConditionsModal");
+        if (detailModal) {
+            detailModal.addEventListener("show.bs.modal", fillDetailModal);
+        }
+        if (fixedModal) {
+            fixedModal.addEventListener("show.bs.modal", fillFixedModal);
+        }
+        var btnDetailSave = document.getElementById("mm-ukeoi-detail-save");
+        var btnDetailReset = document.getElementById("mm-ukeoi-detail-reset");
+        var btnFixedSave = document.getElementById("mm-ukeoi-fixed-save");
+        var btnFixedReset = document.getElementById("mm-ukeoi-fixed-reset");
+        if (btnDetailSave) {
+            btnDetailSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-ukeoi-detail-fields");
+                Q.savePartial(collectFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(detailModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnDetailReset) {
+            btnDetailReset.addEventListener("click", function () {
+                if (!window.confirm("詳細条件に保存した上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearKeys(Q.UKEOI_DETAIL_FIELD_META.map(function (m) { return m.key; }));
+                fillDetailModal();
+            });
+        }
+        if (btnFixedSave) {
+            btnFixedSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-ukeoi-fixed-fields");
+                Q.savePartial(collectFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(fixedModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnFixedReset) {
+            btnFixedReset.addEventListener("click", function () {
+                if (!window.confirm("固定条件に保存した上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearKeys(Q.UKEOI_FIXED_FIELD_META.map(function (m) { return m.key; }));
+                fillFixedModal();
+            });
+        }
+    })();
 
-    function fillModalRows() {
+    (function initMmMaintConditionModals() {
+        var Q = typeof QuoteMaintConditionDefaults !== "undefined" ? QuoteMaintConditionDefaults : null;
+        if (!Q) return;
+        var builtinCache = null;
+        function ensureBuiltins(cb) {
+            if (builtinCache) {
+                cb(builtinCache);
+                return;
+            }
+            Q.fetchBuiltinMapFromMaintHtml("quote-create-maint.html").then(function (map) {
+                builtinCache = map || {};
+                cb(builtinCache);
+            });
+        }
+        function fieldId(meta) {
+            return "mm-mc-" + meta.key.replace(/[^a-zA-Z0-9_-]/g, "_");
+        }
+        function buildControl(meta, saved, builtin) {
+            var val = saved[meta.key] != null ? saved[meta.key] : builtin[meta.key] != null ? builtin[meta.key] : "";
+            var wrap = document.createElement("div");
+            wrap.className = "mb-3 pb-2 border-bottom";
+            var lab = document.createElement("label");
+            lab.className = "form-label fw-semibold mb-1 d-block";
+            var fid = fieldId(meta);
+            lab.setAttribute("for", fid);
+            lab.textContent = meta.label;
+            wrap.appendChild(lab);
+            if (meta.input === "select" && meta.options && meta.options.length) {
+                var sel = document.createElement("select");
+                sel.className = "form-select form-select-sm";
+                sel.id = fid;
+                sel.setAttribute("data-mm-mkey", meta.key);
+                meta.options.forEach(function (opt) {
+                    var o = document.createElement("option");
+                    o.value = opt.value;
+                    o.textContent = opt.label || opt.value;
+                    sel.appendChild(o);
+                });
+                var v = String(val);
+                var ok = false;
+                meta.options.forEach(function (opt) {
+                    if (opt.value === v) ok = true;
+                });
+                sel.value = ok ? v : meta.options[0].value;
+                wrap.appendChild(sel);
+                return wrap;
+            }
+            if (meta.input === "date") {
+                var dt = document.createElement("input");
+                dt.type = "date";
+                dt.className = "form-control form-control-sm";
+                dt.id = fid;
+                dt.setAttribute("data-mm-mkey", meta.key);
+                dt.value = val ? String(val).slice(0, 10) : "";
+                wrap.appendChild(dt);
+                return wrap;
+            }
+            if (meta.input === "text") {
+                var inp = document.createElement("input");
+                inp.type = "text";
+                inp.className = "form-control form-control-sm";
+                inp.id = fid;
+                inp.setAttribute("data-mm-mkey", meta.key);
+                inp.value = String(val);
+                wrap.appendChild(inp);
+                return wrap;
+            }
+            var ta = document.createElement("textarea");
+            ta.className = "form-control form-control-sm";
+            ta.rows = meta.rows || 4;
+            ta.id = fid;
+            ta.setAttribute("data-mm-mkey", meta.key);
+            ta.value = String(val);
+            wrap.appendChild(ta);
+            return wrap;
+        }
+        function fillDetailModal() {
+            var container = document.getElementById("mm-maint-detail-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBuiltins(function (builtin) {
+                var saved = Q.loadAll();
+                container.innerHTML = "";
+                Q.MAINT_DETAIL_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み文言を取得できませんでした（<code>file://</code> などで fetch がブロックされている可能性）。空のまま編集・保存すると、その値が初期表示になります。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function fillFixedModal() {
+            var container = document.getElementById("mm-maint-fixed-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBuiltins(function (builtin) {
+                var saved = Q.loadAll();
+                container.innerHTML = "";
+                Q.MAINT_FIXED_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み文言を取得できませんでした。ブラウザで <code>pages/</code> を HTTP 配信して開くか、直接文言を入力して保存してください。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function collectFromContainer(container) {
+            var out = {};
+            if (!container) return out;
+            container.querySelectorAll("[data-mm-mkey]").forEach(function (el) {
+                var k = el.getAttribute("data-mm-mkey");
+                if (!k) return;
+                out[k] = el.tagName === "SELECT" ? el.value : el.value;
+            });
+            return out;
+        }
+        function clearKeys(keys) {
+            var all = Q.loadAll();
+            keys.forEach(function (k) {
+                delete all[k];
+            });
+            Q.saveAll(all);
+        }
+        var detailModal = document.getElementById("mmMaintDetailConditionsModal");
+        var fixedModal = document.getElementById("mmMaintFixedConditionsModal");
+        if (detailModal) detailModal.addEventListener("show.bs.modal", fillDetailModal);
+        if (fixedModal) fixedModal.addEventListener("show.bs.modal", fillFixedModal);
+        var btnDetailSave = document.getElementById("mm-maint-detail-save");
+        var btnDetailReset = document.getElementById("mm-maint-detail-reset");
+        var btnFixedSave = document.getElementById("mm-maint-fixed-save");
+        var btnFixedReset = document.getElementById("mm-maint-fixed-reset");
+        if (btnDetailSave) {
+            btnDetailSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-maint-detail-fields");
+                Q.savePartial(collectFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(detailModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnDetailReset) {
+            btnDetailReset.addEventListener("click", function () {
+                if (!window.confirm("保守見積の詳細条件に保存した上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearKeys(Q.MAINT_DETAIL_FIELD_META.map(function (m) { return m.key; }));
+                fillDetailModal();
+            });
+        }
+        if (btnFixedSave) {
+            btnFixedSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-maint-fixed-fields");
+                Q.savePartial(collectFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(fixedModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnFixedReset) {
+            btnFixedReset.addEventListener("click", function () {
+                if (!window.confirm("保守見積の固定条件に保存した上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearKeys(Q.MAINT_FIXED_FIELD_META.map(function (m) { return m.key; }));
+                fillFixedModal();
+            });
+        }
+    })();
+
+    (function initMmLabConditionModals() {
+        var Q = typeof QuoteLabConditionDefaults !== "undefined" ? QuoteLabConditionDefaults : null;
+        if (!Q) return;
+        var builtinCache = null;
+        function ensureBuiltins(cb) {
+            if (builtinCache) {
+                cb(builtinCache);
+                return;
+            }
+            Q.fetchBuiltinMapFromLabHtml("quote-create-lab.html").then(function (map) {
+                builtinCache = map || {};
+                cb(builtinCache);
+            });
+        }
+        function fieldId(meta) {
+            return "mm-lc-" + meta.key.replace(/[^a-zA-Z0-9_-]/g, "_");
+        }
+        function buildControl(meta, saved, builtin) {
+            var val = saved[meta.key] != null ? saved[meta.key] : builtin[meta.key] != null ? builtin[meta.key] : "";
+            var wrap = document.createElement("div");
+            wrap.className = "mb-3 pb-2 border-bottom";
+            var lab = document.createElement("label");
+            lab.className = "form-label fw-semibold mb-1 d-block";
+            var fid = fieldId(meta);
+            lab.setAttribute("for", fid);
+            lab.textContent = meta.label;
+            wrap.appendChild(lab);
+            if (meta.input === "select" && meta.options && meta.options.length) {
+                var sel = document.createElement("select");
+                sel.className = "form-select form-select-sm";
+                sel.id = fid;
+                sel.setAttribute("data-mm-lkey", meta.key);
+                meta.options.forEach(function (opt) {
+                    var o = document.createElement("option");
+                    o.value = opt.value;
+                    o.textContent = opt.label || opt.value;
+                    sel.appendChild(o);
+                });
+                var v = String(val);
+                var ok = false;
+                meta.options.forEach(function (opt) {
+                    if (opt.value === v) ok = true;
+                });
+                sel.value = ok ? v : meta.options[0].value;
+                wrap.appendChild(sel);
+                return wrap;
+            }
+            if (meta.input === "date") {
+                var dt = document.createElement("input");
+                dt.type = "date";
+                dt.className = "form-control form-control-sm";
+                dt.id = fid;
+                dt.setAttribute("data-mm-lkey", meta.key);
+                dt.value = val ? String(val).slice(0, 10) : "";
+                wrap.appendChild(dt);
+                return wrap;
+            }
+            if (meta.input === "text") {
+                var inp = document.createElement("input");
+                inp.type = "text";
+                inp.className = "form-control form-control-sm";
+                inp.id = fid;
+                inp.setAttribute("data-mm-lkey", meta.key);
+                inp.value = String(val);
+                wrap.appendChild(inp);
+                return wrap;
+            }
+            var ta = document.createElement("textarea");
+            ta.className = "form-control form-control-sm";
+            ta.rows = meta.rows || 4;
+            ta.id = fid;
+            ta.setAttribute("data-mm-lkey", meta.key);
+            ta.value = String(val);
+            wrap.appendChild(ta);
+            return wrap;
+        }
+        function fillDetailModal() {
+            var container = document.getElementById("mm-lab-detail-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBuiltins(function (builtin) {
+                var saved = Q.loadAll();
+                container.innerHTML = "";
+                Q.LAB_DETAIL_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み文言を取得できませんでした（<code>file://</code> などで fetch がブロックされている可能性）。空のまま編集・保存すると、その値が初期表示になります。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function fillFixedModal() {
+            var container = document.getElementById("mm-lab-fixed-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBuiltins(function (builtin) {
+                var saved = Q.loadAll();
+                container.innerHTML = "";
+                Q.LAB_FIXED_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み文言を取得できませんでした。ブラウザで <code>pages/</code> を HTTP 配信して開くか、直接文言を入力して保存してください。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function collectFromContainer(container) {
+            var out = {};
+            if (!container) return out;
+            container.querySelectorAll("[data-mm-lkey]").forEach(function (el) {
+                var k = el.getAttribute("data-mm-lkey");
+                if (!k) return;
+                out[k] = el.tagName === "SELECT" ? el.value : el.value;
+            });
+            return out;
+        }
+        function clearKeys(keys) {
+            var all = Q.loadAll();
+            keys.forEach(function (k) {
+                delete all[k];
+            });
+            Q.saveAll(all);
+        }
+        var detailModal = document.getElementById("mmLabDetailConditionsModal");
+        var fixedModal = document.getElementById("mmLabFixedConditionsModal");
+        if (detailModal) detailModal.addEventListener("show.bs.modal", fillDetailModal);
+        if (fixedModal) fixedModal.addEventListener("show.bs.modal", fillFixedModal);
+        var btnDetailSave = document.getElementById("mm-lab-detail-save");
+        var btnDetailReset = document.getElementById("mm-lab-detail-reset");
+        var btnFixedSave = document.getElementById("mm-lab-fixed-save");
+        var btnFixedReset = document.getElementById("mm-lab-fixed-reset");
+        if (btnDetailSave) {
+            btnDetailSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-lab-detail-fields");
+                Q.savePartial(collectFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(detailModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnDetailReset) {
+            btnDetailReset.addEventListener("click", function () {
+                if (!window.confirm("ラボ見積の詳細条件に保存した上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearKeys(Q.LAB_DETAIL_FIELD_META.map(function (m) { return m.key; }));
+                fillDetailModal();
+            });
+        }
+        if (btnFixedSave) {
+            btnFixedSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-lab-fixed-fields");
+                Q.savePartial(collectFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(fixedModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnFixedReset) {
+            btnFixedReset.addEventListener("click", function () {
+                if (!window.confirm("ラボ見積の固定条件に保存した上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearKeys(Q.LAB_FIXED_FIELD_META.map(function (m) { return m.key; }));
+                fillFixedModal();
+            });
+        }
+    })();
+
+    (function initMmUkeoiBasicModal() {
+        var B = typeof QuoteUkeoiBasicDefaults !== "undefined" ? QuoteUkeoiBasicDefaults : null;
+        if (!B) return;
+        var basicBuiltinCache = null;
+        function ensureBasicBuiltins(cb) {
+            if (basicBuiltinCache) {
+                cb(basicBuiltinCache);
+                return;
+            }
+            B.fetchBuiltinMapFromQuoteCreateHtml("quote-create.html").then(function (map) {
+                basicBuiltinCache = map || {};
+                cb(basicBuiltinCache);
+            });
+        }
+        function buildBasicControl(meta, saved, builtin) {
+            var val = saved[meta.key] != null ? saved[meta.key] : builtin[meta.key] != null ? builtin[meta.key] : "";
+            var wrap = document.createElement("div");
+            wrap.className = "mb-3 pb-2 border-bottom";
+            var lab = document.createElement("label");
+            lab.className = "form-label fw-semibold mb-1 d-block";
+            lab.setAttribute("for", "mm-qb-" + meta.key);
+            lab.textContent = meta.label;
+            wrap.appendChild(lab);
+            if (meta.input === "select" && meta.options && meta.options.length) {
+                var sel = document.createElement("select");
+                sel.className = "form-select form-select-sm";
+                sel.id = "mm-qb-" + meta.key;
+                sel.setAttribute("data-mm-basic-key", meta.key);
+                meta.options.forEach(function (opt) {
+                    var o = document.createElement("option");
+                    o.value = opt.value;
+                    o.textContent = opt.label || opt.value;
+                    sel.appendChild(o);
+                });
+                var v = String(val);
+                var ok = false;
+                meta.options.forEach(function (opt) {
+                    if (opt.value === v) ok = true;
+                });
+                sel.value = ok ? v : meta.options[0].value;
+                wrap.appendChild(sel);
+                return wrap;
+            }
+            if (meta.input === "date") {
+                var dt = document.createElement("input");
+                dt.type = "date";
+                dt.className = "form-control form-control-sm";
+                dt.id = "mm-qb-" + meta.key;
+                dt.setAttribute("data-mm-basic-key", meta.key);
+                dt.value = val ? String(val).slice(0, 10) : "";
+                wrap.appendChild(dt);
+                return wrap;
+            }
+            if (meta.input === "number") {
+                var num = document.createElement("input");
+                num.type = "number";
+                num.className = "form-control form-control-sm text-end";
+                num.id = "mm-qb-" + meta.key;
+                num.setAttribute("data-mm-basic-key", meta.key);
+                if (meta.step) num.step = meta.step;
+                if (meta.min != null) num.min = String(meta.min);
+                num.value = val !== "" && val != null ? String(val) : "";
+                wrap.appendChild(num);
+                return wrap;
+            }
+            var ta = document.createElement("textarea");
+            ta.className = "form-control form-control-sm";
+            ta.rows = meta.rows || 3;
+            ta.id = "mm-qb-" + meta.key;
+            ta.setAttribute("data-mm-basic-key", meta.key);
+            ta.value = String(val);
+            wrap.appendChild(ta);
+            return wrap;
+        }
+        function fillBasicModal() {
+            var container = document.getElementById("mm-ukeoi-basic-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBasicBuiltins(function (builtin) {
+                var saved = B.loadAll();
+                container.innerHTML = "";
+                B.UKEOI_BASIC_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildBasicControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み値を取得できませんでした（<code>file://</code> 等）。必要に応じて直接入力し保存してください。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function collectBasicFromContainer(container) {
+            var out = {};
+            if (!container) return out;
+            container.querySelectorAll("[data-mm-basic-key]").forEach(function (el) {
+                var k = el.getAttribute("data-mm-basic-key");
+                if (!k) return;
+                out[k] = el.value;
+            });
+            return out;
+        }
+        function clearBasicKeys() {
+            var all = B.loadAll();
+            B.UKEOI_BASIC_FIELD_META.forEach(function (m) {
+                delete all[m.key];
+            });
+            B.saveAll(all);
+        }
+        var basicModal = document.getElementById("mmUkeoiBasicSettingsModal");
+        if (basicModal) basicModal.addEventListener("show.bs.modal", fillBasicModal);
+        var btnSave = document.getElementById("mm-ukeoi-basic-save");
+        var btnReset = document.getElementById("mm-ukeoi-basic-reset");
+        if (btnSave) {
+            btnSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-ukeoi-basic-fields");
+                B.savePartial(collectBasicFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(basicModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnReset) {
+            btnReset.addEventListener("click", function () {
+                if (!window.confirm("基本設定の上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearBasicKeys();
+                fillBasicModal();
+            });
+        }
+    })();
+
+    (function initMmUkeoiDetailItemsModal() {
+        var I = typeof QuoteUkeoiItemsDefaults !== "undefined" ? QuoteUkeoiItemsDefaults : null;
+        if (!I) return;
+        var modal = document.getElementById("mmUkeoiDetailItemsModal");
+        var ta = document.getElementById("mm-ukeoi-items-json");
+        var errEl = document.getElementById("mm-ukeoi-items-json-err");
+        var rowCountEl = document.getElementById("mm-ukeoi-items-rowcount");
+        var btnLoad = document.getElementById("mm-ukeoi-items-load-builtin");
+        var btnSave = document.getElementById("mm-ukeoi-items-save");
+        var btnReset = document.getElementById("mm-ukeoi-items-reset");
+        function showErr(msg) {
+            if (!errEl) return;
+            if (msg) {
+                errEl.textContent = msg;
+                errEl.classList.remove("d-none");
+            } else {
+                errEl.textContent = "";
+                errEl.classList.add("d-none");
+            }
+        }
+        function setRowCountHint(n) {
+            if (rowCountEl) rowCountEl.textContent = n != null ? "行数: " + String(n) + "（HTML の .quote-item-row と一致させてください）" : "";
+        }
+        function fillTextareaFromStorage() {
+            if (!ta) return;
+            showErr("");
+            var doc = I.loadDoc();
+            var payload = doc && Array.isArray(doc.rows) ? doc : { v: I.DOC_VERSION || 1, rows: [] };
+            ta.value = JSON.stringify(payload, null, 2);
+            setRowCountHint(payload.rows ? payload.rows.length : 0);
+        }
+        function fillTextareaFromRows(rows) {
+            if (!ta) return;
+            showErr("");
+            ta.value = JSON.stringify({ v: I.DOC_VERSION || 1, rows: rows || [] }, null, 2);
+            setRowCountHint(rows ? rows.length : 0);
+        }
+        if (modal) {
+            modal.addEventListener("show.bs.modal", function () {
+                fillTextareaFromStorage();
+            });
+        }
+        if (btnLoad) {
+            btnLoad.addEventListener("click", function () {
+                showErr("");
+                btnLoad.disabled = true;
+                I.fetchBuiltinRowsFromQuoteCreateHtml("quote-create.html").then(function (rows) {
+                    btnLoad.disabled = false;
+                    if (!rows || !rows.length) {
+                        showErr("組み込みHTMLから行を取得できませんでした（fetch がブロックされている可能性）。JSON を手入力するか、HTTP で pages を開いてください。");
+                        return;
+                    }
+                    fillTextareaFromRows(rows);
+                });
+            });
+        }
+        if (btnSave) {
+            btnSave.addEventListener("click", function () {
+                showErr("");
+                if (!ta) return;
+                var parsed;
+                try {
+                    parsed = JSON.parse(ta.value);
+                } catch (e) {
+                    showErr("JSON の解析に失敗しました: " + (e && e.message ? e.message : String(e)));
+                    return;
+                }
+                if (!parsed || typeof parsed !== "object" || !Array.isArray(parsed.rows)) {
+                    showErr("最上位に rows（配列）が必要です。");
+                    return;
+                }
+                var cleanRows = parsed.rows.filter(function (r) {
+                    return r && typeof r === "object";
+                });
+                I.saveDoc({ v: I.DOC_VERSION || 1, rows: cleanRows });
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(modal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnReset) {
+            btnReset.addEventListener("click", function () {
+                if (!window.confirm("詳細設定に保存した上書き（localStorage）を削除し、組み込みHTMLの明細に戻しますか？")) return;
+                I.clearAll();
+                fillTextareaFromRows([]);
+            });
+        }
+    })();
+
+    (function initMmMaintDetailItemsModal() {
+        var I = typeof QuoteMaintItemsDefaults !== "undefined" ? QuoteMaintItemsDefaults : null;
+        if (!I) return;
+        var modal = document.getElementById("mmMaintDetailItemsModal");
+        var ta = document.getElementById("mm-maint-items-json");
+        var errEl = document.getElementById("mm-maint-items-json-err");
+        var rowCountEl = document.getElementById("mm-maint-items-rowcount");
+        var btnLoad = document.getElementById("mm-maint-items-load-builtin");
+        var btnSave = document.getElementById("mm-maint-items-save");
+        var btnReset = document.getElementById("mm-maint-items-reset");
+        function showErr(msg) {
+            if (!errEl) return;
+            if (msg) {
+                errEl.textContent = msg;
+                errEl.classList.remove("d-none");
+            } else {
+                errEl.textContent = "";
+                errEl.classList.add("d-none");
+            }
+        }
+        function setRowCountHint(n) {
+            if (rowCountEl) rowCountEl.textContent = n != null ? "行数: " + String(n) + "（.quote-item-row）" : "";
+        }
+        function fillTextareaFromStorage() {
+            if (!ta) return;
+            showErr("");
+            var doc = I.loadDoc();
+            var payload = doc && Array.isArray(doc.rows) ? doc : { v: I.DOC_VERSION || 1, rows: [] };
+            ta.value = JSON.stringify(payload, null, 2);
+            setRowCountHint(payload.rows ? payload.rows.length : 0);
+        }
+        function fillTextareaFromRows(rows) {
+            if (!ta) return;
+            showErr("");
+            ta.value = JSON.stringify({ v: I.DOC_VERSION || 1, rows: rows || [] }, null, 2);
+            setRowCountHint(rows ? rows.length : 0);
+        }
+        if (modal) modal.addEventListener("show.bs.modal", fillTextareaFromStorage);
+        if (btnLoad) {
+            btnLoad.addEventListener("click", function () {
+                showErr("");
+                btnLoad.disabled = true;
+                I.fetchBuiltinRowsFromMaintHtml("quote-create-maint.html").then(function (rows) {
+                    btnLoad.disabled = false;
+                    if (!rows || !rows.length) {
+                        showErr("組み込みHTMLから行を取得できませんでした（fetch がブロックされている可能性）。");
+                        return;
+                    }
+                    fillTextareaFromRows(rows);
+                });
+            });
+        }
+        if (btnSave) {
+            btnSave.addEventListener("click", function () {
+                showErr("");
+                if (!ta) return;
+                var parsed;
+                try {
+                    parsed = JSON.parse(ta.value);
+                } catch (e) {
+                    showErr("JSON の解析に失敗しました: " + (e && e.message ? e.message : String(e)));
+                    return;
+                }
+                if (!parsed || typeof parsed !== "object" || !Array.isArray(parsed.rows)) {
+                    showErr("最上位に rows（配列）が必要です。");
+                    return;
+                }
+                var cleanRows = parsed.rows.filter(function (r) {
+                    return r && typeof r === "object";
+                });
+                I.saveDoc({ v: I.DOC_VERSION || 1, rows: cleanRows });
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(modal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnReset) {
+            btnReset.addEventListener("click", function () {
+                if (!window.confirm("保守見積の詳細設定に保存した上書きを削除し、組み込みHTMLの明細に戻しますか？")) return;
+                I.clearAll();
+                fillTextareaFromRows([]);
+            });
+        }
+    })();
+
+    (function initMmLabDetailItemsModal() {
+        var L = typeof QuoteLabItemsDefaults !== "undefined" ? QuoteLabItemsDefaults : null;
+        if (!L) return;
+        var modal = document.getElementById("mmLabDetailItemsModal");
+        var ta = document.getElementById("mm-lab-items-json");
+        var errEl = document.getElementById("mm-lab-items-json-err");
+        var summaryEl = document.getElementById("mm-lab-items-summary");
+        var btnLoad = document.getElementById("mm-lab-items-load-builtin");
+        var btnSave = document.getElementById("mm-lab-items-save");
+        var btnReset = document.getElementById("mm-lab-items-reset");
+        function showErr(msg) {
+            if (!errEl) return;
+            if (msg) {
+                errEl.textContent = msg;
+                errEl.classList.remove("d-none");
+            } else {
+                errEl.textContent = "";
+                errEl.classList.add("d-none");
+            }
+        }
+        function setSummary(months) {
+            if (!summaryEl) return;
+            if (!months || !months.length) {
+                summaryEl.textContent = "";
+                return;
+            }
+            var rows = 0;
+            months.forEach(function (m) {
+                if (m && Array.isArray(m.rows)) rows += m.rows.length;
+            });
+            summaryEl.textContent = "月数: " + String(months.length) + " / 行合計: " + String(rows);
+        }
+        function fillTextareaFromStorage() {
+            if (!ta) return;
+            showErr("");
+            var doc = L.loadDoc();
+            var payload = doc && Array.isArray(doc.months) ? doc : { v: L.DOC_VERSION || 1, months: [] };
+            ta.value = JSON.stringify(payload, null, 2);
+            setSummary(payload.months);
+        }
+        function fillTextareaFromMonths(months) {
+            if (!ta) return;
+            showErr("");
+            ta.value = JSON.stringify({ v: L.DOC_VERSION || 1, months: months || [] }, null, 2);
+            setSummary(months);
+        }
+        if (modal) modal.addEventListener("show.bs.modal", fillTextareaFromStorage);
+        if (btnLoad) {
+            btnLoad.addEventListener("click", function () {
+                showErr("");
+                btnLoad.disabled = true;
+                L.fetchBuiltinMonthsFromLabHtml("quote-create-lab.html").then(function (months) {
+                    btnLoad.disabled = false;
+                    if (!months || !months.length) {
+                        showErr("組み込みHTMLから月別明細を取得できませんでした（fetch がブロックされている可能性）。");
+                        return;
+                    }
+                    fillTextareaFromMonths(months);
+                });
+            });
+        }
+        if (btnSave) {
+            btnSave.addEventListener("click", function () {
+                showErr("");
+                if (!ta) return;
+                var parsed;
+                try {
+                    parsed = JSON.parse(ta.value);
+                } catch (e) {
+                    showErr("JSON の解析に失敗しました: " + (e && e.message ? e.message : String(e)));
+                    return;
+                }
+                if (!parsed || typeof parsed !== "object" || !Array.isArray(parsed.months)) {
+                    showErr("最上位に months（配列）が必要です。");
+                    return;
+                }
+                var cleanMonths = parsed.months
+                    .filter(function (m) {
+                        return m && typeof m === "object" && String(m.ym || "").trim();
+                    })
+                    .map(function (m) {
+                        var rows = Array.isArray(m.rows) ? m.rows.filter(function (r) { return r && typeof r === "object"; }) : [];
+                        return { ym: String(m.ym).trim(), rows: rows };
+                    });
+                L.saveDoc({ v: L.DOC_VERSION || 1, months: cleanMonths });
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(modal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnReset) {
+            btnReset.addEventListener("click", function () {
+                if (!window.confirm("ラボ見積の詳細設定に保存した上書きを削除し、組み込みHTMLに戻しますか？")) return;
+                L.clearAll();
+                fillTextareaFromMonths([]);
+            });
+        }
+    })();
+
+    (function initMmMaintBasicModal() {
+        var B = typeof QuoteMaintBasicDefaults !== "undefined" ? QuoteMaintBasicDefaults : null;
+        if (!B) return;
+        var basicBuiltinCache = null;
+        function ensureBasicBuiltins(cb) {
+            if (basicBuiltinCache) {
+                cb(basicBuiltinCache);
+                return;
+            }
+            B.fetchBuiltinMapFromMaintHtml("quote-create-maint.html").then(function (map) {
+                basicBuiltinCache = map || {};
+                cb(basicBuiltinCache);
+            });
+        }
+        function buildBasicControl(meta, saved, builtin) {
+            var val = saved[meta.key] != null ? saved[meta.key] : builtin[meta.key] != null ? builtin[meta.key] : "";
+            var wrap = document.createElement("div");
+            wrap.className = "mb-3 pb-2 border-bottom";
+            var lab = document.createElement("label");
+            lab.className = "form-label fw-semibold mb-1 d-block";
+            var fid = "mm-mqb-" + meta.key;
+            lab.setAttribute("for", fid);
+            lab.textContent = meta.label;
+            wrap.appendChild(lab);
+            if (meta.input === "select" && meta.options && meta.options.length) {
+                var sel = document.createElement("select");
+                sel.className = "form-select form-select-sm";
+                sel.id = fid;
+                sel.setAttribute("data-mm-maint-basic-key", meta.key);
+                meta.options.forEach(function (opt) {
+                    var o = document.createElement("option");
+                    o.value = opt.value;
+                    o.textContent = opt.label || opt.value;
+                    sel.appendChild(o);
+                });
+                var v = String(val);
+                var ok = false;
+                meta.options.forEach(function (opt) {
+                    if (opt.value === v) ok = true;
+                });
+                sel.value = ok ? v : meta.options[0].value;
+                wrap.appendChild(sel);
+                return wrap;
+            }
+            if (meta.input === "date") {
+                var dt = document.createElement("input");
+                dt.type = "date";
+                dt.className = "form-control form-control-sm";
+                dt.id = fid;
+                dt.setAttribute("data-mm-maint-basic-key", meta.key);
+                dt.value = val ? String(val).slice(0, 10) : "";
+                wrap.appendChild(dt);
+                return wrap;
+            }
+            if (meta.input === "number") {
+                var num = document.createElement("input");
+                num.type = "number";
+                num.className = "form-control form-control-sm text-end";
+                num.id = fid;
+                num.setAttribute("data-mm-maint-basic-key", meta.key);
+                if (meta.step) num.step = meta.step;
+                if (meta.min != null) num.min = String(meta.min);
+                num.value = val !== "" && val != null ? String(val) : "";
+                wrap.appendChild(num);
+                return wrap;
+            }
+            var ta = document.createElement("textarea");
+            ta.className = "form-control form-control-sm";
+            ta.rows = meta.rows || 3;
+            ta.id = fid;
+            ta.setAttribute("data-mm-maint-basic-key", meta.key);
+            ta.value = String(val);
+            wrap.appendChild(ta);
+            return wrap;
+        }
+        function fillBasicModal() {
+            var container = document.getElementById("mm-maint-basic-fields");
+            if (!container) return;
+            container.innerHTML = '<p class="text-muted small mb-0">読み込み中…</p>';
+            ensureBasicBuiltins(function (builtin) {
+                var saved = B.loadAll();
+                container.innerHTML = "";
+                B.MAINT_BASIC_FIELD_META.forEach(function (meta) {
+                    container.appendChild(buildBasicControl(meta, saved, builtin));
+                });
+                if (!Object.keys(builtin).length) {
+                    var w = document.createElement("p");
+                    w.className = "text-warning small mb-0 mt-2";
+                    w.innerHTML =
+                        "組み込み値を取得できませんでした（<code>file://</code> 等）。必要に応じて直接入力し保存してください。";
+                    container.appendChild(w);
+                }
+            });
+        }
+        function collectBasicFromContainer(container) {
+            var out = {};
+            if (!container) return out;
+            container.querySelectorAll("[data-mm-maint-basic-key]").forEach(function (el) {
+                var k = el.getAttribute("data-mm-maint-basic-key");
+                if (!k) return;
+                out[k] = el.value;
+            });
+            return out;
+        }
+        function clearBasicKeys() {
+            var all = B.loadAll();
+            B.MAINT_BASIC_FIELD_META.forEach(function (m) {
+                delete all[m.key];
+            });
+            B.saveAll(all);
+        }
+        var basicModal = document.getElementById("mmMaintBasicSettingsModal");
+        if (basicModal) basicModal.addEventListener("show.bs.modal", fillBasicModal);
+        var btnSave = document.getElementById("mm-maint-basic-save");
+        var btnReset = document.getElementById("mm-maint-basic-reset");
+        if (btnSave) {
+            btnSave.addEventListener("click", function () {
+                var c = document.getElementById("mm-maint-basic-fields");
+                B.savePartial(collectBasicFromContainer(c));
+                var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(basicModal) : null;
+                if (inst) inst.hide();
+            });
+        }
+        if (btnReset) {
+            btnReset.addEventListener("click", function () {
+                if (!window.confirm("保守見積の基本設定の上書きをすべて削除し、HTML の組み込み値に戻しますか？")) return;
+                clearBasicKeys();
+                fillBasicModal();
+            });
+        }
+    })();
+
+    if (typeof QuoteUnitPriceConfig === "undefined") return;
+
+    var MD_PER_MONTH = 20;
+
+    function fmtYenInt(n) {
+        return "¥" + Math.round(n).toLocaleString("ja-JP");
+    }
+
+    function collectRowsFromTbody(tbody) {
+        var arr = [];
+        tbody.querySelectorAll("tr").forEach(function (tr) {
+            var idEl = tr.querySelector(".qup-id");
+            var labelEl = tr.querySelector(".qup-label");
+            var otjSaleEl = tr.querySelector(".qup-otj-sale-unit");
+            var otjRatioEl = tr.querySelector(".qup-otj-cost-ratio");
+            var venUnitEl = tr.querySelector(".qup-vendor-unit-cost");
+            var venRatioEl = tr.querySelector(".qup-vendor-cost-ratio");
+            if (!idEl || !labelEl || !otjSaleEl) return;
+            arr.push({
+                id: idEl.value,
+                label: labelEl.value,
+                price: otjSaleEl.value,
+                otjCostRatio: otjRatioEl ? otjRatioEl.value : "",
+                vendorUnitCost: venUnitEl ? venUnitEl.value : "0",
+                vendorCostRatio: venRatioEl ? venRatioEl.value : "",
+            });
+        });
+        return arr;
+    }
+
+    function fillQuoteUnitPriceRows(tbody, opts) {
+        opts = opts || {};
+        var showLabMonthRef = !!opts.showLabMonthRef;
         tbody.innerHTML = "";
         QuoteUnitPriceConfig.getRateTypes().forEach(function (rt) {
             var tr = document.createElement("tr");
@@ -619,6 +2062,18 @@
             inpOtjPrice.value = String(rt.price != null ? rt.price : 0);
             tdOtjPrice.appendChild(inpOtjPrice);
             tr.appendChild(tdOtjPrice);
+            if (showLabMonthRef) {
+                var tdRef = document.createElement("td");
+                tdRef.className = "text-end font-monospace small qup-ref-month";
+                tr.appendChild(tdRef);
+                function syncLabRef() {
+                    var v = parseFloat(String(inpOtjPrice.value).replace(",", "."));
+                    if (isNaN(v) || v < 0) v = 0;
+                    tdRef.textContent = fmtYenInt(Math.round(v * MD_PER_MONTH));
+                }
+                inpOtjPrice.addEventListener("input", syncLabRef);
+                syncLabRef();
+            }
             var tdOtjRatio = document.createElement("td");
             var inpOtjRatio = document.createElement("input");
             inpOtjRatio.type = "number";
@@ -659,32 +2114,34 @@
         });
     }
 
-    modal.addEventListener("show.bs.modal", fillModalRows);
-
-    btnSave.addEventListener("click", function () {
-        var rows = tbody.querySelectorAll("tr");
-        var arr = [];
-        rows.forEach(function (tr) {
-            var idEl = tr.querySelector(".qup-id");
-            var labelEl = tr.querySelector(".qup-label");
-            var otjSaleEl = tr.querySelector(".qup-otj-sale-unit");
-            var otjRatioEl = tr.querySelector(".qup-otj-cost-ratio");
-            var venUnitEl = tr.querySelector(".qup-vendor-unit-cost");
-            var venRatioEl = tr.querySelector(".qup-vendor-cost-ratio");
-            if (!idEl || !labelEl || !otjSaleEl) return;
-            arr.push({
-                id: idEl.value,
-                label: labelEl.value,
-                price: otjSaleEl.value,
-                otjCostRatio: otjRatioEl ? otjRatioEl.value : "",
-                vendorUnitCost: venUnitEl ? venUnitEl.value : "0",
-                vendorCostRatio: venRatioEl ? venRatioEl.value : "",
-            });
+    function wireQuoteUnitPriceModal(modalEl, tbodyEl, btnSaveEl) {
+        if (!modalEl || !tbodyEl || !btnSaveEl) return;
+        modalEl.addEventListener("show.bs.modal", function () {
+            fillQuoteUnitPriceRows(tbodyEl, { showLabMonthRef: tbodyEl.id === "quote-lab-unit-price-modal-tbody" });
         });
-        QuoteUnitPriceConfig.saveRateTypes(arr);
-        var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(modal) : null;
-        if (inst) inst.hide();
-    });
+        btnSaveEl.addEventListener("click", function () {
+            var arr = collectRowsFromTbody(tbodyEl);
+            QuoteUnitPriceConfig.saveRateTypes(arr);
+            var inst = typeof bootstrap !== "undefined" && bootstrap.Modal ? bootstrap.Modal.getInstance(modalEl) : null;
+            if (inst) inst.hide();
+        });
+    }
+
+    wireQuoteUnitPriceModal(
+        document.getElementById("quoteUnitPriceModal"),
+        document.getElementById("quote-unit-price-modal-tbody"),
+        document.getElementById("quote-unit-price-save")
+    );
+    wireQuoteUnitPriceModal(
+        document.getElementById("quoteLabUnitPriceModal"),
+        document.getElementById("quote-lab-unit-price-modal-tbody"),
+        document.getElementById("quote-lab-unit-price-save")
+    );
+    wireQuoteUnitPriceModal(
+        document.getElementById("quoteMaintUnitPriceModal"),
+        document.getElementById("quote-maint-unit-price-modal-tbody"),
+        document.getElementById("quote-maint-unit-price-save")
+    );
 })();
     </script>
 </body>

@@ -293,3 +293,17 @@
                 left: 0;
             }
         }
+
+        /* 見積プレビュー印刷（body.qp-printing-preview）：layout.js 挿入のサイドバー・ヘッダーは main 外のため、ページ内スタイルだけでは隠せない */
+        @media print {
+            body.qp-printing-preview .sidebar,
+            body.qp-printing-preview .main-header {
+                display: none !important;
+            }
+            body.qp-printing-preview .main-content {
+                margin-left: 0 !important;
+                margin-top: 0 !important;
+                padding: 0 !important;
+                min-height: 0 !important;
+            }
+        }
